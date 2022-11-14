@@ -28,4 +28,5 @@ cover_db/
 
 MYMETA.*
 
-/Affix-libui-*
+/LibUI-*
+.tidyall.d/

@@ -1,5 +1,5 @@
 {
-   "abstract" : "It's new $module",
+   "abstract" : "Simple, Portable, Native GUI Library",
    "author" : [
       "Sanko Robinson <sanko@cpan.org>"
    ],
@@ -12,7 +12,7 @@
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
       "version" : 2
    },
-   "name" : "Affix-libui",
+   "name" : "LibUI",
    "no_index" : {
       "directory" : [
          "t",
