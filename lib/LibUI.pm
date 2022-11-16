@@ -118,82 +118,6 @@ package LibUI 0.01 {
         func( 'uiNewVerticalBox',   [] => InstanceOf ['LibUI::Box'] );
     }
     #
-    {
-        @LibUI::CheckBox::ISA = qw[LibUI::Control];
-        export checkbox => qw[uiCheckboxText
-            uiCheckboxSetText
-            uiCheckboxOnToggled
-            uiCheckboxChecked
-            uiCheckboxSetChecked
-            uiNewCheckbox
-        ];
-        func( 'uiCheckboxText',    [ InstanceOf ['LibUI::CheckBox'] ]      => Str );
-        func( 'uiCheckboxSetText', [ InstanceOf ['LibUI::CheckBox'], Str ] => Void );
-        func(
-            'uiCheckboxOnToggled',
-            [   InstanceOf ['LibUI::CheckBox'],
-                CodeRef [ [ InstanceOf ['LibUI::CheckBox'], Any ] => Void ]
-            ] => Void
-        );
-        func( 'uiCheckboxChecked',    [ InstanceOf ['LibUI::CheckBox'] ]      => Int );
-        func( 'uiCheckboxSetChecked', [ InstanceOf ['LibUI::CheckBox'], Int ] => Void );
-        func( 'uiNewCheckbox',        [] => InstanceOf ['LibUI::CheckBox'] );
-    }
-    #
-    {
-        @LibUI::Entry::ISA = qw[LibUI::Control];
-        export entry => qw[uiEntrySetText
-            uiEntryOnChanged
-            uiEntryReadOnly
-            uiEntrySetReadOnly
-            uiNewEntry
-        ];
-        func( 'uiEntrySetText', [ InstanceOf ['LibUI::Entry'], Str ] => Void );
-        func(
-            'uiEntryOnChanged',
-            [   InstanceOf ['LibUI::Entry'],
-                CodeRef [ [ InstanceOf ['LibUI::Entry'], Any ] => Void ]
-            ] => Void
-        );
-        func( 'uiEntryReadOnly',    [ InstanceOf ['LibUI::Entry'] ]      => Int );
-        func( 'uiEntrySetReadOnly', [ InstanceOf ['LibUI::Entry'], Int ] => Void );
-        func( 'uiNewEntry',         [] => InstanceOf ['LibUI::Entry'] );
-    }
-    #
-    {
-        @LibUI::PasswordEntry::ISA = qw[LibUI::Entry];
-        export passwordentry => qw[uiNewPasswordEntry
-        ];
-        func( 'uiNewPasswordEntry', [] => InstanceOf ['LibUI::PasswordEntry'] );
-    }
-    #
-    {
-        @LibUI::SearchEntry::ISA = qw[LibUI::Entry];
-        export searchentry => qw[uiNewSearchEntry
-        ];
-        func( 'uiNewSearchEntry', [] => InstanceOf ['LibUI::SearchEntry'] );
-    }
-    #
-    #
-    #
-    {
-        @LibUI::Spinbox::ISA = qw[LibUI::Control];
-        export spinbox => qw[
-            uiSpinboxValue
-            uiSpinboxSetValue
-            uiSpinboxOnChanged
-            uiNewSpinbox
-        ];
-        func( 'uiSpinboxValue',    [ InstanceOf ['LibUI::Spinbox'] ]      => Int );
-        func( 'uiSpinboxSetValue', [ InstanceOf ['LibUI::Spinbox'], Int ] => Void );
-        func(
-            'uiSpinboxOnChanged',
-            [   InstanceOf ['LibUI::Spinbox'],
-                CodeRef [ [ InstanceOf ['LibUI::Spinbox'], Any ] => Any ]
-            ] => Void
-        );
-        func( 'uiNewSpinbox', [ Int, Int ] => InstanceOf ['LibUI::Spinbox'] );
-    }
     #
     {
         @LibUI::ProgressBar::ISA = qw[LibUI::Control];
@@ -399,29 +323,6 @@ package LibUI 0.01 {
         func( 'uiNewMenu',             [Str] => InstanceOf ['LibUI::Menu'] );
     }
     ##############################################################################################
-    @LibUI::Slider::ISA = qw[LibUI::Control];
-    export slider => qw[uiSliderValue
-        uiSliderSetValue
-        uiSliderHasToolTip
-        uiSliderSetHasToolTip
-        uiSliderOnChanged
-        uiSliderOnReleased
-        uiSliderSetRange
-        uiNewSlider
-    ];
-    func( 'uiSliderValue',         [ InstanceOf ['LibUI::Slider'] ]      => Int );
-    func( 'uiSliderSetValue',      [ InstanceOf ['LibUI::Slider'], Int ] => Void );
-    func( 'uiSliderHasToolTip',    [ InstanceOf ['LibUI::Slider'] ]      => Int );
-    func( 'uiSliderSetHasToolTip', [ InstanceOf ['LibUI::Slider'], Int ] => Void );
-    func( 'uiSliderOnChanged',
-        [ InstanceOf ['LibUI::Slider'],
-            CodeRef [ [ InstanceOf ['LibUI::Slider'], Any ] => Void ] ] => Void );
-    func( 'uiSliderOnReleased',
-        [ InstanceOf ['LibUI::Slider'],
-            CodeRef [ [ InstanceOf ['LibUI::Slider'], Any ] => Void ] ] => Void );
-    func( 'uiSliderSetRange', [ InstanceOf ['LibUI::Slider'], Int, Int ] => Void );
-    func( 'uiNewSlider', [ Int, Int ] => InstanceOf ['LibUI::Slider'] );
-    #
     #
     {
         my %seen;
@@ -469,7 +370,7 @@ the native GUI technologies of each platform it supports.
 
 =over
 
-=item L<LibUI::Window> - a control that represents a top-level window
+=item L<LibUI::Window> - a top-level window
 
 =item L<LibUI::HBox> - a horizontally aligned, boxlike container that holds a group of controls
 
@@ -477,16 +378,31 @@ the native GUI technologies of each platform it supports.
 
 =item L<LibUI::Tab> - a multi-page control interface that displays one page at a time
 
-=item L<LibUI::Group> - a control container that adds a label to the contained child control
+=item L<LibUI::Group> - a container that adds a label to the child
 
-=item L<LibUI::Form> - a container control to organize contained controls as labeled fields
+=item L<LibUI::Form> - a container to organize controls as labeled fields
 
-=item L<LibUI::Grid> - a control container to arrange containing controls in a grid
+=item L<LibUI::Grid> - a container to arrange controls in a grid
 
 =back
 
 =head1 Data entry controls
 
+=over
+
+=item L<LibUI::Checkbox> - a user checkable box accompanied by a text label
+
+=item L<LibUI::Entry> - a single line text entry field
+
+=item L<LibUI::PasswordEntry> - a single line, obscured text entry field
+
+=item L<LibUI::SearchEntry> - a single line search query field
+
+=item L<LibUI::Spinbox> - display and modify integer values via a text field or +/- buttons
+
+=item L<LibUI::Slider> - display and modify integer values via a draggable slider
+
+=back
 
 =head2 Static controls
 
@@ -612,6 +528,8 @@ the same terms as Perl itself.
 =head1 AUTHOR
 
 Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+=for stopwords draggable
 
 =cut
 

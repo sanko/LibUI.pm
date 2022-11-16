@@ -1,11 +1,9 @@
 Area
 Button
-CheckBox
 Combobox
 Control
 DateTimePicker
 EditableCombobox
-Entry
 FontButton
 Menu
 MenuItem
@@ -13,8 +11,6 @@ MultilineEntry
 ProgressBar
 RadioButtons
 Separator
-Slider
-Spinbox
 Table
 
 TableParams

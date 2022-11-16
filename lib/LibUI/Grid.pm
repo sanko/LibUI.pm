@@ -83,7 +83,7 @@ LibUI::Grid - Control Container to Arrange Containing Controls in a Grid
 
 =head1 DESCRIPTION
 
-A LibUI::Form object represents a control container to arrange containing
+A LibUI::Grid object represents a control container to arrange containing
 controls in a grid.
 
 Contained controls are arranged on an imaginary grid of rows and columns.

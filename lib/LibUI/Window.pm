@@ -2,109 +2,103 @@ package LibUI::Window 0.01 {
     use 5.008001;
     use strict;
     use warnings;
-    use lib '../lib', '../blib/arch', '../blib/lib';
     use Affix;
     use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
-    $|++;
     #
-    {
-        attach(
-            LibUI::lib(),          'uiWindowTitle', [ InstanceOf ['LibUI::Window'] ] => Str,
-            DC_SIGCHAR_CC_DEFAULT, 'title'
-        );
-        attach(
-            LibUI::lib(), 'uiWindowSetTitle', [ InstanceOf ['LibUI::Window'], Str ] => Void,
-            DC_SIGCHAR_CC_DEFAULT, 'setTitle'
-        );
+    attach(
+        LibUI::lib(),          'uiWindowTitle', [ InstanceOf ['LibUI::Window'] ] => Str,
+        DC_SIGCHAR_CC_DEFAULT, 'title'
+    );
+    attach(
+        LibUI::lib(),          'uiWindowSetTitle', [ InstanceOf ['LibUI::Window'], Str ] => Void,
+        DC_SIGCHAR_CC_DEFAULT, 'setTitle'
+    );
 
-        sub contentSize($) {
-            my $w = shift;
-            CORE::state $affix //= wrap( LibUI::lib(), 'uiWindowContentSize',
-                [ InstanceOf ['LibUI::Window'], Pointer [Int], Pointer [Int] ] => Void );
-            my ( $width, $height );
-            $affix->( $w, $width, $height );
-            return ( $width, $height );
-        }
-        attach(
-            LibUI::lib(), 'uiWindowSetContentSize',
-            [ InstanceOf ['LibUI::Window'], Int, Int ] => Void,
-            DC_SIGCHAR_CC_DEFAULT, 'setContentSize'
-        );
-        attach(
-            LibUI::lib(),          'uiWindowFullscreen', [ InstanceOf ['LibUI::Window'] ] => Int,
-            DC_SIGCHAR_CC_DEFAULT, 'fullscreen'
-        );
-        attach(
-            LibUI::lib(), 'uiWindowSetFullscreen', [ InstanceOf ['LibUI::Window'], Int ] => Void,
-            DC_SIGCHAR_CC_DEFAULT, 'setFullscreen'
-        );
-        attach(
-            LibUI::lib(),
-            'uiWindowOnContentSizeChanged',
-            [   InstanceOf ['LibUI::Window'],
-                CodeRef [ [ InstanceOf ['LibUI::Window'], Any ] => Void ], Any
-            ] => Void,
-            DC_SIGCHAR_CC_DEFAULT,
-            'onContentSizeChanged'
-        );
-        attach(
-            LibUI::lib(),
-            'uiWindowOnClosing',
-            [   InstanceOf ['LibUI::Window'],
-                CodeRef [ [ InstanceOf ['LibUI::Window'], Any ] => Int ], Any
-            ] => Void,
-            DC_SIGCHAR_CC_DEFAULT,
-            'onClosing'
-        );
-        attach(
-            LibUI::lib(),
-            'uiWindowOnFocusChanged',
-            [   InstanceOf ['LibUI::Window'],
-                CodeRef [ [ InstanceOf ['LibUI::Window'], Any ] => Int ], Any
-            ] => Void,
-            DC_SIGCHAR_CC_DEFAULT,
-            'onFocusChanged'
-        );
-        attach(
-            LibUI::lib(),          'uiWindowFocused', [ InstanceOf ['LibUI::Window'] ] => Int,
-            DC_SIGCHAR_CC_DEFAULT, 'focused'
-        );
-        attach(
-            LibUI::lib(),          'uiWindowBorderless', [ InstanceOf ['LibUI::Window'] ] => Int,
-            DC_SIGCHAR_CC_DEFAULT, 'borderless'
-        );
-        attach(
-            LibUI::lib(), 'uiWindowSetBorderless', [ InstanceOf ['LibUI::Window'], Int ] => Void,
-            DC_SIGCHAR_CC_DEFAULT, 'setBorderless'
-        );
-        attach(
-            LibUI::lib(), 'uiWindowSetChild',
-            [ InstanceOf ['LibUI::Window'], InstanceOf ['LibUI::Control'] ] => Void,
-            DC_SIGCHAR_CC_DEFAULT, 'setChild'
-        );
-        attach(
-            LibUI::lib(),          'uiWindowMargined', [ InstanceOf ['LibUI::Window'] ] => Int,
-            DC_SIGCHAR_CC_DEFAULT, 'margined'
-        );
-        attach(
-            LibUI::lib(), 'uiWindowSetMargined', [ InstanceOf ['LibUI::Window'], Int ] => Void,
-            DC_SIGCHAR_CC_DEFAULT, 'setMargined'
-        );
-        attach(
-            LibUI::lib(),          'uiWindowResizeable', [ InstanceOf ['LibUI::Window'] ] => Int,
-            DC_SIGCHAR_CC_DEFAULT, 'resizable'
-        );
-        attach(
-            LibUI::lib(), 'uiWindowSetResizeable', [ InstanceOf ['LibUI::Window'], Int ] => Void,
-            DC_SIGCHAR_CC_DEFAULT, 'setResizable'
-        );
-        attach(
-            LibUI::lib(), 'uiNewWindow',
-            [ Void, Str, Int, Int, Int ] => InstanceOf ['LibUI::Window'],
-            DC_SIGCHAR_CC_DEFAULT, 'new'
-        );
+    sub contentSize($) {
+        my $w = shift;
+        CORE::state $affix //= wrap( LibUI::lib(), 'uiWindowContentSize',
+            [ InstanceOf ['LibUI::Window'], Pointer [Int], Pointer [Int] ] => Void );
+        my ( $width, $height );
+        $affix->( $w, $width, $height );
+        return ( $width, $height );
     }
+    attach(
+        LibUI::lib(), 'uiWindowSetContentSize', [ InstanceOf ['LibUI::Window'], Int, Int ] => Void,
+        DC_SIGCHAR_CC_DEFAULT, 'setContentSize'
+    );
+    attach(
+        LibUI::lib(),          'uiWindowFullscreen', [ InstanceOf ['LibUI::Window'] ] => Int,
+        DC_SIGCHAR_CC_DEFAULT, 'fullscreen'
+    );
+    attach(
+        LibUI::lib(), 'uiWindowSetFullscreen', [ InstanceOf ['LibUI::Window'], Int ] => Void,
+        DC_SIGCHAR_CC_DEFAULT, 'setFullscreen'
+    );
+    attach(
+        LibUI::lib(),
+        'uiWindowOnContentSizeChanged',
+        [   InstanceOf ['LibUI::Window'],
+            CodeRef [ [ InstanceOf ['LibUI::Window'], Any ] => Void ], Any
+        ] => Void,
+        DC_SIGCHAR_CC_DEFAULT,
+        'onContentSizeChanged'
+    );
+    attach(
+        LibUI::lib(),
+        'uiWindowOnClosing',
+        [   InstanceOf ['LibUI::Window'],
+            CodeRef [ [ InstanceOf ['LibUI::Window'], Any ] => Int ], Any
+        ] => Void,
+        DC_SIGCHAR_CC_DEFAULT,
+        'onClosing'
+    );
+    attach(
+        LibUI::lib(),
+        'uiWindowOnFocusChanged',
+        [   InstanceOf ['LibUI::Window'],
+            CodeRef [ [ InstanceOf ['LibUI::Window'], Any ] => Int ], Any
+        ] => Void,
+        DC_SIGCHAR_CC_DEFAULT,
+        'onFocusChanged'
+    );
+    attach(
+        LibUI::lib(),          'uiWindowFocused', [ InstanceOf ['LibUI::Window'] ] => Int,
+        DC_SIGCHAR_CC_DEFAULT, 'focused'
+    );
+    attach(
+        LibUI::lib(),          'uiWindowBorderless', [ InstanceOf ['LibUI::Window'] ] => Int,
+        DC_SIGCHAR_CC_DEFAULT, 'borderless'
+    );
+    attach(
+        LibUI::lib(), 'uiWindowSetBorderless', [ InstanceOf ['LibUI::Window'], Int ] => Void,
+        DC_SIGCHAR_CC_DEFAULT, 'setBorderless'
+    );
+    attach(
+        LibUI::lib(), 'uiWindowSetChild',
+        [ InstanceOf ['LibUI::Window'], InstanceOf ['LibUI::Control'] ] => Void,
+        DC_SIGCHAR_CC_DEFAULT, 'setChild'
+    );
+    attach(
+        LibUI::lib(),          'uiWindowMargined', [ InstanceOf ['LibUI::Window'] ] => Int,
+        DC_SIGCHAR_CC_DEFAULT, 'margined'
+    );
+    attach(
+        LibUI::lib(),          'uiWindowSetMargined', [ InstanceOf ['LibUI::Window'], Int ] => Void,
+        DC_SIGCHAR_CC_DEFAULT, 'setMargined'
+    );
+    attach(
+        LibUI::lib(),          'uiWindowResizeable', [ InstanceOf ['LibUI::Window'] ] => Int,
+        DC_SIGCHAR_CC_DEFAULT, 'resizable'
+    );
+    attach(
+        LibUI::lib(), 'uiWindowSetResizeable', [ InstanceOf ['LibUI::Window'], Int ] => Void,
+        DC_SIGCHAR_CC_DEFAULT, 'setResizable'
+    );
+    attach(
+        LibUI::lib(), 'uiNewWindow', [ Void, Str, Int, Int, Int ] => InstanceOf ['LibUI::Window'],
+        DC_SIGCHAR_CC_DEFAULT, 'new'
+    );
 };
 1;
 #
@@ -356,6 +350,4 @@ Sanko Robinson E<lt>sanko@cpan.orgE<gt>
 
 =for stopwords unix borderless resizable
 
-
 =cut
-

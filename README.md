@@ -28,15 +28,22 @@ the native GUI technologies of each platform it supports.
 
 # Container controls
 
-- [LibUI::Window](https://metacpan.org/pod/LibUI%3A%3AWindow) - a control that represents a top-level window
+- [LibUI::Window](https://metacpan.org/pod/LibUI%3A%3AWindow) - a top-level window
 - [LibUI::HBox](https://metacpan.org/pod/LibUI%3A%3AHBox) - a horizontally aligned, boxlike container that holds a group of controls
 - [LibUI::VBox](https://metacpan.org/pod/LibUI%3A%3AVBox) - a vertically aligned, boxlike container that holds a group of controls
 - [LibUI::Tab](https://metacpan.org/pod/LibUI%3A%3ATab) - a multi-page control interface that displays one page at a time
-- [LibUI::Group](https://metacpan.org/pod/LibUI%3A%3AGroup) - a control container that adds a label to the contained child control
-- [LibUI::Form](https://metacpan.org/pod/LibUI%3A%3AForm) - a container control to organize contained controls as labeled fields
-- [LibUI::Grid](https://metacpan.org/pod/LibUI%3A%3AGrid) - a control container to arrange containing controls in a grid
+- [LibUI::Group](https://metacpan.org/pod/LibUI%3A%3AGroup) - a container that adds a label to the child
+- [LibUI::Form](https://metacpan.org/pod/LibUI%3A%3AForm) - a container to organize controls as labeled fields
+- [LibUI::Grid](https://metacpan.org/pod/LibUI%3A%3AGrid) - a container to arrange controls in a grid
 
 # Data entry controls
+
+- [LibUI::Checkbox](https://metacpan.org/pod/LibUI%3A%3ACheckbox) - a user checkable box accompanied by a text label
+- [LibUI::Entry](https://metacpan.org/pod/LibUI%3A%3AEntry) - a single line text entry field
+- [LibUI::PasswordEntry](https://metacpan.org/pod/LibUI%3A%3APasswordEntry) - a single line, obscured text entry field
+- [LibUI::SearchEntry](https://metacpan.org/pod/LibUI%3A%3ASearchEntry) - a single line search query field
+- [LibUI::Spinbox](https://metacpan.org/pod/LibUI%3A%3ASpinbox) - display and modify integer values via a text field or +/- buttons
+- [LibUI::Slider](https://metacpan.org/pod/LibUI%3A%3ASlider) - display and modify integer values via a draggable slider
 
 ## Static controls
 
