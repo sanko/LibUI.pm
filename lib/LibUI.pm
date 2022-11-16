@@ -29,7 +29,7 @@ package LibUI 0.01 {
         my $name = $func;
         $name =~ s[^ui][LibUI::];
         $name
-            =~ s[LibUI::(Box|Button|Combobox|Control|EditableCombobox|DateTimePicker|Menu|MultilineEntry|NonWrappingMultilineEntry|RadioButtons|Slider|Window)][LibUI::$1::];
+            =~ s[LibUI::(Box|Button|Combobox|Control|DateTimePicker|Menu|MultilineEntry|NonWrappingMultilineEntry|RadioButtons|Slider|Window)][LibUI::$1::];
         $name =~ s[::New(.+)$][::$1::new];
         warn sprintf '%30s => %-50s', $func, $name;
         attach( $lib, $func, $params, $ret, DC_SIGCHAR_CC_DEFAULT, $name );
@@ -139,56 +139,6 @@ package LibUI 0.01 {
         ];
         func( 'uiNewHorizontalSeparator', [] => InstanceOf ['LibUI::Separator'] );
         func( 'uiNewVerticalSeparator',   [] => InstanceOf ['LibUI::Separator'] );
-    }
-    #
-    {
-        @LibUI::Combobox::ISA = qw[LibUI::Control];
-        export combobox => qw[
-            uiComboboxAppend
-            uiComboboxInsertAt
-            uiComboboxDelete
-            uiComboboxClear
-            uiComboboxNumItems
-            uiComboboxSelected
-            uiComboboxSetSelected
-            uiComboboxOnSelected
-            uiNewCombobox
-        ];
-        func( 'uiComboboxAppend',      [ InstanceOf ['LibUI::Combobox'], Str ]      => Void );
-        func( 'uiComboboxInsertAt',    [ InstanceOf ['LibUI::Combobox'], Int, Str ] => Void );
-        func( 'uiComboboxDelete',      [ InstanceOf ['LibUI::Combobox'], Int ]      => Void );
-        func( 'uiComboboxClear',       [ InstanceOf ['LibUI::Combobox'] ]           => Void );
-        func( 'uiComboboxNumItems',    [ InstanceOf ['LibUI::Combobox'] ]           => Int );
-        func( 'uiComboboxSelected',    [ InstanceOf ['LibUI::Combobox'] ]           => Int );
-        func( 'uiComboboxSetSelected', [ InstanceOf ['LibUI::Combobox'], Int ]      => Void );
-        func(
-            'uiComboboxOnSelected',
-            [   InstanceOf ['LibUI::Combobox'],
-                CodeRef [ [ InstanceOf ['LibUI::Combobox'], Any ] => Void ], Any
-            ] => Void
-        );
-        func( 'uiNewCombobox', [] => InstanceOf ['LibUI::Combobox'] );
-    }
-    #
-    {
-        @LibUI::EditableCombobox::ISA = qw[LibUI::Control];
-        export editablecombobox => qw[uiEditableComboboxAppend
-            uiEditableComboboxText
-            uiEditableComboboxSetText
-            uiEditableComboboxOnChanged
-            uiNewEditableCombobox
-        ];
-        func( 'uiEditableComboboxAppend', [ InstanceOf ['LibUI::EditableCombobox'], Str ] => Void );
-        func( 'uiEditableComboboxText',   [ InstanceOf ['LibUI::EditableCombobox'] ]      => Str );
-        func( 'uiEditableComboboxSetText',
-            [ InstanceOf ['LibUI::EditableCombobox'], Str ] => Void );
-        func(
-            'uiEditableComboboxOnChanged',
-            [   InstanceOf ['LibUI::EditableCombobox'],
-                CodeRef [ [ InstanceOf ['LibUI::EditableCombobox'], Any ] => Void ], Any
-            ] => Void
-        );
-        func( 'uiNewEditableCombobox', [] => InstanceOf ['LibUI::EditableCombobox'] );
     }
     #
     {
@@ -401,6 +351,10 @@ the native GUI technologies of each platform it supports.
 =item L<LibUI::Spinbox> - display and modify integer values via a text field or +/- buttons
 
 =item L<LibUI::Slider> - display and modify integer values via a draggable slider
+
+=item L<LibUI::Combobox> - a drop down menu to select one of a predefined list of items
+
+=item L<LibUI::EditableCombobox> - a drop down menu to select one of a predefined list of items or enter you own
 
 =back
 

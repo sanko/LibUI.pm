@@ -6,6 +6,8 @@ use_ok $_ for qw[
     LibUI::At
     LibUI::Checkbox
     LibUI::ColorButton
+    LibUI::Combobox
+    LibUI::EditableCombobox
     LibUI::Entry
     LibUI::Form
     LibUI::Grid

@@ -1,9 +1,7 @@
 Area
 Button
-Combobox
 Control
 DateTimePicker
-EditableCombobox
 FontButton
 Menu
 MenuItem
