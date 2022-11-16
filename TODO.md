@@ -1,13 +1,10 @@
 Area
 Button
 Control
-DateTimePicker
 FontButton
 Menu
 MenuItem
-MultilineEntry
 ProgressBar
-RadioButtons
 Separator
 Table
 

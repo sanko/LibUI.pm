@@ -29,7 +29,7 @@ package LibUI 0.01 {
         my $name = $func;
         $name =~ s[^ui][LibUI::];
         $name
-            =~ s[LibUI::(Box|Button|Combobox|Control|DateTimePicker|Menu|MultilineEntry|NonWrappingMultilineEntry|RadioButtons|Slider|Window)][LibUI::$1::];
+            =~ s[LibUI::(Box|Button|Combobox|Control|Menu|NonWrappingMultilineEntry|RadioButtons|Slider|Window)][LibUI::$1::];
         $name =~ s[::New(.+)$][::$1::new];
         warn sprintf '%30s => %-50s', $func, $name;
         attach( $lib, $func, $params, $ret, DC_SIGCHAR_CC_DEFAULT, $name );
@@ -141,90 +141,6 @@ package LibUI 0.01 {
         func( 'uiNewVerticalSeparator',   [] => InstanceOf ['LibUI::Separator'] );
     }
     #
-    {
-        @LibUI::RadioButtons::ISA = qw[LibUI::Control];
-        export radiobuttons => qw[uiRadioButtonsAppend
-            uiRadioButtonsSelected
-            uiRadioButtonsSetSelected
-            uiRadioButtonsOnSelected
-            uiNewRadioButtons
-        ];
-        func( 'uiRadioButtonsAppend',      [ InstanceOf ['LibUI::RadioButtons'], Str ] => Void );
-        func( 'uiRadioButtonsSelected',    [ InstanceOf ['LibUI::RadioButtons'] ]      => Int );
-        func( 'uiRadioButtonsSetSelected', [ InstanceOf ['LibUI::RadioButtons'], Int ] => Void );
-        func(
-            'uiRadioButtonsOnSelected',
-            [   InstanceOf ['LibUI::RadioButtons'],
-                CodeRef [ [ InstanceOf ['LibUI::RadioButtons'], Any ] => Void ], Any
-            ] => Void
-        );
-        func( 'uiNewRadioButtons', [] => InstanceOf ['LibUI::RadioButtons'] );
-    }
-    {
-        typedef 'Time' => Struct [    # defined in time.h
-            tm_sec   => Int,
-            tm_min   => Int,
-            tm_hour  => Int,
-            tm_mday  => Int,
-            tm_mon   => Int,
-            tm_year  => Int,
-            tm_wday  => Int,
-            tm_yday  => Int,
-            tm_isdst => Int,
-
-            # BSD and GNU extension; not visible in a strict ISO C env
-            ( $Config{d_tm_tm_gmtoff} ? ( tm_gmtoff => Long, ) : () ),
-            ( $Config{d_tm_tm_zone}   ? ( tm_zone   => Str )   : () )
-        ];
-        @LibUI::DateTimePicker::ISA = qw[LibUI::Control];
-        export datetimepicker => qw[
-            uiDateTimePickerTime
-            uiDateTimePickerSetTime
-            uiDateTimePickerOnChanged
-            uiNewDateTimePicker
-            uiNewDatePicker
-            uiNewTimePicker
-        ];
-        func( 'uiDateTimePickerTime',
-            [ InstanceOf ['LibUI::DateTimePicker'], Pointer [ Time() ] ] => Void );
-        func( 'uiDateTimePickerSetTime',
-            [ InstanceOf ['LibUI::DateTimePicker'], Pointer [ Time() ] ] => Void );
-        func(
-            'uiDateTimePickerOnChanged',
-            [   InstanceOf ['LibUI::DateTimePicker'],
-                CodeRef [ [ InstanceOf ['LibUI::DateTimePicker'], Any ] => Void ], Any
-            ] => Void
-        );
-        func( 'uiNewDateTimePicker', [] => InstanceOf ['LibUI::DateTimePicker'] );
-        func( 'uiNewDatePicker',     [] => InstanceOf ['LibUI::DateTimePicker'] );
-        func( 'uiNewTimePicker',     [] => InstanceOf ['LibUI::DateTimePicker'] );
-    }
-    {
-        @LibUI::MultilineEntry::ISA = qw[LibUI::Control];
-        export multilineentry => qw[
-            uiMultilineEntryText
-            uiMultilineEntrySetText
-            uiMultilineEntryAppend
-            uiMultilineEntryReadOnly
-            uiMultilineEntrySetReadOnly
-            uiNewMultilineEntry
-            uiNewNonWrappingMultilineEntry
-        ];
-        func( 'uiMultilineEntryText',    [ InstanceOf ['LibUI::MultilineEntry'] ] => Str );
-        func( 'uiMultilineEntrySetText', [ InstanceOf ['LibUI::MultilineEntry'], Str ] => Void );
-        func( 'uiMultilineEntryAppend',  [ InstanceOf ['LibUI::MultilineEntry'], Str ] => Void );
-        func(
-            'uiMultilineEntryOnChanged',
-            [   InstanceOf ['LibUI::MultilineEntry'],
-                CodeRef [ [ InstanceOf ['LibUI::MultilineEntry'], Any ] => Any ], Any
-            ] => Int
-        );
-        func( 'uiMultilineEntryReadOnly', [ InstanceOf ['LibUI::MultilineEntry'] ] => Void );
-        func( 'uiMultilineEntrySetReadOnly',
-            [ InstanceOf ['LibUI::MultilineEntry'], Int ] => Void );
-        func( 'uiNewMultilineEntry',            [] => InstanceOf ['LibUI::MultilineEntry'] );
-        func( 'uiNewNonWrappingMultilineEntry', [] => InstanceOf ['LibUI::MultilineEntry'] );
-    }
     {
         @LibUI::MenuItem::ISA = qw[LibUI::Control];
         export menuitem => qw[
@@ -355,6 +271,18 @@ the native GUI technologies of each platform it supports.
 =item L<LibUI::Combobox> - a drop down menu to select one of a predefined list of items
 
 =item L<LibUI::EditableCombobox> - a drop down menu to select one of a predefined list of items or enter you own
+
+=item L<LibUI::RadioButtons> - a multiple choice control of check buttons from which only one can be selected at a time
+
+=item L<LibUI::DateTimePicker> - a control to enter a date and/or time
+
+=item L<LibUI::DatePicker> - a control to enter a date
+
+=item L<LibUI::TimePicker> - a control to enter a time
+
+=item L<LibUI::MultilineEntry> - a multi line entry that visually wraps text when lines overflow
+
+=item L<LibUI::NonWrappingMultilineEntry> - a multi line entry that scrolls text horizontally when lines overflow
 
 =back
 

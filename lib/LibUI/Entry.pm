@@ -143,7 +143,11 @@ Returns the entry's text.
 
 =head1 See Also
 
-L<LibUI::PasswordEntry> and L<LibUI::SearchEntry>.
+L<LibUI::PasswordEntry>, L<LibUI::SearchEntry>.
+
+L<LibUI::MultilineEntry> - Multi-line text file that does not wrap
+
+L<LibUI::NonWrappingMultilineEntry> - Multi-line text file that does not wrap
 
 =head1 LICENSE
 

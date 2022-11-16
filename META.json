@@ -42,7 +42,10 @@
       },
       "runtime" : {
          "requires" : {
+            "Affix" : "0",
             "Alien::libui" : "0",
+            "Time::Local" : "1.30",
+            "Time::Piece" : "0",
             "perl" : "5.014000"
          }
       },

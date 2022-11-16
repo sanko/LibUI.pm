@@ -7,6 +7,8 @@ use_ok $_ for qw[
     LibUI::Checkbox
     LibUI::ColorButton
     LibUI::Combobox
+    LibUI::DateTimePicker
+    LibUI::DatePicker
     LibUI::EditableCombobox
     LibUI::Entry
     LibUI::Form
@@ -14,11 +16,16 @@ use_ok $_ for qw[
     LibUI::Group
     LibUI::HBox
     LibUI::Label
+    LibUI::MultilineEntry
+    LibUI::NonWrappingMultilineEntry
     LibUI::PasswordEntry
+    LibUI::RadioButtons
     LibUI::SearchEntry
     LibUI::Slider
     LibUI::Spinbox
     LibUI::Tab
+    LibUI::Time
+    LibUI::TimePicker
     LibUI::VBox
     LibUI::Window
 ];
