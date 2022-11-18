@@ -56,7 +56,10 @@ the native GUI technologies of each platform it supports.
 
 ## Static controls
 
-- [LIBUI::Label](https://metacpan.org/pod/LIBUI%3A%3ALabel) - a control to display non-interactive text
+- [LibUI::Label](https://metacpan.org/pod/LibUI%3A%3ALabel) - a control to display non-interactive text
+- [LibUI::ProgressBar](https://metacpan.org/pod/LibUI%3A%3AProgressBar) - a control that visualizes the progress of a task via the fill level of a horizontal bar
+- [LibUI::HorizontalSeparator](https://metacpan.org/pod/LibUI%3A%3AHorizontalSeparator) - a control to visually separate controls horizontally
+- [LibUI::VerticalSeparator](https://metacpan.org/pod/LibUI%3A%3AVerticalSeparator) - a control to visually separate controls vertically
 
 ## Buttons
 

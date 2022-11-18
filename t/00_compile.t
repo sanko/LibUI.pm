@@ -18,10 +18,12 @@ use_ok $_ for qw[
     LibUI::Grid
     LibUI::Group
     LibUI::HBox
+    LibUI::HorizontalSeparator
     LibUI::Label
     LibUI::MultilineEntry
     LibUI::NonWrappingMultilineEntry
     LibUI::PasswordEntry
+    LibUI::ProgressBar
     LibUI::RadioButtons
     LibUI::SearchEntry
     LibUI::Slider
@@ -33,6 +35,7 @@ use_ok $_ for qw[
     LibUI::Time
     LibUI::TimePicker
     LibUI::VBox
+    LibUI::VerticalSeparator
     LibUI::Window
 ];
 done_testing;

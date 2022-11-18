@@ -100,46 +100,6 @@ package LibUI 0.01 {
         );
         func( 'uiNewButton', [Str] => InstanceOf ['LibUI::Button'] );
     }
-    {
-        @LibUI::Box::ISA = qw[LibUI::Control];
-        export box => qw[uiBoxAppend
-            uiBoxDelete     uiBoxNumChildren
-            uiBoxPadded   uiBoxSetPadded       uiBoxDelete
-            uiNewHorizontalBox
-            uiNewVerticalBox
-        ];
-        func( 'uiBoxAppend',
-            [ InstanceOf ['LibUI::Box'], InstanceOf ['LibUI::Control'], Int ] => Void );
-        func( 'uiBoxNumChildren',   [ InstanceOf ['LibUI::Box'] ]      => Int );
-        func( 'uiBoxDelete',        [ InstanceOf ['LibUI::Box'], Int ] => Void );
-        func( 'uiBoxPadded',        [ InstanceOf ['LibUI::Box'] ]      => Int );
-        func( 'uiBoxSetPadded',     [ InstanceOf ['LibUI::Box'], Int ] => Void );
-        func( 'uiNewHorizontalBox', [] => InstanceOf ['LibUI::Box'] );
-        func( 'uiNewVerticalBox',   [] => InstanceOf ['LibUI::Box'] );
-    }
-    #
-    #
-    {
-        @LibUI::ProgressBar::ISA = qw[LibUI::Control];
-        export progressbar => qw[
-            uiProgressBarValue
-            uiProgressBarSetValue
-            uiNewProgressBar
-        ];
-        func( 'uiProgressBarValue',    [ InstanceOf ['LibUI::ProgressBar'] ]      => Int );
-        func( 'uiProgressBarSetValue', [ InstanceOf ['LibUI::ProgressBar'], Int ] => Void );
-        func( 'uiNewProgressBar',      [] => InstanceOf ['LibUI::ProgressBar'] );
-    }
-    #
-    {
-        @LibUI::Separator::ISA = qw[LibUI::Control];
-        export separator => qw[
-            uiNewHorizontalSeparator
-            uiNewVerticalSeparator
-        ];
-        func( 'uiNewHorizontalSeparator', [] => InstanceOf ['LibUI::Separator'] );
-        func( 'uiNewVerticalSeparator',   [] => InstanceOf ['LibUI::Separator'] );
-    }
     #
     {
         @LibUI::MenuItem::ISA = qw[LibUI::Control];
@@ -293,6 +253,14 @@ the native GUI technologies of each platform it supports.
 =over
 
 =item L<LibUI::Label> - a control to display non-interactive text
+
+=item L<LibUI::ProgressBar> - a control that visualizes the progress of a task via the fill level of a horizontal bar
+
+=item L<LibUI::HorizontalSeparator> - a control to visually separate controls horizontally
+
+=item L<LibUI::VerticalSeparator> - a control to visually separate controls vertically
+
+
 
 =back
 

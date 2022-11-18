@@ -4,8 +4,6 @@ Control
 Image
 Menu
 MenuItem
-ProgressBar
-Separator
 
 Table
 TableParams
