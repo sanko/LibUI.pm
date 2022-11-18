@@ -295,6 +295,21 @@ the native GUI technologies of each platform it supports.
 
 =head2 Dialog windows
 
+=over
+
+=item C<openFile( )> - File chooser to select a single file
+
+=item C<openFolder( )> - File chooser to select a single folder
+
+=item C<saveFile( )> - Save file dialog
+
+=item C<msgBox( ... )> - Message box dialog
+
+=item C<msgBoxError( ... )> - Error message box dialog
+
+=back
+
+See L<LibUI::Window/Dialog windows> for more.
 
 =head2 Menus
 

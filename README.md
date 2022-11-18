@@ -60,6 +60,14 @@ the native GUI technologies of each platform it supports.
 
 ## Dialog windows
 
+- `openFile( )` - File chooser to select a single file
+- `openFolder( )` - File chooser to select a single folder
+- `saveFile( )` - Save file dialog
+- `msgBox( ... )` - Message box dialog
+- `msgBoxError( ... )` - Error message box dialog
+
+See ["Dialog windows" in LibUI::Window](https://metacpan.org/pod/LibUI%3A%3AWindow#Dialog-windows) for more.
+
 ## Menus
 
 ## Tables
