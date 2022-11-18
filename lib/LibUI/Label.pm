@@ -34,11 +34,15 @@ LibUI::Label - Non-interactive Text Display
 =head1 SYNOPSIS
 
     use LibUI ':all';
+    use LibUI::VBox;
     use LibUI::Window;
     use LibUI::Label;
     Init( { Size => 1024 } ) && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
-    $window->setChild( LibUI::Label->new('Hello, World!') );
+    my $box    = LibUI::VBox->new();
+    my $lbl    = LibUI::Label->new('Hello, World');
+    $box->append( $lbl, 1 );
+    $window->setChild($box);
     $window->onClosing(
         sub {
             Quit();
@@ -51,7 +55,7 @@ LibUI::Label - Non-interactive Text Display
 
 =head1 DESCRIPTION
 
-A LibUI::Label object represents control that displays non-interactive text.
+A LibUI::Label object represents a control that displays non-interactive text.
 
 =head1 Functions
 
@@ -71,7 +75,7 @@ Expected parameters include:
 
 =back
 
-=head2 C<text( ... )>
+=head2 C<text( )>
 
     my $title = $lbl->text( );
 

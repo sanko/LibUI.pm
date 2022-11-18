@@ -290,6 +290,12 @@ the native GUI technologies of each platform it supports.
 
 =head2 Static controls
 
+=over
+
+=item L<LibUI::Label> - a control to display non-interactive text
+
+=back
+
 
 =head2 Buttons
 

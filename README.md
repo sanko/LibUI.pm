@@ -56,6 +56,8 @@ the native GUI technologies of each platform it supports.
 
 ## Static controls
 
+- [LIBUI::Label](https://metacpan.org/pod/LIBUI%3A%3ALabel) - a control to display non-interactive text
+
 ## Buttons
 
 ## Dialog windows

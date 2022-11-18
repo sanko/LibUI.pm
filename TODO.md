@@ -1,24 +1,28 @@
 Area
 Button
 Control
-FontButton
+Image
 Menu
 MenuItem
 ProgressBar
 Separator
-Table
 
+Table
 TableParams
 TableTextColumnOptionalParams
 TableValue
 TableValueType
+TableModel
+TableModelHandler
+
+
+
+
 
 LibUI::Timer
 
 Enum:
-    TextItalic
-    TextStretch
-    TextWeight
+    sortIndicator (Table)
 
 Values:
     DrawDefaultMiterLimit
