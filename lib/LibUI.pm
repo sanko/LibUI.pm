@@ -284,6 +284,8 @@ the native GUI technologies of each platform it supports.
 
 =item L<LibUI::NonWrappingMultilineEntry> - a multi line entry that scrolls text horizontally when lines overflow
 
+=item L<LibUI::FontButton> - a control that opens a font picker when clicked
+
 =back
 
 =head2 Static controls
