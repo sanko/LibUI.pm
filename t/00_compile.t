@@ -5,6 +5,7 @@ use_ok $_ for qw[
     LibUI
     LibUI::Align
     LibUI::At
+    LibUI::Button
     LibUI::Checkbox
     LibUI::ColorButton
     LibUI::Combobox

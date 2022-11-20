@@ -78,25 +78,6 @@ package LibUI 0.01 {
         );
         func( 'uiFreeText', [Str] => Void );
     }
-    #
-    {
-        @LibUI::Button::ISA = qw[LibUI::Control];
-        export button => qw[
-            uiButtonText
-            uiButtonSetText
-            uiButtonOnClicked
-            uiNewButton ];
-        func( 'uiButtonText',    [ InstanceOf ['LibUI::Button'] ]      => Str );
-        func( 'uiButtonSetText', [ InstanceOf ['LibUI::Button'], Str ] => Void );
-        func(
-            'uiButtonOnClicked',
-            [   InstanceOf ['LibUI::Button'],
-                CodeRef [ [ InstanceOf ['LibUI::Button'], Any ] => Void ], Any
-            ] => Void
-        );
-        func( 'uiNewButton', [Str] => InstanceOf ['LibUI::Button'] );
-    }
-    #
     ##############################################################################################
     #
     {
@@ -164,6 +145,8 @@ the native GUI technologies of each platform it supports.
 =head1 Data entry controls
 
 =over
+
+=item L<LibUI::Button> - a button control that triggers a callback when clicked
 
 =item L<LibUI::Checkbox> - a user checkable box accompanied by a text label
 

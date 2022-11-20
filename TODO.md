@@ -1,6 +1,17 @@
-Area
-Button
+uiAreaDrawParams
+uiAreaHandler
+uiAreaKeyEvent
+uiAreaMouseEvent
+
+uiDrawBrush
+uiDrawBrushGradientStop
+uiDrawMatrix
+uiDrawStrokeParams
+uiDrawTextLayoutParams
+
 Control
+
+
 Image
 
 Table
@@ -10,10 +21,6 @@ TableValue
 TableValueType
 TableModel
 TableModelHandler
-
-
-
-
 
 LibUI::Timer
 

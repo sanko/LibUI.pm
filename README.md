@@ -38,6 +38,7 @@ the native GUI technologies of each platform it supports.
 
 # Data entry controls
 
+- [LibUI::Button](https://metacpan.org/pod/LibUI%3A%3AButton) - a button control that triggers a callback when clicked
 - [LibUI::Checkbox](https://metacpan.org/pod/LibUI%3A%3ACheckbox) - a user checkable box accompanied by a text label
 - [LibUI::Entry](https://metacpan.org/pod/LibUI%3A%3AEntry) - a single line text entry field
 - [LibUI::PasswordEntry](https://metacpan.org/pod/LibUI%3A%3APasswordEntry) - a single line, obscured text entry field
