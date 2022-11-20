@@ -59,8 +59,6 @@ package LibUI 0.01 {
             uiQueueMain
             uiTimer
             uiFreeText
-            uiMsgBox
-            uiOpenFile
         ];
         func( 'uiInit',          [ Pointer [ InitOptions() ] ] => Str );
         func( 'uiUninit',        []                            => Void );
@@ -78,9 +76,7 @@ package LibUI 0.01 {
             lib(), 'uiOnShouldQuit', [ CodeRef [ [Any] => Int ], Any ] => Void,
             DC_SIGCHAR_CC_DEFAULT, 'LibUI::onShouldQuit'
         );
-        func( 'uiFreeText', [Str]                                      => Void );
-        func( 'uiMsgBox',   [ InstanceOf ['LibUI::Window'], Str, Str ] => Void );
-        func( 'uiOpenFile', [ InstanceOf ['LibUI::Window'] ]           => Str );
+        func( 'uiFreeText', [Str] => Void );
     }
     #
     {
@@ -101,53 +97,6 @@ package LibUI 0.01 {
         func( 'uiNewButton', [Str] => InstanceOf ['LibUI::Button'] );
     }
     #
-    {
-        @LibUI::MenuItem::ISA = qw[LibUI::Control];
-        export menuitem => qw[
-            uiMenuItemEnable
-            uiMenuItemDisable
-            uiMenuItemOnClicked
-            uiMenuItemChecked
-            uiMenuItemSetChecked
-        ];
-        func( 'uiMenuItemEnable',  [ InstanceOf ['LibUI::MenuItem'] ] => Void );
-        func( 'uiMenuItemDisable', [ InstanceOf ['LibUI::MenuItem'] ] => Void );
-        func(
-            'uiMenuItemOnClicked',
-            [   InstanceOf ['LibUI::MenuItem'],
-                CodeRef [
-                    [ InstanceOf ['LibUI::MenuItem'], InstanceOf ['LibUI::Window'], Any ] => Any
-                ],
-                Any
-            ] => Int
-        );
-        func( 'uiMenuItemChecked',    [ InstanceOf ['LibUI::MenuItem'] ]      => Int );
-        func( 'uiMenuItemSetChecked', [ InstanceOf ['LibUI::MenuItem'], Int ] => Void );
-    }
-    {
-        #@LibUI::Menu::ISA = qw[LibUI::Control];
-        export menu => qw[
-            uiMenuAppendItem
-            uiMenuAppendCheckItem
-            uiMenuAppendQuitItem
-            uiMenuAppendPreferencesItem
-            uiMenuAppendAboutItem
-            uiMenuAppendSeparator
-            uiNewMenu
-        ];
-        func( 'uiMenuAppendItem',
-            [ InstanceOf ['LibUI::Menu'], Str ] => InstanceOf ['LibUI::MenuItem'] );
-        func( 'uiMenuAppendCheckItem',
-            [ InstanceOf ['LibUI::Menu'], Str ] => InstanceOf ['LibUI::MenuItem'] );
-        func( 'uiMenuAppendQuitItem',
-            [ InstanceOf ['LibUI::Menu'] ] => InstanceOf ['LibUI::MenuItem'] );
-        func( 'uiMenuAppendPreferencesItem',
-            [ InstanceOf ['LibUI::Menu'] ] => InstanceOf ['LibUI::MenuItem'] );
-        func( 'uiMenuAppendAboutItem',
-            [ InstanceOf ['LibUI::Menu'] ] => InstanceOf ['LibUI::MenuItem'] );
-        func( 'uiMenuAppendSeparator', [ InstanceOf ['LibUI::Menu'] ] => Void );
-        func( 'uiNewMenu',             [Str] => InstanceOf ['LibUI::Menu'] );
-    }
     ##############################################################################################
     #
     {
@@ -287,11 +236,17 @@ See L<LibUI::Window/Dialog windows> for more.
 
 =head2 Menus
 
+=over
+
+=item C<LibUI::Menu> - application-level menu bar
+
+=item C<LibUI::MenuItem> - menu items used in conjunction with L<LibUI::Menu>
+
+=back
 
 =head2 Tables
 
-
-
+The upstream API is a mess so I'm still plotting around this.
 
 =head2 LibUI::Control
 

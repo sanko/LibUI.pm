@@ -20,6 +20,8 @@ use_ok $_ for qw[
     LibUI::HBox
     LibUI::HorizontalSeparator
     LibUI::Label
+    LibUI::Menu
+    LibUI::MenuItem
     LibUI::MultilineEntry
     LibUI::NonWrappingMultilineEntry
     LibUI::PasswordEntry

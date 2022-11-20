@@ -75,7 +75,12 @@ See ["Dialog windows" in LibUI::Window](https://metacpan.org/pod/LibUI%3A%3AWind
 
 ## Menus
 
+- `LibUI::Menu` - application-level menu bar
+- `LibUI::MenuItem` - menu items used in conjunction with [LibUI::Menu](https://metacpan.org/pod/LibUI%3A%3AMenu)
+
 ## Tables
+
+The upstream API is a mess so I'm still plotting around this.
 
 ## LibUI::Control
 

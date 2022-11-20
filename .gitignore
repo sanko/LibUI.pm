@@ -30,3 +30,6 @@ MYMETA.*
 
 /LibUI-*
 .tidyall.d/
+
+eg/lib
+eg/table_testing.pl

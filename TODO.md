@@ -2,8 +2,6 @@ Area
 Button
 Control
 Image
-Menu
-MenuItem
 
 Table
 TableParams
