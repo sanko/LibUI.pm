@@ -42,7 +42,7 @@ jobs:
 
     - name: Regular Tests
       run: |
-          cpanm -n -v https://github.com/sanko/Dyn.pm/archive/refs/heads/aggr.zip
+          cpanm -n -v https://github.com/sanko/Affix.pm/archive/refs/heads/aggr.zip
           cpanm -v --mirror http://cpan.cpantesters.org/ .
     - name: Show content of log files on Linux
       if: ${{ failure() && startsWith( matrix.runner, 'ubuntu-' )  }}

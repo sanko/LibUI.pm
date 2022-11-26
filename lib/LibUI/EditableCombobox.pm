@@ -6,12 +6,12 @@ package LibUI::EditableCombobox 0.01 {
     use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
-    attach(
+    affix(
         LibUI::lib(), 'uiEditableComboboxAppend',
         [ InstanceOf ['LibUI::EditableCombobox'], Str ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'append'
     );
-    attach(
+    affix(
         LibUI::lib(),
         'uiEditableComboboxOnChanged',
         [   InstanceOf ['LibUI::EditableCombobox'],
@@ -20,16 +20,16 @@ package LibUI::EditableCombobox 0.01 {
         DC_SIGCHAR_CC_DEFAULT,
         'onChanged'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiEditableComboboxSetText',
         [ InstanceOf ['LibUI::EditableCombobox'], Str ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setText'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiEditableComboboxText', [ InstanceOf ['LibUI::EditableCombobox'] ] => Str,
         DC_SIGCHAR_CC_DEFAULT, 'text'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiNewEditableCombobox', [Void] => InstanceOf ['LibUI::EditableCombobox'],
         DC_SIGCHAR_CC_DEFAULT, 'new'
     );

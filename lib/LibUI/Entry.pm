@@ -6,7 +6,7 @@ package LibUI::Entry 0.01 {
     use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
-    attach(
+    affix(
         LibUI::lib(),
         'uiEntryOnChanged',
         [   InstanceOf ['LibUI::Entry'],
@@ -15,23 +15,23 @@ package LibUI::Entry 0.01 {
         DC_SIGCHAR_CC_DEFAULT,
         'onChanged'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiEntryReadOnly', [ InstanceOf ['LibUI::Entry'] ] => Int,
         DC_SIGCHAR_CC_DEFAULT, 'readonly'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiEntrySetReadOnly', [ InstanceOf ['LibUI::Entry'], Int ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setReadonly'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiEntrySetText', [ InstanceOf ['LibUI::Entry'], Str ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setText'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiEntryText', [ InstanceOf ['LibUI::Entry'] ] => Str,
         DC_SIGCHAR_CC_DEFAULT, 'text'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiNewEntry', [Void] => InstanceOf ['LibUI::Entry'],
         DC_SIGCHAR_CC_DEFAULT, 'new'
     );

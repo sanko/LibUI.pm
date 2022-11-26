@@ -6,11 +6,11 @@ package LibUI::Window 0.01 {
     use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
-    attach(
+    affix(
         LibUI::lib(),          'uiWindowTitle', [ InstanceOf ['LibUI::Window'] ] => Str,
         DC_SIGCHAR_CC_DEFAULT, 'title'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiWindowSetTitle', [ InstanceOf ['LibUI::Window'], Str ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setTitle'
     );
@@ -23,19 +23,19 @@ package LibUI::Window 0.01 {
         $affix->( $w, $width, $height );
         return ( $width, $height );
     }
-    attach(
+    affix(
         LibUI::lib(), 'uiWindowSetContentSize', [ InstanceOf ['LibUI::Window'], Int, Int ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setContentSize'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiWindowFullscreen', [ InstanceOf ['LibUI::Window'] ] => Int,
         DC_SIGCHAR_CC_DEFAULT, 'fullscreen'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiWindowSetFullscreen', [ InstanceOf ['LibUI::Window'], Int ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setFullscreen'
     );
-    attach(
+    affix(
         LibUI::lib(),
         'uiWindowOnContentSizeChanged',
         [   InstanceOf ['LibUI::Window'],
@@ -44,7 +44,7 @@ package LibUI::Window 0.01 {
         DC_SIGCHAR_CC_DEFAULT,
         'onContentSizeChanged'
     );
-    attach(
+    affix(
         LibUI::lib(),
         'uiWindowOnClosing',
         [   InstanceOf ['LibUI::Window'],
@@ -53,7 +53,7 @@ package LibUI::Window 0.01 {
         DC_SIGCHAR_CC_DEFAULT,
         'onClosing'
     );
-    attach(
+    affix(
         LibUI::lib(),
         'uiWindowOnFocusChanged',
         [   InstanceOf ['LibUI::Window'],
@@ -62,62 +62,62 @@ package LibUI::Window 0.01 {
         DC_SIGCHAR_CC_DEFAULT,
         'onFocusChanged'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiWindowFocused', [ InstanceOf ['LibUI::Window'] ] => Int,
         DC_SIGCHAR_CC_DEFAULT, 'focused'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiWindowBorderless', [ InstanceOf ['LibUI::Window'] ] => Int,
         DC_SIGCHAR_CC_DEFAULT, 'borderless'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiWindowSetBorderless', [ InstanceOf ['LibUI::Window'], Int ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setBorderless'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiWindowSetChild',
         [ InstanceOf ['LibUI::Window'], InstanceOf ['LibUI::Control'] ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setChild'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiWindowMargined', [ InstanceOf ['LibUI::Window'] ] => Int,
         DC_SIGCHAR_CC_DEFAULT, 'margined'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiWindowSetMargined', [ InstanceOf ['LibUI::Window'], Int ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setMargined'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiWindowResizeable', [ InstanceOf ['LibUI::Window'] ] => Int,
         DC_SIGCHAR_CC_DEFAULT, 'resizable'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiWindowSetResizeable', [ InstanceOf ['LibUI::Window'], Int ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setResizable'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiNewWindow', [ Void, Str, Int, Int, Int ] => InstanceOf ['LibUI::Window'],
         DC_SIGCHAR_CC_DEFAULT, 'new'
     );
 
     # Dialogs
-    attach(
+    affix(
         LibUI::lib(),          'uiMsgBox', [ InstanceOf ['LibUI::Window'], Str, Str ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'msgBox'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiMsgBoxError', [ InstanceOf ['LibUI::Window'], Str, Str ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'msgBoxError'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiOpenFile', [ InstanceOf ['LibUI::Window'] ] => Str,
         DC_SIGCHAR_CC_DEFAULT, 'openFile'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiOpenFolder', [ InstanceOf ['LibUI::Window'] ] => Str,
         DC_SIGCHAR_CC_DEFAULT, 'openFolder'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiSaveFile', [ InstanceOf ['LibUI::Window'] ] => Str,
         DC_SIGCHAR_CC_DEFAULT, 'saveFile'
     );

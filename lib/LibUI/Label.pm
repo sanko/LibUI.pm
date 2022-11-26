@@ -6,15 +6,15 @@ package LibUI::Label 0.01 {
     use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
-    attach(
+    affix(
         LibUI::lib(),          'uiLabelText', [ InstanceOf ['LibUI::Label'] ] => Str,
         DC_SIGCHAR_CC_DEFAULT, 'text'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiLabelSetText', [ InstanceOf ['LibUI::Label'], Str ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setText'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiNewLabel', [ Void, Str ] => InstanceOf ['LibUI::Label'],
         DC_SIGCHAR_CC_DEFAULT, 'new'
     );

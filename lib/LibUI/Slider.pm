@@ -6,15 +6,15 @@ package LibUI::Slider 0.01 {
     use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
-    attach(
+    affix(
         LibUI::lib(),          'uiNewSlider', [ Void, Int, Int ] => InstanceOf ['LibUI::Slider'],
         DC_SIGCHAR_CC_DEFAULT, 'new'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiSliderHasToolTip', [ InstanceOf ['LibUI::Slider'] ] => Int,
         DC_SIGCHAR_CC_DEFAULT, 'hasToolTip'
     );
-    attach(
+    affix(
         LibUI::lib(),
         'uiSliderOnChanged',
         [   InstanceOf ['LibUI::Slider'],
@@ -23,7 +23,7 @@ package LibUI::Slider 0.01 {
         DC_SIGCHAR_CC_DEFAULT,
         'onChanged'
     );
-    attach(
+    affix(
         LibUI::lib(),
         'uiSliderOnReleased',
         [   InstanceOf ['LibUI::Slider'],
@@ -32,19 +32,19 @@ package LibUI::Slider 0.01 {
         DC_SIGCHAR_CC_DEFAULT,
         'onReleased'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiSliderSetHasToolTip', [ InstanceOf ['LibUI::Slider'], Int ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setHasToolTip'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiSliderSetRange', [ InstanceOf ['LibUI::Slider'], Int, Int ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setRange'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiSliderSetValue', [ InstanceOf ['LibUI::Slider'], Int ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setValue'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiSliderValue', [ InstanceOf ['LibUI::Slider'] ] => Int,
         DC_SIGCHAR_CC_DEFAULT, 'value'
     );

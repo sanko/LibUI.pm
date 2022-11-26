@@ -7,7 +7,7 @@ package LibUI::TimePicker 0.01 {
     use parent 'LibUI::DateTimePicker';
     use LibUI::Time;
     #
-    attach(
+    affix(
         LibUI::lib(),          'uiNewTimePicker', [Void] => InstanceOf ['LibUI::TimePicker'],
         DC_SIGCHAR_CC_DEFAULT, 'new'
     );

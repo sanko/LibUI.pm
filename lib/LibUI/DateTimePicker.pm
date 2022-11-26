@@ -7,11 +7,11 @@ package LibUI::DateTimePicker 0.01 {
     use parent 'LibUI::Control';
     use LibUI::Time;
     #
-    attach(
+    affix(
         LibUI::lib(), 'uiNewDateTimePicker', [Void] => InstanceOf ['LibUI::DateTimePicker'],
         DC_SIGCHAR_CC_DEFAULT, 'new'
     );
-    attach(
+    affix(
         LibUI::lib(),
         'uiDateTimePickerOnChanged',
         [   InstanceOf ['LibUI::DateTimePicker'],

@@ -22,12 +22,12 @@ package LibUI::ColorButton 0.01 {
         $affix->( $s, $r, $g, $b, $a );
         ( $r, $g, $b, $a );
     }
-    attach(
+    affix(
         LibUI::lib(), 'uiColorButtonSetColor',
         [ InstanceOf ['LibUI::ColorButton'], Double, Double, Double, Double ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setColor'
     );
-    attach(
+    affix(
         LibUI::lib(),
         'uiColorButtonOnChanged',
         [   InstanceOf ['LibUI::ColorButton'],
@@ -36,7 +36,7 @@ package LibUI::ColorButton 0.01 {
         DC_SIGCHAR_CC_DEFAULT,
         'onChanged'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiNewColorButton', [Void] => InstanceOf ['LibUI::ColorButton'],
         DC_SIGCHAR_CC_DEFAULT, 'new'
     );

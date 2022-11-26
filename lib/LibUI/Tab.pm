@@ -6,29 +6,29 @@ package LibUI::Tab 0.01 {
     use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
-    attach(
+    affix(
         LibUI::lib(), 'uiTabAppend',
         [ InstanceOf ['LibUI::Tab'], Str, InstanceOf ['LibUI::Control'] ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'append'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiTabInsertAt',
         [ InstanceOf ['LibUI::Tab'], Str, Int, InstanceOf ['LibUI::Control'] ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'insertAt'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiTabNumPages', [ InstanceOf ['LibUI::Tab'] ] => Int,
         DC_SIGCHAR_CC_DEFAULT, 'numPages'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiTabMargined', [ InstanceOf ['LibUI::Tab'], Int ] => Int,
         DC_SIGCHAR_CC_DEFAULT, 'margined'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiTabSetMargined', [ InstanceOf ['LibUI::Tab'], Int, Int ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setMargined'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiNewTab', [Void] => InstanceOf ['LibUI::Tab'],
         DC_SIGCHAR_CC_DEFAULT, 'new'
     );

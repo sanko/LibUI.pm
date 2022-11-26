@@ -6,11 +6,11 @@ package LibUI::Button 0.01 {
     use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
-    attach(
+    affix(
         LibUI::lib(),          'uiNewButton', [ Void, Str ] => InstanceOf ['LibUI::Button'],
         DC_SIGCHAR_CC_DEFAULT, 'new'
     );
-    attach(
+    affix(
         LibUI::lib(),
         'uiButtonOnClicked',
         [   InstanceOf ['LibUI::Button'],
@@ -19,11 +19,11 @@ package LibUI::Button 0.01 {
         DC_SIGCHAR_CC_DEFAULT,
         'onClicked'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiButtonSetText', [ InstanceOf ['LibUI::Button'], Str ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setText'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiButtonSetText', [ InstanceOf ['LibUI::Button'] ] => Str,
         DC_SIGCHAR_CC_DEFAULT, 'text'
     );

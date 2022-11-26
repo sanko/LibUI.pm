@@ -6,15 +6,15 @@ package LibUI::ProgressBar 0.01 {
     use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
-    attach(
+    affix(
         LibUI::lib(),          'uiProgressBarValue', [ InstanceOf ['LibUI::ProgressBar'] ] => Int,
         DC_SIGCHAR_CC_DEFAULT, 'value'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiProgressBarSetValue', [ InstanceOf ['LibUI::ProgressBar'], Int ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setValue'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiNewProgressBar', [Void] => InstanceOf ['LibUI::ProgressBar'],
         DC_SIGCHAR_CC_DEFAULT, 'new'
     );

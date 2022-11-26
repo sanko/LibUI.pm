@@ -6,28 +6,28 @@ package LibUI::Group 0.01 {
     use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
-    attach(
+    affix(
         LibUI::lib(),          'uiGroupMargined', [ InstanceOf ['LibUI::Group'] ] => Int,
         DC_SIGCHAR_CC_DEFAULT, 'margined'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiGroupSetChild',
         [ InstanceOf ['LibUI::Group'], InstanceOf ['LibUI::Control'] ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setChild'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiGroupSetMargined', [ InstanceOf ['LibUI::Group'], Int ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setMargined'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiGroupSetTitle', [ InstanceOf ['LibUI::Group'], Str ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setTitle'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiGroupTitle', [ InstanceOf ['LibUI::Group'] ] => Str,
         DC_SIGCHAR_CC_DEFAULT, 'title'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiNewGroup', [ Void, Str ] => InstanceOf ['LibUI::Group'],
         DC_SIGCHAR_CC_DEFAULT, 'new'
     );

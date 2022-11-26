@@ -6,15 +6,15 @@ package LibUI::RadioButtons 0.01 {
     use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
-    attach(
+    affix(
         LibUI::lib(),          'uiNewRadioButtons', [Void] => InstanceOf ['LibUI::RadioButtons'],
         DC_SIGCHAR_CC_DEFAULT, 'new'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiRadioButtonsAppend', [ InstanceOf ['LibUI::RadioButtons'], Str ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'append'
     );
-    attach(
+    affix(
         LibUI::lib(),
         'uiRadioButtonsOnSelected',
         [   InstanceOf ['LibUI::RadioButtons'],
@@ -23,11 +23,11 @@ package LibUI::RadioButtons 0.01 {
         DC_SIGCHAR_CC_DEFAULT,
         'onSelected'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiRadioButtonsSelected', [ InstanceOf ['LibUI::RadioButtons'] ] => Int,
         DC_SIGCHAR_CC_DEFAULT, 'selected'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiRadioButtonsSetSelected',
         [ InstanceOf ['LibUI::RadioButtons'], Int ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setSelected'

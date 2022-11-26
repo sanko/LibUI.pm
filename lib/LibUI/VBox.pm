@@ -6,7 +6,7 @@ package LibUI::VBox 0.01 {
     use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::HBox';
     #
-    attach(
+    affix(
         LibUI::lib(),          'uiNewVerticalBox', [Void] => InstanceOf ['LibUI::VBox'],
         DC_SIGCHAR_CC_DEFAULT, 'new'
     );

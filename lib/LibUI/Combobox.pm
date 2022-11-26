@@ -6,27 +6,27 @@ package LibUI::Combobox 0.01 {
     use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
-    attach(
+    affix(
         LibUI::lib(),          'uiComboboxAppend', [ InstanceOf ['LibUI::Combobox'], Str ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'append'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiComboboxClear', [ InstanceOf ['LibUI::Combobox'] ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'clear'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiComboboxDelete', [ InstanceOf ['LibUI::Combobox'], Int ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'delete'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiComboboxInsertAt', [ InstanceOf ['LibUI::Combobox'], Int, Str ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'insertAt'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiComboboxNumItems', [ InstanceOf ['LibUI::Combobox'], ] => Int,
         DC_SIGCHAR_CC_DEFAULT, 'numItems'
     );
-    attach(
+    affix(
         LibUI::lib(),
         'uiComboboxOnSelected',
         [   InstanceOf ['LibUI::Combobox'],
@@ -35,15 +35,15 @@ package LibUI::Combobox 0.01 {
         DC_SIGCHAR_CC_DEFAULT,
         'onSelected'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiComboboxSelected', [ InstanceOf ['LibUI::Combobox'] ] => Int,
         DC_SIGCHAR_CC_DEFAULT, 'selected'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiComboboxSetSelected', [ InstanceOf ['LibUI::Combobox'], Int ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setSelected'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiNewCombobox', [Void] => InstanceOf ['LibUI::Combobox'],
         DC_SIGCHAR_CC_DEFAULT, 'new'
     );

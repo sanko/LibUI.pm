@@ -8,7 +8,7 @@ package LibUI::Grid 0.01 {
     use LibUI::Align;
     use LibUI::At;
     #
-    attach(
+    affix(
         LibUI::lib(),
         'uiGridAppend',
         [   InstanceOf ['LibUI::Grid'],
@@ -18,7 +18,7 @@ package LibUI::Grid 0.01 {
         DC_SIGCHAR_CC_DEFAULT,
         'append'
     );
-    attach(
+    affix(
         LibUI::lib(),
         'uiGridInsertAt',
         [   InstanceOf ['LibUI::Grid'],
@@ -29,15 +29,15 @@ package LibUI::Grid 0.01 {
         DC_SIGCHAR_CC_DEFAULT,
         'insertAt'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiGridPadded', [ InstanceOf ['LibUI::Grid'] ] => Int,
         DC_SIGCHAR_CC_DEFAULT, 'padded'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiGridSetPadded', [ InstanceOf ['LibUI::Grid'], Int ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setPadded'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiNewGrid', [Void] => InstanceOf ['LibUI::Grid'],
         DC_SIGCHAR_CC_DEFAULT, 'new'
     );

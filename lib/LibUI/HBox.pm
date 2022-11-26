@@ -6,28 +6,28 @@ package LibUI::HBox 0.01 {
     use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
-    attach(
+    affix(
         LibUI::lib(), 'uiBoxAppend',
         [ InstanceOf ['LibUI::HBox'], InstanceOf ['LibUI::Control'], Int ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'append'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiBoxDelete', [ InstanceOf ['LibUI::HBox'], Int ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'delete'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiBoxNumChildren', [ InstanceOf ['LibUI::HBox'] ] => Int,
         DC_SIGCHAR_CC_DEFAULT, 'numChildren'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiBoxPadded', [ InstanceOf ['LibUI::HBox'] ] => Int,
         DC_SIGCHAR_CC_DEFAULT, 'padded'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiBoxSetPadded', [ InstanceOf ['LibUI::HBox'], Int ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setPadded'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiNewHorizontalBox', [Void] => InstanceOf ['LibUI::HBox'],
         DC_SIGCHAR_CC_DEFAULT, 'new'
     );

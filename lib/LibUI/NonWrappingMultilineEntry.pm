@@ -6,7 +6,7 @@ package LibUI::NonWrappingMultilineEntry 0.01 {
     use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::MultilineEntry';
     #
-    attach(
+    affix(
         LibUI::lib(), 'uiNewNonWrappingMultilineEntry',
         [Void] => InstanceOf ['LibUI::NonWrappingMultilineEntry'],
         DC_SIGCHAR_CC_DEFAULT, 'new'

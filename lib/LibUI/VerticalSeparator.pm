@@ -6,7 +6,7 @@ package LibUI::VerticalSeparator 0.01 {
     use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
-    attach(
+    affix(
         LibUI::lib(), 'uiNewVerticalSeparator', [Void] => InstanceOf ['LibUI::VerticalSeparator'],
         DC_SIGCHAR_CC_DEFAULT, 'new'
     );

@@ -28,36 +28,42 @@ package LibUI::Control 0.01 {
             Disable   => CodeRef [ [ InstanceOf ['LibUI::Control'] ] => Void ]
         ];
         #
-        attach(
+        affix(
             LibUI::lib(),          'uiControlDestroy', [ InstanceOf ['LibUI::Control'] ] => Void,
             DC_SIGCHAR_CC_DEFAULT, 'Destroy'
         );
-        attach( LibUI::lib(), 'uiControlHandle',
+        affix( LibUI::lib(), 'uiControlHandle',
             [ InstanceOf ['LibUI::Control'] ] => Pointer [UInt] );
-        attach( LibUI::lib(), 'uiControlParent',
+
+
+
+
+
+
+        affix( LibUI::lib(), 'uiControlParent',
             [ InstanceOf ['LibUI::Control'] ] => InstanceOf ['LibUI::Control'] );
-        attach( LibUI::lib(), 'uiControlSetParent',
+        affix( LibUI::lib(), 'uiControlSetParent',
             [ InstanceOf ['LibUI::Control'], InstanceOf ['LibUI::Control'] ] => Void );
-        attach( LibUI::lib(), 'uiControlToplevel', [ InstanceOf ['LibUI::Control'] ] => Int );
-        attach( LibUI::lib(), 'uiControlVisible',  [ InstanceOf ['LibUI::Control'] ] => Int );
-        attach(
+        affix( LibUI::lib(), 'uiControlToplevel', [ InstanceOf ['LibUI::Control'] ] => Int );
+        affix( LibUI::lib(), 'uiControlVisible',  [ InstanceOf ['LibUI::Control'] ] => Int );
+        affix(
             LibUI::lib(),          'uiControlShow', [ InstanceOf ['LibUI::Control'] ] => Void,
             DC_SIGCHAR_CC_DEFAULT, 'show'
         );
-        attach( LibUI::lib(), 'uiControlHide',    [ InstanceOf ['LibUI::Control'] ] => Void );
-        attach( LibUI::lib(), 'uiControlEnabled', [ InstanceOf ['LibUI::Control'] ] => Int );
-        attach( LibUI::lib(), 'uiControlEnable',  [ InstanceOf ['LibUI::Control'] ] => Void );
-        attach( LibUI::lib(), 'uiControlDisable', [ InstanceOf ['LibUI::Control'] ] => Void );
-        attach( LibUI::lib(), 'uiAllocControl',
+        affix( LibUI::lib(), 'uiControlHide',    [ InstanceOf ['LibUI::Control'] ] => Void );
+        affix( LibUI::lib(), 'uiControlEnabled', [ InstanceOf ['LibUI::Control'] ] => Int );
+        affix( LibUI::lib(), 'uiControlEnable',  [ InstanceOf ['LibUI::Control'] ] => Void );
+        affix( LibUI::lib(), 'uiControlDisable', [ InstanceOf ['LibUI::Control'] ] => Void );
+        affix( LibUI::lib(), 'uiAllocControl',
             [ Size_t, ULong, ULong, Str ] => InstanceOf ['LibUI::Control'] );
-        attach( LibUI::lib(), 'uiFreeControl', [ InstanceOf ['LibUI::Control'] ] => Void );
+        affix( LibUI::lib(), 'uiFreeControl', [ InstanceOf ['LibUI::Control'] ] => Void );
         #
-        attach( LibUI::lib(), 'uiControlVerifySetParent',
+        affix( LibUI::lib(), 'uiControlVerifySetParent',
             [ InstanceOf ['LibUI::Control'], InstanceOf ['LibUI::Control'] ] => Void );
-        attach( LibUI::lib(), 'uiControlEnabledToUser', [ InstanceOf ['LibUI::Control'] ] => Int );
+        affix( LibUI::lib(), 'uiControlEnabledToUser', [ InstanceOf ['LibUI::Control'] ] => Int );
 
 # Upstream TODO: Move this to private API? According to old/new.md this should be used by toplevel controls.
-        attach( LibUI::lib(), 'uiUserBugCannotSetParentOnToplevel', [Str] => Void );
+        affix( LibUI::lib(), 'uiUserBugCannotSetParentOnToplevel', [Str] => Void );
     }
 };
 1;
@@ -85,14 +91,98 @@ A LibUI::Control object represents the superclass for all GUI objects.
 
 All subclasses of LibUI::Control have access to these methods.
 
-=head3 C<( ... )>
 
-    my $ctrl = $w->( $w );
+=head3 C<uiControlDestroy( ... )>
 
-Returns
+    uiControlDestroy( $c );
+
+Dispose and free all allocated resources.
+
+=head3 C<uiControlHandle( ... )>
+
+    my $handle = uiControlHandle( $c );
+
+Returns the control's OS-level handle.
+
+=head3 C<uiControlParent( ... )>
+
+    my $parent = uiControlParent( $c );
+
+Returns the parent control or C<undef> if detached.
+
+=head3 C<uiControlSetParent( ... )>
+
+    uiControlSetParent( $c, $parent );
+
+Sets the control's parent. Pass C<undef> to detach.
+
+=head3 C<uiControlToplevel( ... )>
+
+    if ( uiControlToplevel( $c ) ) {
+        ...;
+    }
+
+Returns whether or not the control is a top level control.
 
 
+=head3 C<uiControlVisible( ... )>
 
+    if ( uiControlVisible( $c ) ) {
+        ...;
+    }
+
+Returns whether or not the control is visible.
+
+=head3 C<uiControlShow( ... )>
+
+    uiControlShow( $c );
+
+Shows the control.
+
+=head3 C<uiControlHide( ... )>
+
+    uiControlHide( $c );
+
+Hides the control. Hidden controls do not take up space within the layout.
+
+=head3 C<uiControlEnabled( ... )>
+
+    if ( uiControlEnabled( $c ) ) {
+        ...;
+    }
+
+Returns whether or not the control is enabled.
+
+=head3 C<uiControlEnable( ... )>
+
+    uiControlEnable( $c );
+
+Enables the control.
+
+=head3 C<uiControlDisable( ... )>
+
+    uiControlDisable( $c );
+
+Disables the control.
+
+=head3 C<uiAllocControl( ... )>
+
+    my $control = uiAllocControl( $size, $OSsig, $type, $typename );
+
+Helper to allocate new controls.
+
+=head3 C<uiFreeControl( ... )>
+
+    uiFreeControl( $c );
+
+Frees the control.
+
+=head3 C<uiControlVerifySetParent( ... )>
+
+    uiControlVerifySetParent( $c, $parent );
+
+Makes sure the control's parent can be set to C<$parent> and crashes the
+application on failure.
 
 =head1 LICENSE
 

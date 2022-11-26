@@ -36,7 +36,7 @@ jobs:
         run: perl -V
       - name: Install dependencies
         run: |
-          cpanm -n -v https://github.com/sanko/Dyn.pm/archive/refs/heads/aggr.zip
+          cpanm -n -v https://github.com/sanko/Affix.pm/archive/refs/heads/aggr.zip
           cpanm --installdeps -v -n --mirror http://cpan.cpantesters.org/ .
       - name: Regular Tests
         run: |

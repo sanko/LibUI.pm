@@ -6,16 +6,16 @@ package LibUI::MultilineEntry 0.01 {
     use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
-    attach(
+    affix(
         LibUI::lib(), 'uiNewMultilineEntry', [Void] => InstanceOf ['LibUI::MultilineEntry'],
         DC_SIGCHAR_CC_DEFAULT, 'new'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiMultilineEntryAppend',
         [ InstanceOf ['LibUI::MultilineEntry'], Str ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'append'
     );
-    attach(
+    affix(
         LibUI::lib(),
         'uiMultilineEntryOnChanged',
         [   InstanceOf ['LibUI::MultilineEntry'],
@@ -24,21 +24,21 @@ package LibUI::MultilineEntry 0.01 {
         DC_SIGCHAR_CC_DEFAULT,
         'onChanged'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiMultilineEntryReadOnly', [ InstanceOf ['LibUI::MultilineEntry'] ] => Int,
         DC_SIGCHAR_CC_DEFAULT, 'readonly'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiMultilineEntrySetReadOnly',
         [ InstanceOf ['LibUI::MultilineEntry'], Int ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setReadonly'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiMultilineEntrySetText',
         [ InstanceOf ['LibUI::MultilineEntry'], Str ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setText'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiMultilineEntryText', [ InstanceOf ['LibUI::MultilineEntry'] ] => Str,
         DC_SIGCHAR_CC_DEFAULT, 'text'
     );

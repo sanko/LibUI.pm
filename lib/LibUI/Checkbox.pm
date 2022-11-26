@@ -6,11 +6,11 @@ package LibUI::Checkbox 0.01 {
     use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
-    attach(
+    affix(
         LibUI::lib(),          'uiCheckboxChecked', [ InstanceOf ['LibUI::Checkbox'] ] => Int,
         DC_SIGCHAR_CC_DEFAULT, 'checked'
     );
-    attach(
+    affix(
         LibUI::lib(),
         'uiCheckboxOnToggled',
         [   InstanceOf ['LibUI::Checkbox'],
@@ -19,19 +19,19 @@ package LibUI::Checkbox 0.01 {
         DC_SIGCHAR_CC_DEFAULT,
         'onToggled'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiCheckboxSetChecked', [ InstanceOf ['LibUI::Checkbox'], Int ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setChecked'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiCheckboxSetText', [ InstanceOf ['LibUI::Checkbox'], Str ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setText'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiCheckboxText', [ InstanceOf ['LibUI::Checkbox'] ] => Str,
         DC_SIGCHAR_CC_DEFAULT, 'text'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiNewCheckbox', [ Void, Str ] => InstanceOf ['LibUI::Checkbox'],
         DC_SIGCHAR_CC_DEFAULT, 'new'
     );

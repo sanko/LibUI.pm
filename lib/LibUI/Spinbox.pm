@@ -6,11 +6,11 @@ package LibUI::Spinbox 0.01 {
     use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
-    attach(
+    affix(
         LibUI::lib(),          'uiNewSpinbox', [ Void, Int, Int ] => InstanceOf ['LibUI::Spinbox'],
         DC_SIGCHAR_CC_DEFAULT, 'new'
     );
-    attach(
+    affix(
         LibUI::lib(),
         'uiSpinboxOnChanged',
         [   InstanceOf ['LibUI::Spinbox'],
@@ -19,11 +19,11 @@ package LibUI::Spinbox 0.01 {
         DC_SIGCHAR_CC_DEFAULT,
         'onChanged'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiSpinboxSetValue', [ InstanceOf ['LibUI::Spinbox'], Int ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setValue'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiSpinboxValue', [ InstanceOf ['LibUI::Spinbox'] ] => Int,
         DC_SIGCHAR_CC_DEFAULT, 'value'
     );

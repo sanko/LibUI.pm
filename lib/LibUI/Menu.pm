@@ -6,36 +6,36 @@ package LibUI::Menu 0.01 {
     use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use LibUI::MenuItem;
     #
-    attach(
+    affix(
         LibUI::lib(),          'uiNewMenu', [ Void, Str ] => InstanceOf ['LibUI::Menu'],
         DC_SIGCHAR_CC_DEFAULT, 'new'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiMenuAppendAboutItem',
         [ InstanceOf ['LibUI::Menu'] ] => InstanceOf ['LibUI::MenuItem'],
         DC_SIGCHAR_CC_DEFAULT, 'appendAboutItem'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiMenuAppendCheckItem',
         [ InstanceOf ['LibUI::Menu'], Str ] => InstanceOf ['LibUI::MenuItem'],
         , DC_SIGCHAR_CC_DEFAULT, 'appendCheckItem'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiMenuAppendItem',
         [ InstanceOf ['LibUI::Menu'], Str ] => InstanceOf ['LibUI::MenuItem'],
         , DC_SIGCHAR_CC_DEFAULT, 'appendItem'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiMenuAppendPreferencesItem',
         [ InstanceOf ['LibUI::Menu'] ] => InstanceOf ['LibUI::MenuItem'],
         , DC_SIGCHAR_CC_DEFAULT, 'appendPreferencesItem'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiMenuAppendQuitItem',
         [ InstanceOf ['LibUI::Menu'] ] => InstanceOf ['LibUI::MenuItem'],
         , DC_SIGCHAR_CC_DEFAULT, 'appendQuitItem'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiMenuAppendSeparator',
         [ InstanceOf ['LibUI::Menu'] ] => InstanceOf ['LibUI::MenuItem'],
         , DC_SIGCHAR_CC_DEFAULT, 'appendSeparator'

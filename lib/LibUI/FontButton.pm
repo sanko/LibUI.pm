@@ -7,7 +7,7 @@ package LibUI::FontButton 0.01 {
     use parent 'LibUI::Control';
     use LibUI::FontDescriptor;
     #
-    attach(
+    affix(
         LibUI::lib(),          'uiNewFontButton', [Void] => InstanceOf ['LibUI::FontButton'],
         DC_SIGCHAR_CC_DEFAULT, 'new'
     );
@@ -19,7 +19,7 @@ package LibUI::FontButton 0.01 {
         $affix->( shift, $desc );
         return $desc;
     }
-    attach(
+    affix(
         LibUI::lib(),
         'uiFontButtonOnChanged',
         [   InstanceOf ['LibUI::FontButton'],
@@ -28,7 +28,7 @@ package LibUI::FontButton 0.01 {
         DC_SIGCHAR_CC_DEFAULT,
         'onChanged'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiFreeFontButtonFont', [ Pointer [LibUI::FontDescriptor] ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'freeFont'
     );

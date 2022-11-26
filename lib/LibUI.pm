@@ -32,7 +32,7 @@ package LibUI 0.01 {
             =~ s[LibUI::(Box|Button|Combobox|Control|Menu|NonWrappingMultilineEntry|RadioButtons|Slider|Window)][LibUI::$1::];
         $name =~ s[::New(.+)$][::$1::new];
         warn sprintf '%30s => %-50s', $func, $name;
-        attach( $lib, $func, $params, $ret, DC_SIGCHAR_CC_DEFAULT, $name );
+        affix( $lib, $func, $params, $ret, DC_SIGCHAR_CC_DEFAULT, $name );
     }
     #
     #my $init = dlSymsInit($path);
@@ -72,7 +72,7 @@ package LibUI 0.01 {
         func( 'uiQueueMain', [ CodeRef [ [ Pointer [Void] ] => Void ], Any ] => Void );
         #
         func( 'uiTimer', [ Int, CodeRef [ [Any] => Int ], Any ] => Void );
-        attach(
+        affix(
             lib(), 'uiOnShouldQuit', [ CodeRef [ [Any] => Int ], Any ] => Void,
             DC_SIGCHAR_CC_DEFAULT, 'LibUI::onShouldQuit'
         );
@@ -230,100 +230,6 @@ See L<LibUI::Window/Dialog windows> for more.
 =head2 Tables
 
 The upstream API is a mess so I'm still plotting around this.
-
-=head2 LibUI::Control
-
-=head3 C<uiControlDestroy( ... )>
-
-    uiControlDestroy( $c );
-
-Dispose and free all allocated resources.
-
-=head3 C<uiControlHandle( ... )>
-
-    my $handle = uiControlHandle( $c );
-
-Returns the control's OS-level handle.
-
-=head3 C<uiControlParent( ... )>
-
-    my $parent = uiControlParent( $c );
-
-Returns the parent control or C<undef> if detached.
-
-=head3 C<uiControlSetParent( ... )>
-
-    uiControlSetParent( $c, $parent );
-
-Sets the control's parent. Pass C<undef> to detach.
-
-=head3 C<uiControlToplevel( ... )>
-
-    if ( uiControlToplevel( $c ) ) {
-        ...;
-    }
-
-Returns whether or not the control is a top level control.
-
-
-=head3 C<uiControlVisible( ... )>
-
-    if ( uiControlVisible( $c ) ) {
-        ...;
-    }
-
-Returns whether or not the control is visible.
-
-=head3 C<uiControlShow( ... )>
-
-    uiControlShow( $c );
-
-Shows the control.
-
-=head3 C<uiControlHide( ... )>
-
-    uiControlHide( $c );
-
-Hides the control. Hidden controls do not take up space within the layout.
-
-=head3 C<uiControlEnabled( ... )>
-
-    if ( uiControlEnabled( $c ) ) {
-        ...;
-    }
-
-Returns whether or not the control is enabled.
-
-=head3 C<uiControlEnable( ... )>
-
-    uiControlEnable( $c );
-
-Enables the control.
-
-=head3 C<uiControlDisable( ... )>
-
-    uiControlDisable( $c );
-
-Disables the control.
-
-=head3 C<uiAllocControl( ... )>
-
-    my $control = uiAllocControl( $size, $OSsig, $type, $typename );
-
-Helper to allocate new controls.
-
-=head3 C<uiFreeControl( ... )>
-
-    uiFreeControl( $c );
-
-Frees the control.
-
-=head3 C<uiControlVerifySetParent( ... )>
-
-    uiControlVerifySetParent( $c, $parent );
-
-Makes sure the control's parent can be set to C<$parent> and crashes the
-application on failure.
 
 =head1 Requirements
 

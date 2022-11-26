@@ -6,7 +6,7 @@ package LibUI::HorizontalSeparator 0.01 {
     use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
-    attach(
+    affix(
         LibUI::lib(), 'uiNewHorizontalSeparator',
         [Void] => InstanceOf ['LibUI::HorizontalSeparator'],
         DC_SIGCHAR_CC_DEFAULT, 'new'

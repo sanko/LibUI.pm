@@ -5,19 +5,19 @@ package LibUI::MenuItem 0.01 {
     use Affix;
     use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     #
-    attach(
+    affix(
         LibUI::lib(),          'uiMenuItemChecked', [ InstanceOf ['LibUI::MenuItem'] ] => Int,
         DC_SIGCHAR_CC_DEFAULT, 'checked'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiMenuItemDisable', [ InstanceOf ['LibUI::MenuItem'] ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'disable'
     );
-    attach(
+    affix(
         LibUI::lib(),          'uiMenuItemEnable', [ InstanceOf ['LibUI::MenuItem'] ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'enable'
     );
-    attach(
+    affix(
         LibUI::lib(),
         'uiMenuItemOnClicked',
         [   InstanceOf ['LibUI::MenuItem'],
@@ -29,7 +29,7 @@ package LibUI::MenuItem 0.01 {
         DC_SIGCHAR_CC_DEFAULT,
         'onClicked'
     );
-    attach(
+    affix(
         LibUI::lib(), 'uiMenuItemSetChecked', [ InstanceOf ['LibUI::MenuItem'], Int ] => Void,
         DC_SIGCHAR_CC_DEFAULT, 'setChecked'
     );
