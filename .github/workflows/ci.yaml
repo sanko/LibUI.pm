@@ -32,7 +32,7 @@ jobs:
         if: matrix.os == 'macos-latest'
         run: brew install gtk+3
       - name: Setup Perl environment
-        uses: shogo82148/actions-setup-perl@v1.12.3
+        uses: shogo82148/actions-setup-perl@v1.18.2
         with:
           perl-version: ${{ matrix.perl }}
           distribution: ${{ matrix.dist }}
