@@ -37,7 +37,7 @@ jobs:
           perl-version: ${{ matrix.perl }}
           distribution: ${{ matrix.dist }}
       - run: perl -V
-      - run: cpanm -n -v https://github.com/sanko/Affix.pm/archive/refs/heads/aggr.zip
+      - run: cpanm -n -v https://github.com/sanko/Affix.pm.git
       - run: cpanm --installdeps -v -n .
       - run: cpanm -v -n .
       - run: prove -lv -r t
