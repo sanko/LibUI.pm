@@ -28,7 +28,7 @@ jobs:
         python-version: '3.x'
     - run: pip install meson ninja
     - name: Set up perl ${{ matrix.dist }} ${{ matrix.perl }}
-      uses: shogo82148/actions-setup-perl@v1.18.2
+      uses: shogo82148/actions-setup-perl@v1.18.3
       with:
           perl-version: ${{ matrix.perl }}
           distribution: ${{ matrix.dist }}
