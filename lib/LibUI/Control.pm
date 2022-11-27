@@ -34,12 +34,6 @@ package LibUI::Control 0.01 {
         );
         affix( LibUI::lib(), 'uiControlHandle',
             [ InstanceOf ['LibUI::Control'] ] => Pointer [UInt] );
-
-
-
-
-
-
         affix( LibUI::lib(), 'uiControlParent',
             [ InstanceOf ['LibUI::Control'] ] => InstanceOf ['LibUI::Control'] );
         affix( LibUI::lib(), 'uiControlSetParent',
