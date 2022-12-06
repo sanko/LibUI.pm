@@ -3,16 +3,12 @@ package LibUI::Window 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
+    affix( LibUI::lib(), 'uiWindowTitle', [ InstanceOf ['LibUI::Window'] ] => Str, 'title' );
     affix(
-        LibUI::lib(),          'uiWindowTitle', [ InstanceOf ['LibUI::Window'] ] => Str,
-        DC_SIGCHAR_CC_DEFAULT, 'title'
-    );
-    affix(
-        LibUI::lib(),          'uiWindowSetTitle', [ InstanceOf ['LibUI::Window'], Str ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setTitle'
+        LibUI::lib(), 'uiWindowSetTitle', [ InstanceOf ['LibUI::Window'], Str ] => Void,
+        'setTitle'
     );
 
     sub contentSize($) {
@@ -25,15 +21,15 @@ package LibUI::Window 0.01 {
     }
     affix(
         LibUI::lib(), 'uiWindowSetContentSize', [ InstanceOf ['LibUI::Window'], Int, Int ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setContentSize'
+        'setContentSize'
     );
     affix(
-        LibUI::lib(),          'uiWindowFullscreen', [ InstanceOf ['LibUI::Window'] ] => Int,
-        DC_SIGCHAR_CC_DEFAULT, 'fullscreen'
+        LibUI::lib(), 'uiWindowFullscreen', [ InstanceOf ['LibUI::Window'] ] => Int,
+        'fullscreen'
     );
     affix(
         LibUI::lib(), 'uiWindowSetFullscreen', [ InstanceOf ['LibUI::Window'], Int ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setFullscreen'
+        'setFullscreen'
     );
     affix(
         LibUI::lib(),
@@ -41,7 +37,6 @@ package LibUI::Window 0.01 {
         [   InstanceOf ['LibUI::Window'],
             CodeRef [ [ InstanceOf ['LibUI::Window'], Any ] => Void ], Any
         ] => Void,
-        DC_SIGCHAR_CC_DEFAULT,
         'onContentSizeChanged'
     );
     affix(
@@ -50,7 +45,6 @@ package LibUI::Window 0.01 {
         [   InstanceOf ['LibUI::Window'],
             CodeRef [ [ InstanceOf ['LibUI::Window'], Any ] => Int ], Any
         ] => Void,
-        DC_SIGCHAR_CC_DEFAULT,
         'onClosing'
     );
     affix(
@@ -59,68 +53,49 @@ package LibUI::Window 0.01 {
         [   InstanceOf ['LibUI::Window'],
             CodeRef [ [ InstanceOf ['LibUI::Window'], Any ] => Int ], Any
         ] => Void,
-        DC_SIGCHAR_CC_DEFAULT,
         'onFocusChanged'
     );
+    affix( LibUI::lib(), 'uiWindowFocused', [ InstanceOf ['LibUI::Window'] ] => Int, 'focused' );
     affix(
-        LibUI::lib(),          'uiWindowFocused', [ InstanceOf ['LibUI::Window'] ] => Int,
-        DC_SIGCHAR_CC_DEFAULT, 'focused'
-    );
-    affix(
-        LibUI::lib(),          'uiWindowBorderless', [ InstanceOf ['LibUI::Window'] ] => Int,
-        DC_SIGCHAR_CC_DEFAULT, 'borderless'
+        LibUI::lib(), 'uiWindowBorderless', [ InstanceOf ['LibUI::Window'] ] => Int,
+        'borderless'
     );
     affix(
         LibUI::lib(), 'uiWindowSetBorderless', [ InstanceOf ['LibUI::Window'], Int ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setBorderless'
+        'setBorderless'
     );
     affix(
         LibUI::lib(), 'uiWindowSetChild',
         [ InstanceOf ['LibUI::Window'], InstanceOf ['LibUI::Control'] ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setChild'
+        'setChild'
+    );
+    affix( LibUI::lib(), 'uiWindowMargined', [ InstanceOf ['LibUI::Window'] ] => Int, 'margined' );
+    affix(
+        LibUI::lib(), 'uiWindowSetMargined', [ InstanceOf ['LibUI::Window'], Int ] => Void,
+        'setMargined'
     );
     affix(
-        LibUI::lib(),          'uiWindowMargined', [ InstanceOf ['LibUI::Window'] ] => Int,
-        DC_SIGCHAR_CC_DEFAULT, 'margined'
-    );
-    affix(
-        LibUI::lib(),          'uiWindowSetMargined', [ InstanceOf ['LibUI::Window'], Int ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setMargined'
-    );
-    affix(
-        LibUI::lib(),          'uiWindowResizeable', [ InstanceOf ['LibUI::Window'] ] => Int,
-        DC_SIGCHAR_CC_DEFAULT, 'resizable'
+        LibUI::lib(), 'uiWindowResizeable', [ InstanceOf ['LibUI::Window'] ] => Int,
+        'resizable'
     );
     affix(
         LibUI::lib(), 'uiWindowSetResizeable', [ InstanceOf ['LibUI::Window'], Int ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setResizable'
+        'setResizable'
     );
     affix(
         LibUI::lib(), 'uiNewWindow', [ Void, Str, Int, Int, Int ] => InstanceOf ['LibUI::Window'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
+        'new'
     );
 
     # Dialogs
+    affix( LibUI::lib(), 'uiMsgBox', [ InstanceOf ['LibUI::Window'], Str, Str ] => Void, 'msgBox' );
     affix(
-        LibUI::lib(),          'uiMsgBox', [ InstanceOf ['LibUI::Window'], Str, Str ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'msgBox'
+        LibUI::lib(), 'uiMsgBoxError', [ InstanceOf ['LibUI::Window'], Str, Str ] => Void,
+        'msgBoxError'
     );
-    affix(
-        LibUI::lib(),          'uiMsgBoxError', [ InstanceOf ['LibUI::Window'], Str, Str ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'msgBoxError'
-    );
-    affix(
-        LibUI::lib(),          'uiOpenFile', [ InstanceOf ['LibUI::Window'] ] => Str,
-        DC_SIGCHAR_CC_DEFAULT, 'openFile'
-    );
-    affix(
-        LibUI::lib(),          'uiOpenFolder', [ InstanceOf ['LibUI::Window'] ] => Str,
-        DC_SIGCHAR_CC_DEFAULT, 'openFolder'
-    );
-    affix(
-        LibUI::lib(),          'uiSaveFile', [ InstanceOf ['LibUI::Window'] ] => Str,
-        DC_SIGCHAR_CC_DEFAULT, 'saveFile'
-    );
+    affix( LibUI::lib(), 'uiOpenFile',   [ InstanceOf ['LibUI::Window'] ] => Str, 'openFile' );
+    affix( LibUI::lib(), 'uiOpenFolder', [ InstanceOf ['LibUI::Window'] ] => Str, 'openFolder' );
+    affix( LibUI::lib(), 'uiSaveFile',   [ InstanceOf ['LibUI::Window'] ] => Str, 'saveFile' );
 };
 1;
 #

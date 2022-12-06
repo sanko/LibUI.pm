@@ -3,42 +3,38 @@ package LibUI::Menu 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use LibUI::MenuItem;
     #
-    affix(
-        LibUI::lib(),          'uiNewMenu', [ Void, Str ] => InstanceOf ['LibUI::Menu'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
-    );
+    affix( LibUI::lib(), 'uiNewMenu', [ Void, Str ] => InstanceOf ['LibUI::Menu'], 'new' );
     affix(
         LibUI::lib(), 'uiMenuAppendAboutItem',
         [ InstanceOf ['LibUI::Menu'] ] => InstanceOf ['LibUI::MenuItem'],
-        DC_SIGCHAR_CC_DEFAULT, 'appendAboutItem'
+        'appendAboutItem'
     );
     affix(
         LibUI::lib(), 'uiMenuAppendCheckItem',
         [ InstanceOf ['LibUI::Menu'], Str ] => InstanceOf ['LibUI::MenuItem'],
-        , DC_SIGCHAR_CC_DEFAULT, 'appendCheckItem'
+        , 'appendCheckItem'
     );
     affix(
         LibUI::lib(), 'uiMenuAppendItem',
         [ InstanceOf ['LibUI::Menu'], Str ] => InstanceOf ['LibUI::MenuItem'],
-        , DC_SIGCHAR_CC_DEFAULT, 'appendItem'
+        , 'appendItem'
     );
     affix(
         LibUI::lib(), 'uiMenuAppendPreferencesItem',
         [ InstanceOf ['LibUI::Menu'] ] => InstanceOf ['LibUI::MenuItem'],
-        , DC_SIGCHAR_CC_DEFAULT, 'appendPreferencesItem'
+        , 'appendPreferencesItem'
     );
     affix(
         LibUI::lib(), 'uiMenuAppendQuitItem',
         [ InstanceOf ['LibUI::Menu'] ] => InstanceOf ['LibUI::MenuItem'],
-        , DC_SIGCHAR_CC_DEFAULT, 'appendQuitItem'
+        , 'appendQuitItem'
     );
     affix(
         LibUI::lib(), 'uiMenuAppendSeparator',
         [ InstanceOf ['LibUI::Menu'] ] => InstanceOf ['LibUI::MenuItem'],
-        , DC_SIGCHAR_CC_DEFAULT, 'appendSeparator'
+        , 'appendSeparator'
     );
 };
 1;

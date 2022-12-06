@@ -3,12 +3,11 @@ package LibUI::Spinbox 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
     affix(
-        LibUI::lib(),          'uiNewSpinbox', [ Void, Int, Int ] => InstanceOf ['LibUI::Spinbox'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
+        LibUI::lib(), 'uiNewSpinbox', [ Void, Int, Int ] => InstanceOf ['LibUI::Spinbox'],
+        'new'
     );
     affix(
         LibUI::lib(),
@@ -16,17 +15,13 @@ package LibUI::Spinbox 0.01 {
         [   InstanceOf ['LibUI::Spinbox'],
             CodeRef [ [ InstanceOf ['LibUI::Spinbox'], Any ] => Void ], Any
         ] => Void,
-        DC_SIGCHAR_CC_DEFAULT,
         'onChanged'
     );
     affix(
-        LibUI::lib(),          'uiSpinboxSetValue', [ InstanceOf ['LibUI::Spinbox'], Int ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setValue'
+        LibUI::lib(), 'uiSpinboxSetValue', [ InstanceOf ['LibUI::Spinbox'], Int ] => Void,
+        'setValue'
     );
-    affix(
-        LibUI::lib(),          'uiSpinboxValue', [ InstanceOf ['LibUI::Spinbox'] ] => Int,
-        DC_SIGCHAR_CC_DEFAULT, 'value'
-    );
+    affix( LibUI::lib(), 'uiSpinboxValue', [ InstanceOf ['LibUI::Spinbox'] ] => Int, 'value' );
 };
 1;
 #

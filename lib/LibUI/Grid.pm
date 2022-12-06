@@ -3,7 +3,6 @@ package LibUI::Grid 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     use LibUI::Align;
     use LibUI::At;
@@ -15,7 +14,6 @@ package LibUI::Grid 0.01 {
             InstanceOf ['LibUI::Control'],
             Int, Int, Int, Int, Int, LibUI::Align, Int, LibUI::Align
         ] => Void,
-        DC_SIGCHAR_CC_DEFAULT,
         'append'
     );
     affix(
@@ -26,21 +24,14 @@ package LibUI::Grid 0.01 {
             InstanceOf ['LibUI::Control'],
             LibUI::At, Int, Int, Int, LibUI::Align, Int, LibUI::Align
         ] => Void,
-        DC_SIGCHAR_CC_DEFAULT,
         'insertAt'
     );
+    affix( LibUI::lib(), 'uiGridPadded', [ InstanceOf ['LibUI::Grid'] ] => Int, 'padded' );
     affix(
-        LibUI::lib(),          'uiGridPadded', [ InstanceOf ['LibUI::Grid'] ] => Int,
-        DC_SIGCHAR_CC_DEFAULT, 'padded'
+        LibUI::lib(), 'uiGridSetPadded', [ InstanceOf ['LibUI::Grid'], Int ] => Void,
+        'setPadded'
     );
-    affix(
-        LibUI::lib(),          'uiGridSetPadded', [ InstanceOf ['LibUI::Grid'], Int ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setPadded'
-    );
-    affix(
-        LibUI::lib(),          'uiNewGrid', [Void] => InstanceOf ['LibUI::Grid'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
-    );
+    affix( LibUI::lib(), 'uiNewGrid', [Void] => InstanceOf ['LibUI::Grid'], 'new' );
 };
 1;
 #

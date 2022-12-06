@@ -3,17 +3,16 @@ package LibUI::MultilineEntry 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
     affix(
         LibUI::lib(), 'uiNewMultilineEntry', [Void] => InstanceOf ['LibUI::MultilineEntry'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
+        'new'
     );
     affix(
         LibUI::lib(), 'uiMultilineEntryAppend',
         [ InstanceOf ['LibUI::MultilineEntry'], Str ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'append'
+        'append'
     );
     affix(
         LibUI::lib(),
@@ -21,26 +20,25 @@ package LibUI::MultilineEntry 0.01 {
         [   InstanceOf ['LibUI::MultilineEntry'],
             CodeRef [ [ InstanceOf ['LibUI::MultilineEntry'], Any ] => Void ], Any
         ] => Void,
-        DC_SIGCHAR_CC_DEFAULT,
         'onChanged'
     );
     affix(
         LibUI::lib(), 'uiMultilineEntryReadOnly', [ InstanceOf ['LibUI::MultilineEntry'] ] => Int,
-        DC_SIGCHAR_CC_DEFAULT, 'readonly'
+        'readonly'
     );
     affix(
         LibUI::lib(), 'uiMultilineEntrySetReadOnly',
         [ InstanceOf ['LibUI::MultilineEntry'], Int ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setReadonly'
+        'setReadonly'
     );
     affix(
         LibUI::lib(), 'uiMultilineEntrySetText',
         [ InstanceOf ['LibUI::MultilineEntry'], Str ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setText'
+        'setText'
     );
     affix(
         LibUI::lib(), 'uiMultilineEntryText', [ InstanceOf ['LibUI::MultilineEntry'] ] => Str,
-        DC_SIGCHAR_CC_DEFAULT, 'text'
+        'text'
     );
 };
 1;

@@ -4,7 +4,6 @@ package LibUI::Control 0.01 {
     use warnings;
     use lib '../lib', '../blib/arch', '../blib/lib';
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use LibUI;
     $|++;
     #
@@ -29,8 +28,8 @@ package LibUI::Control 0.01 {
         ];
         #
         affix(
-            LibUI::lib(),          'uiControlDestroy', [ InstanceOf ['LibUI::Control'] ] => Void,
-            DC_SIGCHAR_CC_DEFAULT, 'Destroy'
+            LibUI::lib(), 'uiControlDestroy', [ InstanceOf ['LibUI::Control'] ] => Void,
+            'Destroy'
         );
         affix( LibUI::lib(), 'uiControlHandle',
             [ InstanceOf ['LibUI::Control'] ] => Pointer [UInt] );
@@ -40,10 +39,7 @@ package LibUI::Control 0.01 {
             [ InstanceOf ['LibUI::Control'], InstanceOf ['LibUI::Control'] ] => Void );
         affix( LibUI::lib(), 'uiControlToplevel', [ InstanceOf ['LibUI::Control'] ] => Int );
         affix( LibUI::lib(), 'uiControlVisible',  [ InstanceOf ['LibUI::Control'] ] => Int );
-        affix(
-            LibUI::lib(),          'uiControlShow', [ InstanceOf ['LibUI::Control'] ] => Void,
-            DC_SIGCHAR_CC_DEFAULT, 'show'
-        );
+        affix( LibUI::lib(), 'uiControlShow', [ InstanceOf ['LibUI::Control'] ] => Void, 'show' );
         affix( LibUI::lib(), 'uiControlHide',    [ InstanceOf ['LibUI::Control'] ] => Void );
         affix( LibUI::lib(), 'uiControlEnabled', [ InstanceOf ['LibUI::Control'] ] => Int );
         affix( LibUI::lib(), 'uiControlEnable',  [ InstanceOf ['LibUI::Control'] ] => Void );

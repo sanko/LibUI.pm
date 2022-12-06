@@ -3,34 +3,24 @@ package LibUI::Group 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
-    affix(
-        LibUI::lib(),          'uiGroupMargined', [ InstanceOf ['LibUI::Group'] ] => Int,
-        DC_SIGCHAR_CC_DEFAULT, 'margined'
-    );
+    affix( LibUI::lib(), 'uiGroupMargined', [ InstanceOf ['LibUI::Group'] ] => Int, 'margined' );
     affix(
         LibUI::lib(), 'uiGroupSetChild',
         [ InstanceOf ['LibUI::Group'], InstanceOf ['LibUI::Control'] ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setChild'
+        'setChild'
     );
     affix(
-        LibUI::lib(),          'uiGroupSetMargined', [ InstanceOf ['LibUI::Group'], Int ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setMargined'
+        LibUI::lib(), 'uiGroupSetMargined', [ InstanceOf ['LibUI::Group'], Int ] => Void,
+        'setMargined'
     );
     affix(
-        LibUI::lib(),          'uiGroupSetTitle', [ InstanceOf ['LibUI::Group'], Str ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setTitle'
+        LibUI::lib(), 'uiGroupSetTitle', [ InstanceOf ['LibUI::Group'], Str ] => Void,
+        'setTitle'
     );
-    affix(
-        LibUI::lib(),          'uiGroupTitle', [ InstanceOf ['LibUI::Group'] ] => Str,
-        DC_SIGCHAR_CC_DEFAULT, 'title'
-    );
-    affix(
-        LibUI::lib(),          'uiNewGroup', [ Void, Str ] => InstanceOf ['LibUI::Group'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
-    );
+    affix( LibUI::lib(), 'uiGroupTitle', [ InstanceOf ['LibUI::Group'] ] => Str,       'title' );
+    affix( LibUI::lib(), 'uiNewGroup',   [ Void, Str ] => InstanceOf ['LibUI::Group'], 'new' );
 };
 1;
 #

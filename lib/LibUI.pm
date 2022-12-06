@@ -31,8 +31,9 @@ package LibUI 0.01 {
         $name
             =~ s[LibUI::(Box|Button|Combobox|Control|Menu|NonWrappingMultilineEntry|RadioButtons|Slider|Window)][LibUI::$1::];
         $name =~ s[::New(.+)$][::$1::new];
-        warn sprintf '%30s => %-50s', $func, $name;
-        affix( $lib, $func, $params, $ret, DC_SIGCHAR_CC_DEFAULT, $name );
+
+        # warn sprintf '%30s => %-50s', $func, $name;
+        affix( $lib, $func, $params, $ret, $name );
     }
     #
     #my $init = dlSymsInit($path);
@@ -74,7 +75,7 @@ package LibUI 0.01 {
         func( 'uiTimer', [ Int, CodeRef [ [Any] => Int ], Any ] => Void );
         affix(
             lib(), 'uiOnShouldQuit', [ CodeRef [ [Any] => Int ], Any ] => Void,
-            DC_SIGCHAR_CC_DEFAULT, 'LibUI::onShouldQuit'
+            'LibUI::onShouldQuit'
         );
         func( 'uiFreeText', [Str] => Void );
     }

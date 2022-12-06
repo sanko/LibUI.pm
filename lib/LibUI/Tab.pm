@@ -3,35 +3,25 @@ package LibUI::Tab 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
     affix(
         LibUI::lib(), 'uiTabAppend',
         [ InstanceOf ['LibUI::Tab'], Str, InstanceOf ['LibUI::Control'] ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'append'
+        'append'
     );
     affix(
         LibUI::lib(), 'uiTabInsertAt',
         [ InstanceOf ['LibUI::Tab'], Str, Int, InstanceOf ['LibUI::Control'] ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'insertAt'
+        'insertAt'
     );
+    affix( LibUI::lib(), 'uiTabNumPages', [ InstanceOf ['LibUI::Tab'] ]      => Int, 'numPages' );
+    affix( LibUI::lib(), 'uiTabMargined', [ InstanceOf ['LibUI::Tab'], Int ] => Int, 'margined' );
     affix(
-        LibUI::lib(),          'uiTabNumPages', [ InstanceOf ['LibUI::Tab'] ] => Int,
-        DC_SIGCHAR_CC_DEFAULT, 'numPages'
+        LibUI::lib(), 'uiTabSetMargined', [ InstanceOf ['LibUI::Tab'], Int, Int ] => Void,
+        'setMargined'
     );
-    affix(
-        LibUI::lib(),          'uiTabMargined', [ InstanceOf ['LibUI::Tab'], Int ] => Int,
-        DC_SIGCHAR_CC_DEFAULT, 'margined'
-    );
-    affix(
-        LibUI::lib(),          'uiTabSetMargined', [ InstanceOf ['LibUI::Tab'], Int, Int ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setMargined'
-    );
-    affix(
-        LibUI::lib(),          'uiNewTab', [Void] => InstanceOf ['LibUI::Tab'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
-    );
+    affix( LibUI::lib(), 'uiNewTab', [Void] => InstanceOf ['LibUI::Tab'], 'new' );
 };
 1;
 #

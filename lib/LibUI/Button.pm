@@ -3,30 +3,22 @@ package LibUI::Button 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
-    affix(
-        LibUI::lib(),          'uiNewButton', [ Void, Str ] => InstanceOf ['LibUI::Button'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
-    );
+    affix( LibUI::lib(), 'uiNewButton', [ Void, Str ] => InstanceOf ['LibUI::Button'], 'new' );
     affix(
         LibUI::lib(),
         'uiButtonOnClicked',
         [   InstanceOf ['LibUI::Button'],
             CodeRef [ [ InstanceOf ['LibUI::Button'], Any ] => Void ], Any
         ] => Void,
-        DC_SIGCHAR_CC_DEFAULT,
         'onClicked'
     );
     affix(
-        LibUI::lib(),          'uiButtonSetText', [ InstanceOf ['LibUI::Button'], Str ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setText'
+        LibUI::lib(), 'uiButtonSetText', [ InstanceOf ['LibUI::Button'], Str ] => Void,
+        'setText'
     );
-    affix(
-        LibUI::lib(),          'uiButtonSetText', [ InstanceOf ['LibUI::Button'] ] => Str,
-        DC_SIGCHAR_CC_DEFAULT, 'text'
-    );
+    affix( LibUI::lib(), 'uiButtonSetText', [ InstanceOf ['LibUI::Button'] ] => Str, 'text' );
 };
 1;
 #

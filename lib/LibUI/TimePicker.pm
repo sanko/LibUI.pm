@@ -3,14 +3,10 @@ package LibUI::TimePicker 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::DateTimePicker';
     use LibUI::Time;
     #
-    affix(
-        LibUI::lib(),          'uiNewTimePicker', [Void] => InstanceOf ['LibUI::TimePicker'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
-    );
+    affix( LibUI::lib(), 'uiNewTimePicker', [Void] => InstanceOf ['LibUI::TimePicker'], 'new' );
 };
 1;
 #

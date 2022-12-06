@@ -3,13 +3,12 @@ package LibUI::EditableCombobox 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
     affix(
         LibUI::lib(), 'uiEditableComboboxAppend',
         [ InstanceOf ['LibUI::EditableCombobox'], Str ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'append'
+        'append'
     );
     affix(
         LibUI::lib(),
@@ -17,21 +16,20 @@ package LibUI::EditableCombobox 0.01 {
         [   InstanceOf ['LibUI::EditableCombobox'],
             CodeRef [ [ InstanceOf ['LibUI::EditableCombobox'], Any ] => Void ], Any
         ] => Void,
-        DC_SIGCHAR_CC_DEFAULT,
         'onChanged'
     );
     affix(
         LibUI::lib(), 'uiEditableComboboxSetText',
         [ InstanceOf ['LibUI::EditableCombobox'], Str ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setText'
+        'setText'
     );
     affix(
         LibUI::lib(), 'uiEditableComboboxText', [ InstanceOf ['LibUI::EditableCombobox'] ] => Str,
-        DC_SIGCHAR_CC_DEFAULT, 'text'
+        'text'
     );
     affix(
         LibUI::lib(), 'uiNewEditableCombobox', [Void] => InstanceOf ['LibUI::EditableCombobox'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
+        'new'
     );
 };
 1;

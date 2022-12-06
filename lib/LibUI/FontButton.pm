@@ -3,14 +3,10 @@ package LibUI::FontButton 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     use LibUI::FontDescriptor;
     #
-    affix(
-        LibUI::lib(),          'uiNewFontButton', [Void] => InstanceOf ['LibUI::FontButton'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
-    );
+    affix( LibUI::lib(), 'uiNewFontButton', [Void] => InstanceOf ['LibUI::FontButton'], 'new' );
 
     sub font($) {
         CORE::state $affix //= wrap( LibUI::lib(), 'uiFontButtonFont',
@@ -25,12 +21,11 @@ package LibUI::FontButton 0.01 {
         [   InstanceOf ['LibUI::FontButton'],
             CodeRef [ [ InstanceOf ['LibUI::FontButton'], Any ] => Void ], Any
         ] => Void,
-        DC_SIGCHAR_CC_DEFAULT,
         'onChanged'
     );
     affix(
-        LibUI::lib(),          'uiFreeFontButtonFont', [ Pointer [LibUI::FontDescriptor] ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'freeFont'
+        LibUI::lib(), 'uiFreeFontButtonFont', [ Pointer [LibUI::FontDescriptor] ] => Void,
+        'freeFont'
     );
 };
 1;

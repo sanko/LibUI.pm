@@ -3,13 +3,12 @@ package LibUI::HorizontalSeparator 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
     affix(
         LibUI::lib(), 'uiNewHorizontalSeparator',
         [Void] => InstanceOf ['LibUI::HorizontalSeparator'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
+        'new'
     );
 };
 1;

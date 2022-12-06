@@ -3,34 +3,24 @@ package LibUI::Form 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
     affix(
         LibUI::lib(), 'uiFormAppend',
         [ InstanceOf ['LibUI::Form'], Str, InstanceOf ['LibUI::Control'], Int ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'append'
+        'append'
     );
+    affix( LibUI::lib(), 'uiFormDelete', [ InstanceOf ['LibUI::Form'], Int ] => Void, 'delete' );
     affix(
-        LibUI::lib(),          'uiFormDelete', [ InstanceOf ['LibUI::Form'], Int ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'delete'
+        LibUI::lib(), 'uiFormNumChildren', [ InstanceOf ['LibUI::Form'] ] => Int,
+        'numChildren'
     );
+    affix( LibUI::lib(), 'uiFormPadded', [ InstanceOf ['LibUI::Form'] ] => Int, 'padded' );
     affix(
-        LibUI::lib(),          'uiFormNumChildren', [ InstanceOf ['LibUI::Form'] ] => Int,
-        DC_SIGCHAR_CC_DEFAULT, 'numChildren'
+        LibUI::lib(), 'uiFormSetPadded', [ InstanceOf ['LibUI::Form'], Int ] => Void,
+        'setPadded'
     );
-    affix(
-        LibUI::lib(),          'uiFormPadded', [ InstanceOf ['LibUI::Form'] ] => Int,
-        DC_SIGCHAR_CC_DEFAULT, 'padded'
-    );
-    affix(
-        LibUI::lib(),          'uiFormSetPadded', [ InstanceOf ['LibUI::Form'], Int ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setPadded'
-    );
-    affix(
-        LibUI::lib(),          'uiNewForm', [Void] => InstanceOf ['LibUI::Form'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
-    );
+    affix( LibUI::lib(), 'uiNewForm', [Void] => InstanceOf ['LibUI::Form'], 'new' );
 };
 1;
 #

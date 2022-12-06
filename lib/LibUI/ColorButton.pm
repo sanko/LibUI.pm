@@ -3,7 +3,6 @@ package LibUI::ColorButton 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
     sub color ($) {
@@ -25,7 +24,7 @@ package LibUI::ColorButton 0.01 {
     affix(
         LibUI::lib(), 'uiColorButtonSetColor',
         [ InstanceOf ['LibUI::ColorButton'], Double, Double, Double, Double ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setColor'
+        'setColor'
     );
     affix(
         LibUI::lib(),
@@ -33,13 +32,9 @@ package LibUI::ColorButton 0.01 {
         [   InstanceOf ['LibUI::ColorButton'],
             CodeRef [ [ InstanceOf ['LibUI::ColorButton'], Any ] => Void ], Any
         ] => Void,
-        DC_SIGCHAR_CC_DEFAULT,
         'onChanged'
     );
-    affix(
-        LibUI::lib(),          'uiNewColorButton', [Void] => InstanceOf ['LibUI::ColorButton'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
-    );
+    affix( LibUI::lib(), 'uiNewColorButton', [Void] => InstanceOf ['LibUI::ColorButton'], 'new' );
 };
 1;
 #

@@ -3,12 +3,11 @@ package LibUI::Checkbox 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
     affix(
-        LibUI::lib(),          'uiCheckboxChecked', [ InstanceOf ['LibUI::Checkbox'] ] => Int,
-        DC_SIGCHAR_CC_DEFAULT, 'checked'
+        LibUI::lib(), 'uiCheckboxChecked', [ InstanceOf ['LibUI::Checkbox'] ] => Int,
+        'checked'
     );
     affix(
         LibUI::lib(),
@@ -16,25 +15,18 @@ package LibUI::Checkbox 0.01 {
         [   InstanceOf ['LibUI::Checkbox'],
             CodeRef [ [ InstanceOf ['LibUI::Checkbox'], Any ] => Void ], Any
         ] => Void,
-        DC_SIGCHAR_CC_DEFAULT,
         'onToggled'
     );
     affix(
         LibUI::lib(), 'uiCheckboxSetChecked', [ InstanceOf ['LibUI::Checkbox'], Int ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setChecked'
+        'setChecked'
     );
     affix(
-        LibUI::lib(),          'uiCheckboxSetText', [ InstanceOf ['LibUI::Checkbox'], Str ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setText'
+        LibUI::lib(), 'uiCheckboxSetText', [ InstanceOf ['LibUI::Checkbox'], Str ] => Void,
+        'setText'
     );
-    affix(
-        LibUI::lib(),          'uiCheckboxText', [ InstanceOf ['LibUI::Checkbox'] ] => Str,
-        DC_SIGCHAR_CC_DEFAULT, 'text'
-    );
-    affix(
-        LibUI::lib(),          'uiNewCheckbox', [ Void, Str ] => InstanceOf ['LibUI::Checkbox'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
-    );
+    affix( LibUI::lib(), 'uiCheckboxText', [ InstanceOf ['LibUI::Checkbox'] ] => Str, 'text' );
+    affix( LibUI::lib(), 'uiNewCheckbox',  [ Void, Str ] => InstanceOf ['LibUI::Checkbox'], 'new' );
 };
 1;
 #

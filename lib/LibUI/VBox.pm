@@ -3,13 +3,9 @@ package LibUI::VBox 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::HBox';
     #
-    affix(
-        LibUI::lib(),          'uiNewVerticalBox', [Void] => InstanceOf ['LibUI::VBox'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
-    );
+    affix( LibUI::lib(), 'uiNewVerticalBox', [Void] => InstanceOf ['LibUI::VBox'], 'new' );
 };
 1;
 #

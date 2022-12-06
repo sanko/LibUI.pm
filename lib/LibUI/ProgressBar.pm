@@ -3,21 +3,17 @@ package LibUI::ProgressBar 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
     affix(
-        LibUI::lib(),          'uiProgressBarValue', [ InstanceOf ['LibUI::ProgressBar'] ] => Int,
-        DC_SIGCHAR_CC_DEFAULT, 'value'
+        LibUI::lib(), 'uiProgressBarValue', [ InstanceOf ['LibUI::ProgressBar'] ] => Int,
+        'value'
     );
     affix(
         LibUI::lib(), 'uiProgressBarSetValue', [ InstanceOf ['LibUI::ProgressBar'], Int ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setValue'
+        'setValue'
     );
-    affix(
-        LibUI::lib(),          'uiNewProgressBar', [Void] => InstanceOf ['LibUI::ProgressBar'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
-    );
+    affix( LibUI::lib(), 'uiNewProgressBar', [Void] => InstanceOf ['LibUI::ProgressBar'], 'new' );
 };
 1;
 #

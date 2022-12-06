@@ -3,13 +3,12 @@ package LibUI::DateTimePicker 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     use LibUI::Time;
     #
     affix(
         LibUI::lib(), 'uiNewDateTimePicker', [Void] => InstanceOf ['LibUI::DateTimePicker'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
+        'new'
     );
     affix(
         LibUI::lib(),
@@ -17,27 +16,20 @@ package LibUI::DateTimePicker 0.01 {
         [   InstanceOf ['LibUI::DateTimePicker'],
             CodeRef [ [ InstanceOf ['LibUI::DateTimePicker'], Any ] => Void ], Any
         ] => Void,
-        DC_SIGCHAR_CC_DEFAULT,
         'onChanged'
     );
 
     sub setTime ($$) {
         my ( $s, $time ) = @_;
-        CORE::state $affix //= wrap(
-            LibUI::lib(), 'uiDateTimePickerSetTime',
-            [ InstanceOf ['LibUI::DateTimePicker'], Pointer [LibUI::Time] ] => Void,
-            DC_SIGCHAR_CC_DEFAULT
-        );
+        CORE::state $affix //= wrap( LibUI::lib(), 'uiDateTimePickerSetTime',
+            [ InstanceOf ['LibUI::DateTimePicker'], Pointer [LibUI::Time] ] => Void );
         $time = LibUI::Time::to_hash($time) unless ref $time eq 'HASH';
         $affix->( $s, $time );
     }
 
     sub time {
-        CORE::state $affix //= wrap(
-            LibUI::lib(), 'uiDateTimePickerTime',
-            [ InstanceOf ['LibUI::DateTimePicker'], Pointer [LibUI::Time] ] => Void,
-            DC_SIGCHAR_CC_DEFAULT
-        );
+        CORE::state $affix //= wrap( LibUI::lib(), 'uiDateTimePickerTime',
+            [ InstanceOf ['LibUI::DateTimePicker'], Pointer [LibUI::Time] ] => Void );
         my $ret;
         $affix->( shift, $ret );
         LibUI::Time::to_obj($ret);

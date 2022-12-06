@@ -3,21 +3,14 @@ package LibUI::Label 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
+    affix( LibUI::lib(), 'uiLabelText', [ InstanceOf ['LibUI::Label'] ] => Str, 'text' );
     affix(
-        LibUI::lib(),          'uiLabelText', [ InstanceOf ['LibUI::Label'] ] => Str,
-        DC_SIGCHAR_CC_DEFAULT, 'text'
+        LibUI::lib(), 'uiLabelSetText', [ InstanceOf ['LibUI::Label'], Str ] => Void,
+        'setText'
     );
-    affix(
-        LibUI::lib(),          'uiLabelSetText', [ InstanceOf ['LibUI::Label'], Str ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setText'
-    );
-    affix(
-        LibUI::lib(),          'uiNewLabel', [ Void, Str ] => InstanceOf ['LibUI::Label'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
-    );
+    affix( LibUI::lib(), 'uiNewLabel', [ Void, Str ] => InstanceOf ['LibUI::Label'], 'new' );
 };
 1;
 #

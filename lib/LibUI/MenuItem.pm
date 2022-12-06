@@ -3,20 +3,16 @@ package LibUI::MenuItem 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     #
     affix(
-        LibUI::lib(),          'uiMenuItemChecked', [ InstanceOf ['LibUI::MenuItem'] ] => Int,
-        DC_SIGCHAR_CC_DEFAULT, 'checked'
+        LibUI::lib(), 'uiMenuItemChecked', [ InstanceOf ['LibUI::MenuItem'] ] => Int,
+        'checked'
     );
     affix(
-        LibUI::lib(),          'uiMenuItemDisable', [ InstanceOf ['LibUI::MenuItem'] ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'disable'
+        LibUI::lib(), 'uiMenuItemDisable', [ InstanceOf ['LibUI::MenuItem'] ] => Void,
+        'disable'
     );
-    affix(
-        LibUI::lib(),          'uiMenuItemEnable', [ InstanceOf ['LibUI::MenuItem'] ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'enable'
-    );
+    affix( LibUI::lib(), 'uiMenuItemEnable', [ InstanceOf ['LibUI::MenuItem'] ] => Void, 'enable' );
     affix(
         LibUI::lib(),
         'uiMenuItemOnClicked',
@@ -26,12 +22,11 @@ package LibUI::MenuItem 0.01 {
             ],
             Any
         ] => Void,
-        DC_SIGCHAR_CC_DEFAULT,
         'onClicked'
     );
     affix(
         LibUI::lib(), 'uiMenuItemSetChecked', [ InstanceOf ['LibUI::MenuItem'], Int ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setChecked'
+        'setChecked'
     );
 };
 1;

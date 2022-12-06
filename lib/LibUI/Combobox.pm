@@ -3,28 +3,24 @@ package LibUI::Combobox 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
     affix(
-        LibUI::lib(),          'uiComboboxAppend', [ InstanceOf ['LibUI::Combobox'], Str ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'append'
+        LibUI::lib(), 'uiComboboxAppend', [ InstanceOf ['LibUI::Combobox'], Str ] => Void,
+        'append'
     );
+    affix( LibUI::lib(), 'uiComboboxClear', [ InstanceOf ['LibUI::Combobox'] ] => Void, 'clear' );
     affix(
-        LibUI::lib(),          'uiComboboxClear', [ InstanceOf ['LibUI::Combobox'] ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'clear'
-    );
-    affix(
-        LibUI::lib(),          'uiComboboxDelete', [ InstanceOf ['LibUI::Combobox'], Int ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'delete'
+        LibUI::lib(), 'uiComboboxDelete', [ InstanceOf ['LibUI::Combobox'], Int ] => Void,
+        'delete'
     );
     affix(
         LibUI::lib(), 'uiComboboxInsertAt', [ InstanceOf ['LibUI::Combobox'], Int, Str ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'insertAt'
+        'insertAt'
     );
     affix(
-        LibUI::lib(),          'uiComboboxNumItems', [ InstanceOf ['LibUI::Combobox'], ] => Int,
-        DC_SIGCHAR_CC_DEFAULT, 'numItems'
+        LibUI::lib(), 'uiComboboxNumItems', [ InstanceOf ['LibUI::Combobox'], ] => Int,
+        'numItems'
     );
     affix(
         LibUI::lib(),
@@ -32,21 +28,17 @@ package LibUI::Combobox 0.01 {
         [   InstanceOf ['LibUI::Combobox'],
             CodeRef [ [ InstanceOf ['LibUI::Combobox'], Any ] => Void ], Any
         ] => Void,
-        DC_SIGCHAR_CC_DEFAULT,
         'onSelected'
     );
     affix(
-        LibUI::lib(),          'uiComboboxSelected', [ InstanceOf ['LibUI::Combobox'] ] => Int,
-        DC_SIGCHAR_CC_DEFAULT, 'selected'
+        LibUI::lib(), 'uiComboboxSelected', [ InstanceOf ['LibUI::Combobox'] ] => Int,
+        'selected'
     );
     affix(
         LibUI::lib(), 'uiComboboxSetSelected', [ InstanceOf ['LibUI::Combobox'], Int ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setSelected'
+        'setSelected'
     );
-    affix(
-        LibUI::lib(),          'uiNewCombobox', [Void] => InstanceOf ['LibUI::Combobox'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
-    );
+    affix( LibUI::lib(), 'uiNewCombobox', [Void] => InstanceOf ['LibUI::Combobox'], 'new' );
 };
 1;
 #

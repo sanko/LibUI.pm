@@ -3,16 +3,12 @@ package LibUI::RadioButtons 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
-    affix(
-        LibUI::lib(),          'uiNewRadioButtons', [Void] => InstanceOf ['LibUI::RadioButtons'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
-    );
+    affix( LibUI::lib(), 'uiNewRadioButtons', [Void] => InstanceOf ['LibUI::RadioButtons'], 'new' );
     affix(
         LibUI::lib(), 'uiRadioButtonsAppend', [ InstanceOf ['LibUI::RadioButtons'], Str ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'append'
+        'append'
     );
     affix(
         LibUI::lib(),
@@ -20,17 +16,16 @@ package LibUI::RadioButtons 0.01 {
         [   InstanceOf ['LibUI::RadioButtons'],
             CodeRef [ [ InstanceOf ['LibUI::RadioButtons'], Any ] => Void ], Any
         ] => Void,
-        DC_SIGCHAR_CC_DEFAULT,
         'onSelected'
     );
     affix(
         LibUI::lib(), 'uiRadioButtonsSelected', [ InstanceOf ['LibUI::RadioButtons'] ] => Int,
-        DC_SIGCHAR_CC_DEFAULT, 'selected'
+        'selected'
     );
     affix(
         LibUI::lib(), 'uiRadioButtonsSetSelected',
         [ InstanceOf ['LibUI::RadioButtons'], Int ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setSelected'
+        'setSelected'
     );
 };
 1;

@@ -3,7 +3,6 @@ package LibUI::Entry 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
     affix(
@@ -12,29 +11,19 @@ package LibUI::Entry 0.01 {
         [   InstanceOf ['LibUI::Entry'],
             CodeRef [ [ InstanceOf ['LibUI::Entry'], Any ] => Void ], Any
         ] => Void,
-        DC_SIGCHAR_CC_DEFAULT,
         'onChanged'
     );
+    affix( LibUI::lib(), 'uiEntryReadOnly', [ InstanceOf ['LibUI::Entry'] ] => Int, 'readonly' );
     affix(
-        LibUI::lib(),          'uiEntryReadOnly', [ InstanceOf ['LibUI::Entry'] ] => Int,
-        DC_SIGCHAR_CC_DEFAULT, 'readonly'
+        LibUI::lib(), 'uiEntrySetReadOnly', [ InstanceOf ['LibUI::Entry'], Int ] => Void,
+        'setReadonly'
     );
     affix(
-        LibUI::lib(),          'uiEntrySetReadOnly', [ InstanceOf ['LibUI::Entry'], Int ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setReadonly'
+        LibUI::lib(), 'uiEntrySetText', [ InstanceOf ['LibUI::Entry'], Str ] => Void,
+        'setText'
     );
-    affix(
-        LibUI::lib(),          'uiEntrySetText', [ InstanceOf ['LibUI::Entry'], Str ] => Void,
-        DC_SIGCHAR_CC_DEFAULT, 'setText'
-    );
-    affix(
-        LibUI::lib(),          'uiEntryText', [ InstanceOf ['LibUI::Entry'] ] => Str,
-        DC_SIGCHAR_CC_DEFAULT, 'text'
-    );
-    affix(
-        LibUI::lib(),          'uiNewEntry', [Void] => InstanceOf ['LibUI::Entry'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
-    );
+    affix( LibUI::lib(), 'uiEntryText', [ InstanceOf ['LibUI::Entry'] ] => Str, 'text' );
+    affix( LibUI::lib(), 'uiNewEntry',  [Void] => InstanceOf ['LibUI::Entry'],  'new' );
 };
 1;
 #

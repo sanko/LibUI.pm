@@ -3,13 +3,12 @@ package LibUI::NonWrappingMultilineEntry 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::MultilineEntry';
     #
     affix(
         LibUI::lib(), 'uiNewNonWrappingMultilineEntry',
         [Void] => InstanceOf ['LibUI::NonWrappingMultilineEntry'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
+        'new'
     );
 };
 1;

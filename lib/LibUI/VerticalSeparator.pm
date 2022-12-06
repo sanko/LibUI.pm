@@ -3,12 +3,11 @@ package LibUI::VerticalSeparator 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Control';
     #
     affix(
         LibUI::lib(), 'uiNewVerticalSeparator', [Void] => InstanceOf ['LibUI::VerticalSeparator'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
+        'new'
     );
 };
 1;

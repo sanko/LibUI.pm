@@ -3,13 +3,9 @@ package LibUI::SearchEntry 0.01 {
     use strict;
     use warnings;
     use Affix;
-    use Dyn::Call qw[DC_SIGCHAR_CC_DEFAULT];
     use parent 'LibUI::Entry';
     #
-    affix(
-        LibUI::lib(),          'uiNewSearchEntry', [Void] => InstanceOf ['LibUI::SearchEntry'],
-        DC_SIGCHAR_CC_DEFAULT, 'new'
-    );
+    affix( LibUI::lib(), 'uiNewSearchEntry', [Void] => InstanceOf ['LibUI::SearchEntry'], 'new' );
 };
 1;
 #
