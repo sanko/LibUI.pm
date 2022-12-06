@@ -26,6 +26,8 @@ LibUI - Simple, Portable, Native GUI Library
 LibUI is a simple and portable (but not inflexible) GUI library in C that uses
 the native GUI technologies of each platform it supports.
 
+This distribution is under construction. It works but is incomplete.
+
 # Container controls
 
 - [LibUI::Window](https://metacpan.org/pod/LibUI%3A%3AWindow) - a top-level window
@@ -62,8 +64,6 @@ the native GUI technologies of each platform it supports.
 - [LibUI::HorizontalSeparator](https://metacpan.org/pod/LibUI%3A%3AHorizontalSeparator) - a control to visually separate controls horizontally
 - [LibUI::VerticalSeparator](https://metacpan.org/pod/LibUI%3A%3AVerticalSeparator) - a control to visually separate controls vertically
 
-## Buttons
-
 ## Dialog windows
 
 - `openFile( )` - File chooser to select a single file
@@ -82,6 +82,62 @@ See ["Dialog windows" in LibUI::Window](https://metacpan.org/pod/LibUI%3A%3AWind
 ## Tables
 
 The upstream API is a mess so I'm still plotting around this.
+
+# GUI Functions
+
+Some basics you gotta use just to keep a modern GUI running.
+
+This is incomplete but... well, I'm working on it.
+
+## `Init( ... )`
+
+    Init( { Size => 1024 } );
+
+Ask LibUI to do all the platform specific work to get up and running.
+
+Expected parameters include:
+
+- `$options`
+
+    LibUI::InitOptions structure.
+
+## `Uninit( ... )`
+
+    Uninit( );
+
+Ask LibUI to break everything down before quitting.
+
+## `Quit( ... )`
+
+    Quit( );
+
+Quit.
+
+## `Main( ... )`
+
+    Main( );
+
+Let LibUI's event loop run until interrupted.
+
+## `Timer( ... )`
+
+    Timer( 1000, sub { die 'do not do this here' }, undef);
+
+Expected parameters include:
+
+- `$time`
+
+    Time in milliseconds.
+
+- `$func`
+
+    CodeRef that will be triggered when `$time` runs out.
+
+    Return a true value from your `$func` to make your timer repeating.
+
+- `$data`
+
+    Any userdata you feel like passing.
 
 # Requirements
 

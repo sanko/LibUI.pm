@@ -32,7 +32,7 @@ package LibUI 0.01 {
             =~ s[LibUI::(Box|Button|Combobox|Control|Menu|NonWrappingMultilineEntry|RadioButtons|Slider|Window)][LibUI::$1::];
         $name =~ s[::New(.+)$][::$1::new];
 
-        # warn sprintf '%30s => %-50s', $func, $name;
+        #warn sprintf '%30s => %-50s', $func, $name;
         affix( $lib, $func, $params, $ret, $name );
     }
     #
@@ -61,18 +61,20 @@ package LibUI 0.01 {
             uiTimer
             uiFreeText
         ];
-        func( 'uiInit',          [ Pointer [ InitOptions() ] ] => Str );
-        func( 'uiUninit',        []                            => Void );
-        func( 'uiFreeInitError', [Str]                         => Void );
+        func( 'uiInit',   [ Pointer [ InitOptions() ] ]          => Str );
+        func( 'uiUninit', []                                     => Void );
+        func( 'uiMain',   []                                     => Void );
+        func( 'uiQuit',   []                                     => Void );
+        func( 'uiTimer',  [ Int, CodeRef [ [Any] => Int ], Any ] => Void );
+
+        # Undocumented
+        func( 'uiFreeInitError', [Str] => Void );
         #
-        func( 'uiMain',      []    => Void );
         func( 'uiMainSteps', []    => Void );
         func( 'uiMainStep',  [Int] => Int );
-        func( 'uiQuit',      []    => Void );
         #
         func( 'uiQueueMain', [ CodeRef [ [ Pointer [Void] ] => Void ], Any ] => Void );
         #
-        func( 'uiTimer', [ Int, CodeRef [ [Any] => Int ], Any ] => Void );
         affix(
             lib(), 'uiOnShouldQuit', [ CodeRef [ [Any] => Int ], Any ] => Void,
             'LibUI::onShouldQuit'
@@ -122,6 +124,8 @@ LibUI - Simple, Portable, Native GUI Library
 
 LibUI is a simple and portable (but not inflexible) GUI library in C that uses
 the native GUI technologies of each platform it supports.
+
+This distribution is under construction. It works but is incomplete.
 
 =head1 Container controls
 
@@ -193,12 +197,7 @@ the native GUI technologies of each platform it supports.
 
 =item L<LibUI::VerticalSeparator> - a control to visually separate controls vertically
 
-
-
 =back
-
-
-=head2 Buttons
 
 =head2 Dialog windows
 
@@ -232,6 +231,75 @@ See L<LibUI::Window/Dialog windows> for more.
 
 The upstream API is a mess so I'm still plotting around this.
 
+=head1 GUI Functions
+
+Some basics you gotta use just to keep a modern GUI running.
+
+This is incomplete but... well, I'm working on it.
+
+
+
+=head2 C<Init( ... )>
+
+    Init( { Size => 1024 } );
+
+Ask LibUI to do all the platform specific work to get up and running.
+
+Expected parameters include:
+
+=over
+
+=item C<$options>
+
+LibUI::InitOptions structure.
+
+=back
+
+
+=head2 C<Uninit( ... )>
+
+    Uninit( );
+
+Ask LibUI to break everything down before quitting.
+
+=head2 C<Quit( ... )>
+
+    Quit( );
+
+Quit.
+
+=head2 C<Main( ... )>
+
+    Main( );
+
+Let LibUI's event loop run until interrupted.
+
+=head2 C<Timer( ... )>
+
+    Timer( 1000, sub { die 'do not do this here' }, undef);
+
+Expected parameters include:
+
+=over
+
+=item C<$time>
+
+Time in milliseconds.
+
+=item C<$func>
+
+CodeRef that will be triggered when C<$time> runs out.
+
+Return a true value from your C<$func> to make your timer repeating.
+
+=item C<$data>
+
+Any userdata you feel like passing.
+
+=back
+
+
+
 =head1 Requirements
 
 See L<Alien::libui>
@@ -247,7 +315,7 @@ the same terms as Perl itself.
 
 Sanko Robinson E<lt>sanko@cpan.orgE<gt>
 
-=for stopwords draggable
+=for stopwords draggable gotta userdata
 
 =cut
 
