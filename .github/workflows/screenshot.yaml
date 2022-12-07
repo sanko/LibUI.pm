@@ -1,0 +1,46 @@
+name: Take screenshots
+
+on:
+  push:
+    branches: [ screenshot ]
+  pull_request:
+    branches: [ screenshot ]
+
+jobs:
+  build-linux-qt-current:
+    name: Linux Qt 6.3 (current) build
+    runs-on: ubuntu-latest
+    env:
+      DISPLAY: ":1"
+    steps:
+    - uses: actions/checkout@v2
+    - name: Smoke test
+      run: |
+        Xvfb :1 &
+        sleep 10
+        import -pause 1 -window root screenshot-linux-qt6-3.jpg
+        killall Xvfb
+    - name: Upload smoke test artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: screenshot-linux-qt6-3.jpg
+        path: screenshot-linux-qt6-3.jpg
+
+  build-windows-qt-current:
+    name: Windows Qt 6.3 (current) build
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: OrbitalOwen/desktop-screenshot-action@0.1
+      with:
+        file-name: 'screenshot-windows-qt6-3.jpg'
+
+  build-mac-qt-current:
+    name: MacOS
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: OrbitalOwen/desktop-screenshot-action@0.1
+      with:
+        file-name: 'screenshot-macos-qt6-3.jpg'
+
