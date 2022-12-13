@@ -89,17 +89,11 @@ Some basics you gotta use just to keep a modern GUI running.
 
 This is incomplete but... well, I'm working on it.
 
-## `Init( ... )`
+## `Init( )`
 
-    Init( { Size => 1024 } );
+    Init( );
 
 Ask LibUI to do all the platform specific work to get up and running.
-
-Expected parameters include:
-
-- `$options`
-
-    LibUI::InitOptions structure.
 
 ## `Uninit( ... )`
 

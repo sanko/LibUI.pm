@@ -35,15 +35,10 @@ jobs:
 
     - name: perl -V
       run: perl -V
-
-    - name: Install dependencies
-      run: |
-          cpanm -n -v https://github.com/sanko/Affix.pm.git
-          cpanm --installdeps -v -n --mirror http://cpan.cpantesters.org/ .
-
-    - name: Regular Tests
-      run: |
-          cpanm -v --test-only .
+    - run: cpanm -n -v https://github.com/sanko/Affix.pm.git
+    - run: cpanm --installdeps -v -n --mirror http://cpan.cpantesters.org/ .
+    - run: cpanm -v -n .
+    - run: prove -lv -r t
 
     - name: Show content of log files on Linux
       if: ${{ failure() && startsWith( matrix.runner, 'ubuntu-' )  }}
