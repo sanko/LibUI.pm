@@ -54,7 +54,7 @@ LibUI::Menu - Application-Level Menu Bar
     use LibUI ':all';
     use LibUI::Window;
     use LibUI::Menu;
-    Init( { Size => 1024 } ) && die;
+    Init && die;
     my $mnuFile = LibUI::Menu->new('File');
     $mnuFile->appendItem('New')->onClicked( sub { warn 'File>New' }, undef );
     $mnuFile->appendItem('Open');

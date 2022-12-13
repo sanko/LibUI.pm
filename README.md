@@ -117,6 +117,16 @@ Let LibUI's event loop run until interrupted.
 
     Timer( 1000, sub { die 'do not do this here' }, undef);
 
+    Timer(
+        1000,
+        sub {
+            my $data = shift;
+            return 1 unless ++$data->{ticks} == 5;
+            0;
+        },
+        { ticks => 0 }
+    );
+
 Expected parameters include:
 
 - `$time`
@@ -131,7 +141,7 @@ Expected parameters include:
 
 - `$data`
 
-    Any userdata you feel like passing.
+    Any userdata you feel like passing. It'll be handed off to your function.
 
 # Requirements
 

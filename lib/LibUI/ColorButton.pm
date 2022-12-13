@@ -53,7 +53,7 @@ LibUI::ColorButton - Color Picker
     use LibUI ':all';
     use LibUI::Window;
     use LibUI::ColorButton;
-    Init( { Size => 1024 } ) && die;
+    Init && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
     my $cbtn   = LibUI::ColorButton->new();
     $cbtn->onChanged(

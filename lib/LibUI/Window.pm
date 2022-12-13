@@ -113,7 +113,7 @@ LibUI::Window - Top-Level Window
 
     use LibUI ':all';
     use LibUI::Window;
-    Init( { Size => 1024 } ) && die;
+    Init && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
     $window->onClosing(
         sub {

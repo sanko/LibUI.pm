@@ -41,7 +41,7 @@ Fields
     use LibUI::Form;
     use LibUI::Window;
     use LibUI::ColorButton;
-    Init( { Size => 1024 } ) && die;
+    Init && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
     my $form   = LibUI::Form->new();
     my $cbtn_l = LibUI::ColorButton->new();

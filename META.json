@@ -51,8 +51,7 @@
       },
       "test" : {
          "requires" : {
-            "Test::More" : "0.98",
-            "Test::NeedsDisplay" : "0"
+            "Test::More" : "0.98"
          }
       }
    },

@@ -51,7 +51,7 @@ Predefined Options or Enter Your Own
     use LibUI::VBox;
     use LibUI::Window;
     use LibUI::EditableCombobox;
-    Init( { Size => 1024 } ) && die;
+    Init && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
     my $box    = LibUI::VBox->new();
     my $combo  = LibUI::EditableCombobox->new();

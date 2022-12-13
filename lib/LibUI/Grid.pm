@@ -53,7 +53,7 @@ LibUI::Grid - Control Container to Arrange Containing Controls in a Grid
     use LibUI::Align qw[Center Fill];
     use LibUI::At    qw[Bottom];
     use LibUI::Label;
-    Init( { Size => 1024 } ) && die;
+    Init && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
     my $grid   = LibUI::Grid->new();
     my $lbl    = LibUI::Label->new('Top Left');

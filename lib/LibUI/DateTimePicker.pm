@@ -54,7 +54,7 @@ LibUI::DateTimePicker - Control to Enter a Date and Time
     use LibUI::Window;
     use LibUI::DateTimePicker;
     use Time::Piece;
-    Init( { Size => 1024 } ) && die;
+    Init && die;
     my $window = LibUI::Window->new( 'Schedule an Event', 320, 100, 0 );
     my $box    = LibUI::VBox->new();
     my $date   = LibUI::DateTimePicker->new();

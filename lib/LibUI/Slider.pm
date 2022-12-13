@@ -59,7 +59,7 @@ Slider
     use LibUI::VBox;
     use LibUI::Window;
     use LibUI::Slider;
-    Init( { Size => 1024 } ) && die;
+    Init && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
     my $box    = LibUI::VBox->new();
     my $slider = LibUI::Slider->new( 1, 100 );

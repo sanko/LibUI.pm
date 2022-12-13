@@ -5,5 +5,4 @@ requires 'Time::Piece';
 requires 'Affix', '0.05';
 on 'test' => sub {
     requires 'Test::More', '0.98';
-    requires 'Test::NeedsDisplay';
 };

@@ -42,7 +42,7 @@ or +/- Buttons
     use LibUI::VBox;
     use LibUI::Window;
     use LibUI::Spinbox;
-    Init( { Size => 1024 } ) && die;
+    Init && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
     my $box    = LibUI::VBox->new();
     my $count  = LibUI::Spinbox->new( 1, 100 );

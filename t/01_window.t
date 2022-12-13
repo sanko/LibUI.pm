@@ -1,10 +1,12 @@
 use strict;
 use Test::More 0.98;
-use Test::NeedsDisplay;
+use lib './t/lib', './lib';
+use t::Display;
 use lib '../lib';
 use LibUI ':all';
 use LibUI::Window;
-Init( { Size => 1024 } ) && die;
+t::Display::needs_display();
+Init() && die;
 my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
 isa_ok $window, 'LibUI::Window';
 $window->onClosing(

@@ -46,7 +46,7 @@ LibUI::MenuItem - Menu Item Use in Conjunction with LibUI::Menu
     use LibUI ':all';
     use LibUI::Window;
     use LibUI::Menu;
-    Init( { Size => 1024 } ) && die;
+    Init && die;
     my $mnuTest  = LibUI::Menu->new('Test');
     my $mnuCheck = $mnuTest->appendCheckItem('Target');
     $mnuTest->appendSeparator;

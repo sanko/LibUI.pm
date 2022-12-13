@@ -59,7 +59,7 @@ LibUI::MultilineEntry - Multiline Text Entry Field
     use LibUI::VBox;
     use LibUI::Window;
     use LibUI::MultilineEntry;
-    Init( { Size => 1024 } ) && die;
+    Init && die;
     my $window = LibUI::Window->new( 'Notepadish', 320, 100, 0 );
     my $box    = LibUI::VBox->new();
     my $text   = LibUI::MultilineEntry->new();

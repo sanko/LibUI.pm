@@ -37,7 +37,7 @@ LibUI::Button - Button to be Clicked by the User to Trigger an Action
     use LibUI ':all';
     use LibUI::Window;
     use LibUI::Button;
-    Init( { Size => 1024 } ) && die;
+    Init && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
     my $btn    = LibUI::Button->new('Click me!');
     $btn->onClicked(

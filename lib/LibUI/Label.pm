@@ -30,7 +30,7 @@ LibUI::Label - Non-interactive Text Display
     use LibUI::VBox;
     use LibUI::Window;
     use LibUI::Label;
-    Init( { Size => 1024 } ) && die;
+    Init && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
     my $box    = LibUI::VBox->new();
     my $lbl    = LibUI::Label->new('Hello, World');

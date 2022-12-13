@@ -49,6 +49,13 @@ package LibUI 0.01 {
             //= wrap( lib(), 'uiInit', [ Pointer [ Struct [ Size => Size_t ] ] ], Str );
         $func->( { Size => 1024 } );
     }
+
+    sub Timer($&;$) {
+        my ( $timeout, $coderef, $agg ) = @_;
+        CORE::state $func
+            //= wrap( lib(), 'uiTimer', [ Int, CodeRef [ [Any] => Int ], Any ] => Void );
+        $func->( $timeout, $coderef, $agg // undef );
+    }
     typedef uiForEach => Enum [qw[uiForEachContinue uiForEachStop]];
     {
         export default => qw[uiInit uiUninit uiFreeInitError
@@ -57,10 +64,9 @@ package LibUI 0.01 {
             uiTimer
             uiFreeText
         ];
-        func( 'uiUninit', []                                     => Void );
-        func( 'uiMain',   []                                     => Void );
-        func( 'uiQuit',   []                                     => Void );
-        func( 'uiTimer',  [ Int, CodeRef [ [Any] => Int ], Any ] => Void );
+        func( 'uiUninit', [] => Void );
+        func( 'uiMain',   [] => Void );
+        func( 'uiQuit',   [] => Void );
 
         # Undocumented
         func( 'uiFreeInitError', [Str] => Void );
@@ -260,6 +266,16 @@ Let LibUI's event loop run until interrupted.
 
     Timer( 1000, sub { die 'do not do this here' }, undef);
 
+    Timer(
+        1000,
+        sub {
+            my $data = shift;
+            return 1 unless ++$data->{ticks} == 5;
+            0;
+        },
+        { ticks => 0 }
+    );
+
 Expected parameters include:
 
 =over
@@ -276,7 +292,7 @@ Return a true value from your C<$func> to make your timer repeating.
 
 =item C<$data>
 
-Any userdata you feel like passing.
+Any userdata you feel like passing. It'll be handed off to your function.
 
 =back
 

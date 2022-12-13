@@ -41,7 +41,7 @@ LibUI::Tab - Multi-Page Control Interface that Displays One Page at a Time
     use LibUI::Tab;
     use LibUI::Window;
     use LibUI::Label;
-    Init( { Size => 1024 } ) && die;
+    Init && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
     my $tabs   = LibUI::Tab->new;
     $tabs->append( $_, LibUI::Label->new($_) ) for qw[First Second Third Fourth];

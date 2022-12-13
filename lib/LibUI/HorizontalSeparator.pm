@@ -30,7 +30,7 @@ LibUI::HorizontalSeparator - Visually Separates Controls Horizontally
     use LibUI::Window;
     use LibUI::MultilineEntry;
     use LibUI::HorizontalSeparator;
-    Init( { Size => 1024 } ) && die;
+    Init && die;
     my $window = LibUI::Window->new( 'Left and Right', 320, 100, 0 );
     my $box    = LibUI::HBox->new();
     my $left   = LibUI::MultilineEntry->new();

@@ -25,7 +25,7 @@ LibUI::Entry - Single Line Text Entry Field Suitable for Sensitive Input
     use LibUI::VBox;
     use LibUI::Window;
     use LibUI::SearchEntry;
-    Init( { Size => 1024 } ) && die;
+    Init && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
     my $box    = LibUI::VBox->new();
     my $pass   = LibUI::SearchEntry->new;

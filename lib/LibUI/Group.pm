@@ -43,7 +43,7 @@ Control
     use LibUI::Window;
     use LibUI::ColorButton;
     use LibUI::Label;
-    Init( { Size => 1024 } ) && die;
+    Init && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
     my $group  = LibUI::Group->new('Color Pickers');
     my $box    = LibUI::HBox->new;

@@ -29,7 +29,7 @@ LibUI::VerticalSeparator - Visually Separates Controls Vertically
     use LibUI::Window;
     use LibUI::MultilineEntry;
     use LibUI::VerticalSeparator;
-    Init( { Size => 1024 } ) && die;
+    Init && die;
     my $window = LibUI::Window->new( 'Top and Bottom', 320, 100, 0 );
     my $box    = LibUI::VBox->new();
     my $top    = LibUI::MultilineEntry->new();
