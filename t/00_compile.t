@@ -41,4 +41,5 @@ use_ok $_ for qw[
     LibUI::VerticalSeparator
     LibUI::Window
 ];
+diag prototype('LibUI::Timer');
 done_testing;

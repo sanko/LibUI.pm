@@ -44,24 +44,19 @@ package LibUI 0.01 {
     #    CORE::say sprintf '  %4d %s', $i, $name if $name =~ m[^ui];
     #}
     #
-    #push @{ $EXPORT_TAGS{types} }, 'InitOptions';
-    #typedef InitOptions => Struct [ Size => Size_t ];
-    #sub InitOptions {
-    #    InitOptions->new(@_);
-    #}
+    sub Init {
+        CORE::state $func
+            //= wrap( lib(), 'uiInit', [ Pointer [ Struct [ Size => Size_t ] ] ], Str );
+        $func->( { Size => 1024 } );
+    }
     typedef uiForEach => Enum [qw[uiForEachContinue uiForEachStop]];
     {
-        typedef 'InitOptions' => Struct [ Size => Size_t ];
-
-        #@InitOptions::ISA = qw[Dyn::Call::Pointer];
-        #
         export default => qw[uiInit uiUninit uiFreeInitError
             uiMain uiMainSteps uiMainStep uiQuit
             uiQueueMain
             uiTimer
             uiFreeText
         ];
-        func( 'uiInit',   [ Pointer [ InitOptions() ] ]          => Str );
         func( 'uiUninit', []                                     => Void );
         func( 'uiMain',   []                                     => Void );
         func( 'uiQuit',   []                                     => Void );
@@ -237,24 +232,11 @@ Some basics you gotta use just to keep a modern GUI running.
 
 This is incomplete but... well, I'm working on it.
 
+=head2 C<Init( )>
 
-
-=head2 C<Init( ... )>
-
-    Init( { Size => 1024 } );
+    Init( );
 
 Ask LibUI to do all the platform specific work to get up and running.
-
-Expected parameters include:
-
-=over
-
-=item C<$options>
-
-LibUI::InitOptions structure.
-
-=back
-
 
 =head2 C<Uninit( ... )>
 
