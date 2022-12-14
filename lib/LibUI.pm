@@ -108,7 +108,7 @@ LibUI - Simple, Portable, Native GUI Library
     use LibUI ':all';
     use LibUI::Window;
     use LibUI::Label;
-    Init( { Size => 1024 } ) && die;
+    Init( ) && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
     $window->setChild( LibUI::Label->new('Hello, World!') );
     $window->onClosing(
