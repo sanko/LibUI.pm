@@ -1,4 +1,4 @@
-package LibUI::MultilineEntry 0.01 {
+package LibUI::MultilineEntry 0.02 {
     use 5.008001;
     use strict;
     use warnings;

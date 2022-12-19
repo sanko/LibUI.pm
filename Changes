@@ -2,6 +2,10 @@ Revision history for Perl extension LibUI.pm
 
 {{$NEXT}}
 
+    - Renamed widgets to fit existing pattern:
+        - LibUI::HorizontalSeparator => LibUI::HSeparator
+        - LibUI::VerticalSeparator   => LibUI::VSeparator
+
 0.01 2022-12-07T00:34:14Z
 
     - original version

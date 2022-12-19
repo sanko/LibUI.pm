@@ -1,13 +1,9 @@
-package LibUI 0.01 {
     use 5.008001;
+package LibUI 0.02 {
     use strict;
     use warnings;
     use lib '../lib', '../blib/arch', '../blib/lib';
     use Affix;
-
-    #use Dyn       qw[:dl];
-    #use Dyn::Load qw[:all];
-    #use Dyn::Call qw[:all];
     use Alien::libui;
     use Exporter 'import';    # gives you Exporter's import() method directly
     use Config;
@@ -292,8 +288,6 @@ Return a true value from your C<$func> to make your timer repeating.
 Any userdata you feel like passing. It'll be handed off to your function.
 
 =back
-
-
 
 =head1 Requirements
 
