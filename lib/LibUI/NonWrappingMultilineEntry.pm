@@ -32,6 +32,7 @@ Automatically Wrap
     use LibUI::NonWrappingMultilineEntry;
     Init && die;
     my $window = LibUI::Window->new( 'Notepadish', 320, 100, 0 );
+    $window->setMargined( 1 );
     my $box    = LibUI::VBox->new();
     my $text   = LibUI::NonWrappingMultilineEntry->new();
     $box->append( $text, 1 );

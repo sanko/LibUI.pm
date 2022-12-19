@@ -61,6 +61,7 @@ Slider
     use LibUI::Slider;
     Init && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
+    $window->setMargined( 1 );
     my $box    = LibUI::VBox->new();
     my $slider = LibUI::Slider->new( 1, 100 );
     $box->append( $slider, 0 );

@@ -50,7 +50,7 @@
       },
       "runtime" : {
          "requires" : {
-            "Affix" : "0.05",
+            "Affix" : "0.08",
             "Alien::libui" : "0",
             "Time::Local" : "1.30",
             "Time::Piece" : "0",

@@ -30,6 +30,7 @@ LibUI::Entry - Single Line Text Entry Field Suitable for Sensitive Input
     use LibUI::PasswordEntry;
     Init && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
+    $window->setMargined( 1 );
     my $box    = LibUI::VBox->new();
     my $pass   = LibUI::PasswordEntry->new;
     $box->append( $pass, 0 );

@@ -4,20 +4,18 @@ package LibUI 0.01 {
     use warnings;
     use lib '../lib', '../blib/arch', '../blib/lib';
     use Affix;
-    use Dyn       qw[:dl];
-    use Dyn::Load qw[:all];
-    use Dyn::Call qw[:all];
+
+    #use Dyn       qw[:dl];
+    #use Dyn::Load qw[:all];
+    #use Dyn::Call qw[:all];
     use Alien::libui;
     use Exporter 'import';    # gives you Exporter's import() method directly
     use Config;
     our %EXPORT_TAGS;
     $|++;
     #
-    my ($path) = Alien::libui->dynamic_libs;
-
     #my $path = '/home/sanko/Downloads/libui-ng-master/build/meson-out/libui.so.0';
-    my $lib = dlLoadLibrary($path);
-    sub lib () {$lib}
+    sub lib () { CORE::state $lib //= Alien::libui->dynamic_libs; $lib }
     #
     sub export {
         my ( $tag, @funcs ) = @_;
@@ -33,21 +31,14 @@ package LibUI 0.01 {
         $name =~ s[::New(.+)$][::$1::new];
 
         #warn sprintf '%30s => %-50s', $func, $name;
-        affix( $lib, $func, $params, $ret, $name );
+        affix( lib, $func, $params, $ret, $name );
     }
     #
-    #my $init = dlSymsInit($path);
-    #
-    #CORE::say "Symbols in $path: " . dlSymsCount($init);
-    #for my $i ( 0 .. dlSymsCount($init) - 1 ) {
-    #    my $name = dlSymsName( $init, $i );
-    #    CORE::say sprintf '  %4d %s', $i, $name if $name =~ m[^ui];
-    #}
-    #
     sub Init {
+        my $aggs = @_ ? shift : { Size => 1024 };
         CORE::state $func
             //= wrap( lib(), 'uiInit', [ Pointer [ Struct [ Size => Size_t ] ] ], Str );
-        $func->( { Size => 1024 } );
+        $func->($aggs);
     }
 
     sub Timer($&;$) {
@@ -110,6 +101,7 @@ LibUI - Simple, Portable, Native GUI Library
     use LibUI::Label;
     Init( ) && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
+    $window->setMargined( 1 );
     $window->setChild( LibUI::Label->new('Hello, World!') );
     $window->onClosing(
         sub {
@@ -194,9 +186,9 @@ This distribution is under construction. It works but is incomplete.
 
 =item L<LibUI::ProgressBar> - a control that visualizes the progress of a task via the fill level of a horizontal bar
 
-=item L<LibUI::HorizontalSeparator> - a control to visually separate controls horizontally
+=item L<LibUI::HSeparator> - a control to visually separate controls horizontally
 
-=item L<LibUI::VerticalSeparator> - a control to visually separate controls vertically
+=item L<LibUI::VSeparator> - a control to visually separate controls vertically
 
 =back
 
@@ -238,11 +230,21 @@ Some basics you gotta use just to keep a modern GUI running.
 
 This is incomplete but... well, I'm working on it.
 
-=head2 C<Init( )>
+=head2 C<Init( [...] )>
 
     Init( );
 
-Ask LibUI to do all the platform specific work to get up and running.
+Ask LibUI to do all the platform specific work to get up and running. If LibUI
+fails to initialize itself, this will return a true value. Weird upstream
+choice, I know...
+
+You B<must> call this before creating widgets.
+
+=head2 C<Main( ... )>
+
+    Main( );
+
+Let LibUI's event loop run until interrupted.
 
 =head2 C<Uninit( ... )>
 
@@ -256,11 +258,6 @@ Ask LibUI to break everything down before quitting.
 
 Quit.
 
-=head2 C<Main( ... )>
-
-    Main( );
-
-Let LibUI's event loop run until interrupted.
 
 =head2 C<Timer( ... )>
 
@@ -301,6 +298,12 @@ Any userdata you feel like passing. It'll be handed off to your function.
 =head1 Requirements
 
 See L<Alien::libui>
+
+=head1 See Also
+
+F<eg/demo.pl> - Very basic example
+
+F<eg/widgets.pl> - Demo of basic controls
 
 =head1 LICENSE
 

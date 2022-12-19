@@ -48,6 +48,7 @@ LibUI::Checkbox - User Checkable Box
     use LibUI::Checkbox;
     Init && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
+    $window->setMargined( 1 );
     my $box    = LibUI::VBox->new();
 
     sub checked {

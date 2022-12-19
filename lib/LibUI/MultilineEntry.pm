@@ -61,6 +61,7 @@ LibUI::MultilineEntry - Multiline Text Entry Field
     use LibUI::MultilineEntry;
     Init && die;
     my $window = LibUI::Window->new( 'Notepadish', 320, 100, 0 );
+    $window->setMargined( 1 );
     my $box    = LibUI::VBox->new();
     my $text   = LibUI::MultilineEntry->new();
     $box->append( $text, 1 );

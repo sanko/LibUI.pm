@@ -10,6 +10,7 @@ LibUI - Simple, Portable, Native GUI Library
     use LibUI::Label;
     Init( ) && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
+    $window->setMargined( 1 );
     $window->setChild( LibUI::Label->new('Hello, World!') );
     $window->onClosing(
         sub {
@@ -61,8 +62,8 @@ This distribution is under construction. It works but is incomplete.
 
 - [LibUI::Label](https://metacpan.org/pod/LibUI%3A%3ALabel) - a control to display non-interactive text
 - [LibUI::ProgressBar](https://metacpan.org/pod/LibUI%3A%3AProgressBar) - a control that visualizes the progress of a task via the fill level of a horizontal bar
-- [LibUI::HorizontalSeparator](https://metacpan.org/pod/LibUI%3A%3AHorizontalSeparator) - a control to visually separate controls horizontally
-- [LibUI::VerticalSeparator](https://metacpan.org/pod/LibUI%3A%3AVerticalSeparator) - a control to visually separate controls vertically
+- [LibUI::HSeparator](https://metacpan.org/pod/LibUI%3A%3AHSeparator) - a control to visually separate controls horizontally
+- [LibUI::VSeparator](https://metacpan.org/pod/LibUI%3A%3AVSeparator) - a control to visually separate controls vertically
 
 ## Dialog windows
 
@@ -89,11 +90,21 @@ Some basics you gotta use just to keep a modern GUI running.
 
 This is incomplete but... well, I'm working on it.
 
-## `Init( )`
+## `Init( [...] )`
 
     Init( );
 
-Ask LibUI to do all the platform specific work to get up and running.
+Ask LibUI to do all the platform specific work to get up and running. If LibUI
+fails to initialize itself, this will return a true value. Weird upstream
+choice, I know...
+
+You **must** call this before creating widgets.
+
+## `Main( ... )`
+
+    Main( );
+
+Let LibUI's event loop run until interrupted.
 
 ## `Uninit( ... )`
 
@@ -106,12 +117,6 @@ Ask LibUI to break everything down before quitting.
     Quit( );
 
 Quit.
-
-## `Main( ... )`
-
-    Main( );
-
-Let LibUI's event loop run until interrupted.
 
 ## `Timer( ... )`
 
@@ -146,6 +151,12 @@ Expected parameters include:
 # Requirements
 
 See [Alien::libui](https://metacpan.org/pod/Alien%3A%3Alibui)
+
+# See Also
+
+`eg/demo.pl` - Very basic example
+
+`eg/widgets.pl` - Demo of basic controls
 
 # LICENSE
 

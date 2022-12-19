@@ -61,6 +61,7 @@ Options
     use LibUI::Combobox;
     Init && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
+    $window->setMargined( 1 );
     my $box    = LibUI::VBox->new();
     my $combo  = LibUI::Combobox->new();
     my @langs  = ( qw[English French Klingon German Japanese], 'Ubbi dubbi' );

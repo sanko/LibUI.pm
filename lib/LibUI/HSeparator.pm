@@ -1,4 +1,4 @@
-package LibUI::HorizontalSeparator 0.01 {
+package LibUI::HSeparator 0.01 {
     use 5.008001;
     use strict;
     use warnings;
@@ -6,8 +6,7 @@ package LibUI::HorizontalSeparator 0.01 {
     use parent 'LibUI::Control';
     #
     affix(
-        LibUI::lib(), 'uiNewHorizontalSeparator',
-        [Void] => InstanceOf ['LibUI::HorizontalSeparator'],
+        LibUI::lib(), 'uiNewHorizontalSeparator', [Void] => InstanceOf ['LibUI::HSeparator'],
         'new'
     );
 };
@@ -21,7 +20,7 @@ __END__
 
 =head1 NAME
 
-LibUI::HorizontalSeparator - Visually Separates Controls Horizontally
+LibUI::HSeparator - Visually Separates Controls Horizontally
 
 =head1 SYNOPSIS
 
@@ -29,14 +28,15 @@ LibUI::HorizontalSeparator - Visually Separates Controls Horizontally
     use LibUI::HBox;
     use LibUI::Window;
     use LibUI::MultilineEntry;
-    use LibUI::HorizontalSeparator;
+    use LibUI::HSeparator;
     Init && die;
     my $window = LibUI::Window->new( 'Left and Right', 320, 100, 0 );
+    $window->setMargined( 1 );
     my $box    = LibUI::HBox->new();
     my $left   = LibUI::MultilineEntry->new();
     my $right  = LibUI::MultilineEntry->new();
     $box->append( $left,                             1 );
-    $box->append( LibUI::HorizontalSeparator->new(), 0 );
+    $box->append( LibUI::HSeparator->new(), 0 );
     $box->append( $right,                            1 );
     $window->setChild($box);
     $window->onClosing(
@@ -51,8 +51,8 @@ LibUI::HorizontalSeparator - Visually Separates Controls Horizontally
 
 =head1 DESCRIPTION
 
-A LibUI::HorizontalSeparator object represents a control to visually separate
-controls horizontally.
+A LibUI::HSeparator object represents a control to visually separate controls
+horizontally.
 
 =head1 Functions
 
@@ -60,7 +60,7 @@ Not a lot here but... well, it's just a line.
 
 =head2 C<new( )>
 
-    my $sep = LibUI::HorizontalSeparator->new( );
+    my $sep = LibUI::HSeparator->new( );
 
 Creates a new horizontal separator.
 

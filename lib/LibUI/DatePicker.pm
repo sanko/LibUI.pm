@@ -29,6 +29,7 @@ LibUI::DatePicker - Control to Enter a Date
     use Time::Piece;
     Init && die;
     my $window = LibUI::Window->new( 'Schedule an Event', 320, 100, 0 );
+    $window->setMargined( 1 );
     my $box    = LibUI::VBox->new();
     my $date   = LibUI::DatePicker->new();
     $box->append( $date, 0 );

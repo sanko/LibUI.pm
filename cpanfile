@@ -2,7 +2,7 @@ requires 'perl', '5.014000';
 requires 'Alien::libui';
 requires 'Time::Local', '1.30';
 requires 'Time::Piece';
-requires 'Affix', '0.05';
+requires 'Affix', '0.08';
 on 'test' => sub {
     requires 'Test::More', '0.98';
 };

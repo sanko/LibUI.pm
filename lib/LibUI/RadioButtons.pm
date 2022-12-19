@@ -48,6 +48,7 @@ LibUI::RadioButtons - Multiple Choice Array of Check Buttons
     use LibUI::RadioButtons;
     Init && die;
     my $window = LibUI::Window->new( 'Age range', 320, 100, 0 );
+    $window->setMargined( 1 );
     my $box    = LibUI::VBox->new();
     my $radio  = LibUI::RadioButtons->new();
     my @range  = qw[0-5 6-12 13-18 19-25 26-35 36-45 46-60 60+];

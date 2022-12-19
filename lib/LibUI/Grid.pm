@@ -55,6 +55,7 @@ LibUI::Grid - Control Container to Arrange Containing Controls in a Grid
     use LibUI::Label;
     Init && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
+    $window->setMargined( 1 );
     my $grid   = LibUI::Grid->new();
     my $lbl    = LibUI::Label->new('Top Left');
     $grid->append( $lbl,                           0, 0, 1, 1, 1, Fill, 1, Fill );

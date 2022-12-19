@@ -45,6 +45,7 @@ Control
     use LibUI::Label;
     Init && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
+    $window->setMargined( 1 );
     my $group  = LibUI::Group->new('Color Pickers');
     my $box    = LibUI::HBox->new;
     my $cbtn_l = LibUI::ColorButton->new();

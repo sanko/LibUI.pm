@@ -44,6 +44,7 @@ or +/- Buttons
     use LibUI::Spinbox;
     Init && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
+    $window->setMargined( 1 );
     my $box    = LibUI::VBox->new();
     my $count  = LibUI::Spinbox->new( 1, 100 );
     $box->append( $count, 0 );

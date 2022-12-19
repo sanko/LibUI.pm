@@ -35,6 +35,7 @@ LibUI::ProgressBar - Control that Visualizes the Progress of a Task
     use LibUI::ProgressBar;
     Init && die;
     my $window   = LibUI::Window->new( 'Hang on a tick...', 320, 100, 0 );
+    $window->setMargined( 1 );
     my $box      = LibUI::VBox->new();
     my $progress = LibUI::ProgressBar->new();
     $progress->setValue(-1);

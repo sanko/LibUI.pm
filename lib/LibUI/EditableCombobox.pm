@@ -53,6 +53,7 @@ Predefined Options or Enter Your Own
     use LibUI::EditableCombobox;
     Init && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
+    $window->setMargined( 1 );
     my $box    = LibUI::VBox->new();
     my $combo  = LibUI::EditableCombobox->new();
     my @langs  = ( qw[English French Klingon German Japanese], 'Ubbi dubbi' );

@@ -1,4 +1,4 @@
-package LibUI::VerticalSeparator 0.01 {
+package LibUI::VSeparator 0.01 {
     use 5.008001;
     use strict;
     use warnings;
@@ -6,7 +6,7 @@ package LibUI::VerticalSeparator 0.01 {
     use parent 'LibUI::Control';
     #
     affix(
-        LibUI::lib(), 'uiNewVerticalSeparator', [Void] => InstanceOf ['LibUI::VerticalSeparator'],
+        LibUI::lib(), 'uiNewVerticalSeparator', [Void] => InstanceOf ['LibUI::VSeparator'],
         'new'
     );
 };
@@ -20,7 +20,7 @@ __END__
 
 =head1 NAME
 
-LibUI::VerticalSeparator - Visually Separates Controls Vertically
+LibUI::VSeparator - Visually Separates Controls Vertically
 
 =head1 SYNOPSIS
 
@@ -28,14 +28,15 @@ LibUI::VerticalSeparator - Visually Separates Controls Vertically
     use LibUI::VBox;
     use LibUI::Window;
     use LibUI::MultilineEntry;
-    use LibUI::VerticalSeparator;
+    use LibUI::VSeparator;
     Init && die;
     my $window = LibUI::Window->new( 'Top and Bottom', 320, 100, 0 );
+    $window->setMargined( 1 );
     my $box    = LibUI::VBox->new();
     my $top    = LibUI::MultilineEntry->new();
     my $bot    = LibUI::MultilineEntry->new();
     $box->append( $top,                            1 );
-    $box->append( LibUI::VerticalSeparator->new(), 0 );
+    $box->append( LibUI::VSeparator->new(), 0 );
     $box->append( $bot,                            1 );
     $window->setChild($box);
     $window->onClosing(
@@ -50,8 +51,8 @@ LibUI::VerticalSeparator - Visually Separates Controls Vertically
 
 =head1 DESCRIPTION
 
-A LibUI::VerticalSeparator object represents a control to visually separate
-controls vertically.
+A LibUI::VSeparator object represents a control to visually separate controls
+vertically.
 
 =head1 Functions
 
@@ -59,7 +60,7 @@ Not a lot here but... well, it's just a line.
 
 =head2 C<new( )>
 
-    my $sep = LibUI::VerticalSeparator->new( );
+    my $sep = LibUI::VSeparator->new( );
 
 Creates a new vertical separator.
 
