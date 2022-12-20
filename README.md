@@ -22,6 +22,19 @@ LibUI - Simple, Portable, Native GUI Library
     $window->show;
     Main();
 
+<div>
+    <h2>Screenshots</h2> <div style="text-align: center">
+    <h3>Linux</h3><img alt="Linux"
+    src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/linux.png" />
+    <h3>MacOS</h3><img
+    alt="MacOS"
+    src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/macos.png" />
+    <h3>Windows</h3><img
+    alt="Windows"
+    src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/windows.png" />
+    </div>
+</div>
+
 # DESCRIPTION
 
 LibUI is a simple and portable (but not inflexible) GUI library in C that uses
