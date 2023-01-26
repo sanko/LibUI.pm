@@ -1,86 +1,86 @@
-    use 5.008001;
+use 5.008001;
 
-    package LibUI 0.02 {
-        use strict;
-        use warnings;
-        use lib '../lib', '../blib/arch', '../blib/lib';
-        use Affix;
-        use Alien::libui;
-        use Exporter 'import';    # gives you Exporter's import() method directly
-        use Config;
-        our %EXPORT_TAGS;
-        $|++;
-        #
-        #my $path = '/home/sanko/Downloads/libui-ng-master/build/meson-out/libui.so.0';
-        sub lib () { CORE::state $lib //= Alien::libui->dynamic_libs; $lib }
-        #
-        sub export {
-            my ( $tag, @funcs ) = @_;
-            push @{ $EXPORT_TAGS{$tag} }, map { m[^ui]; $'; } @funcs;
-        }
-
-        sub func {
-            my ( $func, $params, $ret ) = @_;
-            my $name = $func;
-            $name =~ s[^ui][LibUI::];
-            $name
-                =~ s[LibUI::(Box|Button|Combobox|Control|Menu|NonWrappingMultilineEntry|RadioButtons|Slider|Window)][LibUI::$1::];
-            $name =~ s[::New(.+)$][::$1::new];
-
-            #warn sprintf '%30s => %-50s', $func, $name;
-            affix( lib, $func, $params, $ret, $name );
-        }
-        #
-        sub Init {
-            my $aggs = @_ ? shift : { Size => 1024 };
-            CORE::state $func
-                //= wrap( lib(), 'uiInit', [ Pointer [ Struct [ Size => Size_t ] ] ], Str );
-            $func->($aggs);
-        }
-
-        sub Timer($&;$) {
-            my ( $timeout, $coderef, $agg ) = @_;
-            CORE::state $func
-                //= wrap( lib(), 'uiTimer', [ Int, CodeRef [ [Any] => Int ], Any ] => Void );
-            $func->( $timeout, $coderef, $agg // undef );
-        }
-        typedef uiForEach => Enum [qw[uiForEachContinue uiForEachStop]];
-        {
-            export default => qw[uiInit uiUninit uiFreeInitError
-                uiMain uiMainSteps uiMainStep uiQuit
-                uiQueueMain
-                uiTimer
-                uiFreeText
-            ];
-            func( 'uiUninit', [] => Void );
-            func( 'uiMain',   [] => Void );
-            func( 'uiQuit',   [] => Void );
-
-            # Undocumented
-            func( 'uiFreeInitError', [Str] => Void );
-            #
-            func( 'uiMainSteps', []    => Void );
-            func( 'uiMainStep',  [Int] => Int );
-            #
-            func( 'uiQueueMain', [ CodeRef [ [ Pointer [Void] ] => Void ], Any ] => Void );
-            #
-            affix(
-                lib(), 'uiOnShouldQuit', [ CodeRef [ [Any] => Int ], Any ] => Void,
-                'LibUI::onShouldQuit'
-            );
-            func( 'uiFreeText', [Str] => Void );
-        }
-        ##############################################################################################
-        #
-        {
-            my %seen;
-            push @{ $EXPORT_TAGS{all} }, grep { !$seen{$_}++ } @{ $EXPORT_TAGS{$_} }
-                for keys %EXPORT_TAGS;
-            our @EXPORT_OK = @{ $EXPORT_TAGS{all} };
-        }
-    };
-    1;
+package LibUI 0.02 {
+    use strict;
+    use warnings;
+    use lib '../lib', '../blib/arch', '../blib/lib';
+    use Affix;
+    use Alien::libui;
+    use Exporter 'import';    # gives you Exporter's import() method directly
+    use Config;
+    our %EXPORT_TAGS;
+    $|++;
     #
+    #my $path = '/home/sanko/Downloads/libui-ng-master/build/meson-out/libui.so.0';
+    sub lib () { CORE::state $lib //= Alien::libui->dynamic_libs; $lib }
+    #
+    sub export {
+        my ( $tag, @funcs ) = @_;
+        push @{ $EXPORT_TAGS{$tag} }, map { m[^ui]; $'; } @funcs;
+    }
+
+    sub func {
+        my ( $func, $params, $ret ) = @_;
+        my $name = $func;
+        $name =~ s[^ui][LibUI::];
+        $name
+            =~ s[LibUI::(Box|Button|Combobox|Control|Menu|NonWrappingMultilineEntry|RadioButtons|Slider|Window)][LibUI::$1::];
+        $name =~ s[::New(.+)$][::$1::new];
+
+        #warn sprintf '%30s => %-50s', $func, $name;
+        affix( lib, $func, $params, $ret, $name );
+    }
+    #
+    sub Init {
+        my $aggs = @_ ? shift : { Size => 1024 };
+        CORE::state $func
+            //= wrap( lib(), 'uiInit', [ Pointer [ Struct [ Size => Size_t ] ] ], Str );
+        $func->($aggs);
+    }
+
+    sub Timer($&;$) {
+        my ( $timeout, $coderef, $agg ) = @_;
+        CORE::state $func
+            //= wrap( lib(), 'uiTimer', [ Int, CodeRef [ [Any] => Int ], Any ] => Void );
+        $func->( $timeout, $coderef, $agg // undef );
+    }
+    typedef uiForEach => Enum [qw[uiForEachContinue uiForEachStop]];
+    {
+        export default => qw[uiInit uiUninit uiFreeInitError
+            uiMain uiMainSteps uiMainStep uiQuit
+            uiQueueMain
+            uiTimer
+            uiFreeText
+        ];
+        func( 'uiUninit', [] => Void );
+        func( 'uiMain',   [] => Void );
+        func( 'uiQuit',   [] => Void );
+
+        # Undocumented
+        func( 'uiFreeInitError', [Str] => Void );
+        #
+        func( 'uiMainSteps', []    => Void );
+        func( 'uiMainStep',  [Int] => Int );
+        #
+        func( 'uiQueueMain', [ CodeRef [ [ Pointer [Void] ] => Void ], Any ] => Void );
+        #
+        affix(
+            lib(), 'uiOnShouldQuit', [ CodeRef [ [Any] => Int ], Any ] => Void,
+            'LibUI::onShouldQuit'
+        );
+        func( 'uiFreeText', [Str] => Void );
+    }
+    ##############################################################################################
+    #
+    {
+        my %seen;
+        push @{ $EXPORT_TAGS{all} }, grep { !$seen{$_}++ } @{ $EXPORT_TAGS{$_} }
+            for keys %EXPORT_TAGS;
+        our @EXPORT_OK = @{ $EXPORT_TAGS{all} };
+    }
+};
+1;
+#
 __END__
 
 =pod

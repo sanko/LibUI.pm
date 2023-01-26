@@ -28,4 +28,5 @@ jobs:
           perl-version: ${{ matrix.perl }}
           distribution: ${{ matrix.dist }}
       - run: perl -V
-      - run: cpanm -v Alien::libui
+      - run: cpanm -v -n Alien::libui Affix
+      - run: cpanm -v LibUI

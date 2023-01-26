@@ -19,7 +19,7 @@ $window->onClosing(
 );
 ok !$window->show, '->show';
 Timer(
-    10,
+    100,
     sub {
         pass 'Timer triggered! Quitting...';
         Quit;
