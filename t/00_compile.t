@@ -4,6 +4,7 @@ use lib '../lib';
 use_ok $_ for qw[
     LibUI
     LibUI::Align
+    LibUI::Area
     LibUI::At
     LibUI::Button
     LibUI::Checkbox
@@ -28,6 +29,7 @@ use_ok $_ for qw[
     LibUI::PasswordEntry
     LibUI::ProgressBar
     LibUI::RadioButtons
+    LibUI::ScrollingArea
     LibUI::SearchEntry
     LibUI::Slider
     LibUI::Spinbox
