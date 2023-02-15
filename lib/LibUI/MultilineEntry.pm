@@ -6,39 +6,41 @@ package LibUI::MultilineEntry 0.02 {
     use parent 'LibUI::Control';
     #
     affix(
-        LibUI::lib(), 'uiNewMultilineEntry', [Void] => InstanceOf ['LibUI::MultilineEntry'],
-        'new'
-    );
-    affix(
-        LibUI::lib(), 'uiMultilineEntryAppend',
-        [ InstanceOf ['LibUI::MultilineEntry'], Str ] => Void,
-        'append'
+        LibUI::lib(),
+        [ 'uiNewMultilineEntry', 'new' ],
+        [Void] => InstanceOf ['LibUI::MultilineEntry']
     );
     affix(
         LibUI::lib(),
-        'uiMultilineEntryOnChanged',
+        [ 'uiMultilineEntryAppend',             'append' ],
+        [ InstanceOf ['LibUI::MultilineEntry'], Str ] => Void
+    );
+    affix(
+        LibUI::lib(),
+        [ 'uiMultilineEntryOnChanged', 'onChanged' ],
         [   InstanceOf ['LibUI::MultilineEntry'],
             CodeRef [ [ InstanceOf ['LibUI::MultilineEntry'], Any ] => Void ], Any
-        ] => Void,
-        'onChanged'
+        ] => Void
     );
     affix(
-        LibUI::lib(), 'uiMultilineEntryReadOnly', [ InstanceOf ['LibUI::MultilineEntry'] ] => Int,
-        'readonly'
+        LibUI::lib(),
+        [ 'uiMultilineEntryReadOnly', 'readonly' ],
+        [ InstanceOf ['LibUI::MultilineEntry'] ] => Int
     );
     affix(
-        LibUI::lib(), 'uiMultilineEntrySetReadOnly',
-        [ InstanceOf ['LibUI::MultilineEntry'], Int ] => Void,
-        'setReadonly'
+        LibUI::lib(),
+        [ 'uiMultilineEntrySetReadOnly',        'setReadonly' ],
+        [ InstanceOf ['LibUI::MultilineEntry'], Int ] => Void
     );
     affix(
-        LibUI::lib(), 'uiMultilineEntrySetText',
-        [ InstanceOf ['LibUI::MultilineEntry'], Str ] => Void,
-        'setText'
+        LibUI::lib(),
+        [ 'uiMultilineEntrySetText',            'setText' ],
+        [ InstanceOf ['LibUI::MultilineEntry'], Str ] => Void
     );
     affix(
-        LibUI::lib(), 'uiMultilineEntryText', [ InstanceOf ['LibUI::MultilineEntry'] ] => Str,
-        'text'
+        LibUI::lib(),
+        [ 'uiMultilineEntryText', 'text' ],
+        [ InstanceOf ['LibUI::MultilineEntry'] ] => Str
     );
 };
 1;

@@ -5,22 +5,25 @@ package LibUI::Group 0.02 {
     use Affix;
     use parent 'LibUI::Control';
     #
-    affix( LibUI::lib(), 'uiGroupMargined', [ InstanceOf ['LibUI::Group'] ] => Int, 'margined' );
+    affix( LibUI::lib(), [ 'uiGroupMargined', 'margined' ],
+        [ InstanceOf ['LibUI::Group'] ] => Int );
     affix(
-        LibUI::lib(), 'uiGroupSetChild',
-        [ InstanceOf ['LibUI::Group'], InstanceOf ['LibUI::Control'] ] => Void,
-        'setChild'
+        LibUI::lib(),
+        [ 'uiGroupSetChild',           'setChild' ],
+        [ InstanceOf ['LibUI::Group'], InstanceOf ['LibUI::Control'] ] => Void
     );
     affix(
-        LibUI::lib(), 'uiGroupSetMargined', [ InstanceOf ['LibUI::Group'], Int ] => Void,
-        'setMargined'
+        LibUI::lib(),
+        [ 'uiGroupSetMargined',        'setMargined' ],
+        [ InstanceOf ['LibUI::Group'], Int ] => Void
     );
     affix(
-        LibUI::lib(), 'uiGroupSetTitle', [ InstanceOf ['LibUI::Group'], Str ] => Void,
-        'setTitle'
+        LibUI::lib(),
+        [ 'uiGroupSetTitle',           'setTitle' ],
+        [ InstanceOf ['LibUI::Group'], Str ] => Void
     );
-    affix( LibUI::lib(), 'uiGroupTitle', [ InstanceOf ['LibUI::Group'] ] => Str,       'title' );
-    affix( LibUI::lib(), 'uiNewGroup',   [ Void, Str ] => InstanceOf ['LibUI::Group'], 'new' );
+    affix( LibUI::lib(), [ 'uiGroupTitle', 'title' ], [ InstanceOf ['LibUI::Group'] ] => Str );
+    affix( LibUI::lib(), [ 'uiNewGroup', 'new' ], [ Void, Str ] => InstanceOf ['LibUI::Group'] );
 };
 1;
 #

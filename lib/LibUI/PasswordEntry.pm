@@ -6,8 +6,9 @@ package LibUI::PasswordEntry 0.02 {
     use parent 'LibUI::Entry';
     #
     affix(
-        LibUI::lib(), 'uiNewPasswordEntry', [Void] => InstanceOf ['LibUI::PasswordEntry'],
-        'new'
+        LibUI::lib(),
+        [ 'uiNewPasswordEntry', 'new' ],
+        [Void] => InstanceOf ['LibUI::PasswordEntry']
     );
 };
 1;

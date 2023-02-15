@@ -6,9 +6,9 @@ package LibUI::NonWrappingMultilineEntry 0.02 {
     use parent 'LibUI::MultilineEntry';
     #
     affix(
-        LibUI::lib(), 'uiNewNonWrappingMultilineEntry',
-        [Void] => InstanceOf ['LibUI::NonWrappingMultilineEntry'],
-        'new'
+        LibUI::lib(),
+        [ 'uiNewNonWrappingMultilineEntry', 'new' ],
+        [Void] => InstanceOf ['LibUI::NonWrappingMultilineEntry']
     );
 };
 1;

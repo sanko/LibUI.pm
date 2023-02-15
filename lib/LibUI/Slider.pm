@@ -5,40 +5,46 @@ package LibUI::Slider 0.02 {
     use Affix;
     use parent 'LibUI::Control';
     #
-    affix( LibUI::lib(), 'uiNewSlider', [ Void, Int, Int ] => InstanceOf ['LibUI::Slider'], 'new' );
     affix(
-        LibUI::lib(), 'uiSliderHasToolTip', [ InstanceOf ['LibUI::Slider'] ] => Int,
-        'hasToolTip'
+        LibUI::lib(),
+        [ 'uiNewSlider', 'new' ],
+        [ Void, Int, Int ] => InstanceOf ['LibUI::Slider']
     );
     affix(
         LibUI::lib(),
-        'uiSliderOnChanged',
-        [   InstanceOf ['LibUI::Slider'],
-            CodeRef [ [ InstanceOf ['LibUI::Slider'], Any ] => Void ], Any
-        ] => Void,
-        'onChanged'
+        [ 'uiSliderHasToolTip', 'hasToolTip' ],
+        [ InstanceOf ['LibUI::Slider'] ] => Int
     );
     affix(
         LibUI::lib(),
-        'uiSliderOnReleased',
+        [ 'uiSliderOnChanged', 'onChanged' ],
         [   InstanceOf ['LibUI::Slider'],
             CodeRef [ [ InstanceOf ['LibUI::Slider'], Any ] => Void ], Any
-        ] => Void,
-        'onReleased'
+        ] => Void
     );
     affix(
-        LibUI::lib(), 'uiSliderSetHasToolTip', [ InstanceOf ['LibUI::Slider'], Int ] => Void,
-        'setHasToolTip'
+        LibUI::lib(),
+        [ 'uiSliderOnReleased', 'onReleased' ],
+        [   InstanceOf ['LibUI::Slider'],
+            CodeRef [ [ InstanceOf ['LibUI::Slider'], Any ] => Void ], Any
+        ] => Void
     );
     affix(
-        LibUI::lib(), 'uiSliderSetRange', [ InstanceOf ['LibUI::Slider'], Int, Int ] => Void,
-        'setRange'
+        LibUI::lib(),
+        [ 'uiSliderSetHasToolTip',      'setHasToolTip' ],
+        [ InstanceOf ['LibUI::Slider'], Int ] => Void
     );
     affix(
-        LibUI::lib(), 'uiSliderSetValue', [ InstanceOf ['LibUI::Slider'], Int ] => Void,
-        'setValue'
+        LibUI::lib(),
+        [ 'uiSliderSetRange', 'setRange' ],
+        [ InstanceOf ['LibUI::Slider'], Int, Int ] => Void
     );
-    affix( LibUI::lib(), 'uiSliderValue', [ InstanceOf ['LibUI::Slider'] ] => Int, 'value' );
+    affix(
+        LibUI::lib(),
+        [ 'uiSliderSetValue',           'setValue' ],
+        [ InstanceOf ['LibUI::Slider'], Int ] => Void
+    );
+    affix( LibUI::lib(), [ 'uiSliderValue', 'value' ], [ InstanceOf ['LibUI::Slider'] ] => Int );
 };
 1;
 #

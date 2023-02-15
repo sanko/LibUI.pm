@@ -6,22 +6,27 @@ package LibUI::Tab 0.02 {
     use parent 'LibUI::Control';
     #
     affix(
-        LibUI::lib(), 'uiTabAppend',
-        [ InstanceOf ['LibUI::Tab'], Str, InstanceOf ['LibUI::Control'] ] => Void,
-        'append'
+        LibUI::lib(),
+        [ 'uiTabAppend', 'append' ],
+        [ InstanceOf ['LibUI::Tab'], Str, InstanceOf ['LibUI::Control'] ] => Void
     );
     affix(
-        LibUI::lib(), 'uiTabInsertAt',
-        [ InstanceOf ['LibUI::Tab'], Str, Int, InstanceOf ['LibUI::Control'] ] => Void,
-        'insertAt'
+        LibUI::lib(),
+        [ 'uiTabInsertAt', 'insertAt' ],
+        [ InstanceOf ['LibUI::Tab'], Str, Int, InstanceOf ['LibUI::Control'] ] => Void
     );
-    affix( LibUI::lib(), 'uiTabNumPages', [ InstanceOf ['LibUI::Tab'] ]      => Int, 'numPages' );
-    affix( LibUI::lib(), 'uiTabMargined', [ InstanceOf ['LibUI::Tab'], Int ] => Int, 'margined' );
+    affix( LibUI::lib(), [ 'uiTabNumPages', 'numPages' ], [ InstanceOf ['LibUI::Tab'] ] => Int );
     affix(
-        LibUI::lib(), 'uiTabSetMargined', [ InstanceOf ['LibUI::Tab'], Int, Int ] => Void,
-        'setMargined'
+        LibUI::lib(),
+        [ 'uiTabMargined',           'margined' ],
+        [ InstanceOf ['LibUI::Tab'], Int ] => Int
     );
-    affix( LibUI::lib(), 'uiNewTab', [Void] => InstanceOf ['LibUI::Tab'], 'new' );
+    affix(
+        LibUI::lib(),
+        [ 'uiTabSetMargined', 'setMargined' ],
+        [ InstanceOf ['LibUI::Tab'], Int, Int ] => Void
+    );
+    affix( LibUI::lib(), [ 'uiNewTab', 'new' ], [Void] => InstanceOf ['LibUI::Tab'] );
 };
 1;
 #

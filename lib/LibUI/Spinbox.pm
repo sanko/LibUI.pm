@@ -6,22 +6,23 @@ package LibUI::Spinbox 0.02 {
     use parent 'LibUI::Control';
     #
     affix(
-        LibUI::lib(), 'uiNewSpinbox', [ Void, Int, Int ] => InstanceOf ['LibUI::Spinbox'],
-        'new'
+        LibUI::lib(),
+        [ 'uiNewSpinbox', 'new' ],
+        [ Void, Int, Int ] => InstanceOf ['LibUI::Spinbox']
     );
     affix(
         LibUI::lib(),
-        'uiSpinboxOnChanged',
+        [ 'uiSpinboxOnChanged', 'onChanged' ],
         [   InstanceOf ['LibUI::Spinbox'],
             CodeRef [ [ InstanceOf ['LibUI::Spinbox'], Any ] => Void ], Any
-        ] => Void,
-        'onChanged'
+        ] => Void
     );
     affix(
-        LibUI::lib(), 'uiSpinboxSetValue', [ InstanceOf ['LibUI::Spinbox'], Int ] => Void,
-        'setValue'
+        LibUI::lib(),
+        [ 'uiSpinboxSetValue',           'setValue' ],
+        [ InstanceOf ['LibUI::Spinbox'], Int ] => Void
     );
-    affix( LibUI::lib(), 'uiSpinboxValue', [ InstanceOf ['LibUI::Spinbox'] ] => Int, 'value' );
+    affix( LibUI::lib(), [ 'uiSpinboxValue', 'value' ], [ InstanceOf ['LibUI::Spinbox'] ] => Int );
 };
 1;
 #

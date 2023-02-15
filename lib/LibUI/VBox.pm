@@ -5,7 +5,7 @@ package LibUI::VBox 0.02 {
     use Affix;
     use parent 'LibUI::HBox';
     #
-    affix( LibUI::lib(), 'uiNewVerticalBox', [Void] => InstanceOf ['LibUI::VBox'], 'new' );
+    affix( LibUI::lib(), [ 'uiNewVerticalBox', 'new' ], [Void] => InstanceOf ['LibUI::VBox'] );
 };
 1;
 #

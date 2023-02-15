@@ -74,5 +74,7 @@ the same terms as Perl itself.
 
 Sanko Robinson E<lt>sanko@cpan.orgE<gt>
 
+=for stopwords bitmasks
+
 =cut
 

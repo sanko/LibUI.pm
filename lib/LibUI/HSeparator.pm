@@ -6,8 +6,9 @@ package LibUI::HSeparator 0.02 {
     use parent 'LibUI::Control';
     #
     affix(
-        LibUI::lib(), 'uiNewHorizontalSeparator', [Void] => InstanceOf ['LibUI::HSeparator'],
-        'new'
+        LibUI::lib(),
+        [ 'uiNewHorizontalSeparator', 'new' ],
+        [Void] => InstanceOf ['LibUI::HSeparator']
     );
 };
 1;

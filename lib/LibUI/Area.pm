@@ -71,17 +71,19 @@ package LibUI::Area 0.02 {
         );
     }
     affix(
-        LibUI::lib(), 'uiAreaQueueRedrawAll', [ InstanceOf ['LibUI::Area'] ] => Void,
-        'queueRedrawAll'
+        LibUI::lib(),
+        [ 'uiAreaQueueRedrawAll', 'queueRedrawAll' ],
+        [ InstanceOf ['LibUI::Area'] ] => Void
     );
     affix(
-        LibUI::lib(), 'uiAreaBeginUserWindowMove', [ InstanceOf ['LibUI::Area'] ] => Void,
-        'beginUserWindowMove'
+        LibUI::lib(),
+        [ 'uiAreaBeginUserWindowMove', 'beginUserWindowMove' ],
+        [ InstanceOf ['LibUI::Area'] ] => Void
     );
     affix(
-        LibUI::lib(), 'uiAreaBeginUserWindowResize',
-        [ InstanceOf ['LibUI::Area'], LibUI::Window::ResizeEdge() ] => Void,
-        'beginUserWindowResize'
+        LibUI::lib(),
+        [ 'uiAreaBeginUserWindowResize', 'beginUserWindowResize' ],
+        [ InstanceOf ['LibUI::Area'],    LibUI::Window::ResizeEdge() ] => Void
     );
 };
 1;
@@ -248,6 +250,8 @@ the same terms as Perl itself.
 =head1 AUTHOR
 
 Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+=for stopwords scrollbars
 
 =cut
 

@@ -6,7 +6,7 @@ package LibUI::TimePicker 0.02 {
     use parent 'LibUI::DateTimePicker';
     use LibUI::Time;
     #
-    affix( LibUI::lib(), 'uiNewTimePicker', [Void] => InstanceOf ['LibUI::TimePicker'], 'new' );
+    affix( LibUI::lib(), [ 'uiNewTimePicker', 'new' ], [Void] => InstanceOf ['LibUI::TimePicker'] );
 };
 1;
 #

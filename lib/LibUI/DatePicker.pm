@@ -6,7 +6,7 @@ package LibUI::DatePicker 0.02 {
     use parent 'LibUI::DateTimePicker';
     use LibUI::Time;
     #
-    affix( LibUI::lib(), 'uiNewDatePicker', [Void] => InstanceOf ['LibUI::DatePicker'], 'new' );
+    affix( LibUI::lib(), [ 'uiNewDatePicker', 'new' ], [Void] => InstanceOf ['LibUI::DatePicker'] );
 };
 1;
 #

@@ -62,7 +62,7 @@ triggered.
 
 =head1 Fields
 
-Being a struct, a mouse event conains the following data:
+Being a struct, a mouse event contains the following data:
 
 =over
 
@@ -174,6 +174,8 @@ the same terms as Perl itself.
 =head1 AUTHOR
 
 Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+=for stopwords struct numpad
 
 =cut
 

@@ -6,18 +6,23 @@ package LibUI::HBox 0.02 {
     use parent 'LibUI::Control';
     #
     affix(
-        LibUI::lib(), 'uiBoxAppend',
-        [ InstanceOf ['LibUI::HBox'], InstanceOf ['LibUI::Control'], Int ] => Void,
-        'append'
+        LibUI::lib(),
+        [ 'uiBoxAppend', 'append' ],
+        [ InstanceOf ['LibUI::HBox'], InstanceOf ['LibUI::Control'], Int ] => Void
     );
-    affix( LibUI::lib(), 'uiBoxDelete', [ InstanceOf ['LibUI::HBox'], Int ] => Void, 'delete' );
-    affix( LibUI::lib(), 'uiBoxNumChildren', [ InstanceOf ['LibUI::HBox'] ] => Int, 'numChildren' );
-    affix( LibUI::lib(), 'uiBoxPadded',      [ InstanceOf ['LibUI::HBox'] ] => Int, 'padded' );
+    affix( LibUI::lib(), [ 'uiBoxDelete', 'delete' ], [ InstanceOf ['LibUI::HBox'], Int ] => Void );
     affix(
-        LibUI::lib(), 'uiBoxSetPadded', [ InstanceOf ['LibUI::HBox'], Int ] => Void,
-        'setPadded'
+        LibUI::lib(),
+        [ 'uiBoxNumChildren', 'numChildren' ],
+        [ InstanceOf ['LibUI::HBox'] ] => Int
     );
-    affix( LibUI::lib(), 'uiNewHorizontalBox', [Void] => InstanceOf ['LibUI::HBox'], 'new' );
+    affix( LibUI::lib(), [ 'uiBoxPadded', 'padded' ], [ InstanceOf ['LibUI::HBox'] ] => Int );
+    affix(
+        LibUI::lib(),
+        [ 'uiBoxSetPadded',           'setPadded' ],
+        [ InstanceOf ['LibUI::HBox'], Int ] => Void
+    );
+    affix( LibUI::lib(), [ 'uiNewHorizontalBox', 'new' ], [Void] => InstanceOf ['LibUI::HBox'] );
 };
 1;
 #

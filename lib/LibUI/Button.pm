@@ -5,20 +5,20 @@ package LibUI::Button 0.02 {
     use Affix;
     use parent 'LibUI::Control';
     #
-    affix( LibUI::lib(), 'uiNewButton', [ Void, Str ] => InstanceOf ['LibUI::Button'], 'new' );
+    affix( LibUI::lib(), [ 'uiNewButton', 'new' ], [ Void, Str ] => InstanceOf ['LibUI::Button'] );
     affix(
         LibUI::lib(),
-        'uiButtonOnClicked',
+        [ 'uiButtonOnClicked', 'onClicked' ],
         [   InstanceOf ['LibUI::Button'],
             CodeRef [ [ InstanceOf ['LibUI::Button'], Any ] => Void ], Any
-        ] => Void,
-        'onClicked'
+        ] => Void
     );
     affix(
-        LibUI::lib(), 'uiButtonSetText', [ InstanceOf ['LibUI::Button'], Str ] => Void,
-        'setText'
+        LibUI::lib(),
+        [ 'uiButtonSetText',            'setText' ],
+        [ InstanceOf ['LibUI::Button'], Str ] => Void
     );
-    affix( LibUI::lib(), 'uiButtonSetText', [ InstanceOf ['LibUI::Button'] ] => Str, 'text' );
+    affix( LibUI::lib(), [ 'uiButtonSetText', 'text' ], [ InstanceOf ['LibUI::Button'] ] => Str );
 };
 1;
 #

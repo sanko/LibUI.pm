@@ -5,7 +5,11 @@ package LibUI::SearchEntry 0.02 {
     use Affix;
     use parent 'LibUI::Entry';
     #
-    affix( LibUI::lib(), 'uiNewSearchEntry', [Void] => InstanceOf ['LibUI::SearchEntry'], 'new' );
+    affix(
+        LibUI::lib(),
+        [ 'uiNewSearchEntry', 'new' ],
+        [Void] => InstanceOf ['LibUI::SearchEntry']
+    );
 };
 1;
 #

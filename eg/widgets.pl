@@ -1,3 +1,4 @@
+use lib '../lib';
 use LibUI;
 use LibUI::Menu;
 use LibUI::Window;

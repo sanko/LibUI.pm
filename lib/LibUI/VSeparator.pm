@@ -6,8 +6,9 @@ package LibUI::VSeparator 0.02 {
     use parent 'LibUI::Control';
     #
     affix(
-        LibUI::lib(), 'uiNewVerticalSeparator', [Void] => InstanceOf ['LibUI::VSeparator'],
-        'new'
+        LibUI::lib(),
+        [ 'uiNewVerticalSeparator', 'new' ],
+        [Void] => InstanceOf ['LibUI::VSeparator']
     );
 };
 1;

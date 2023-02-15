@@ -43,13 +43,13 @@ triggered.
 
 =head1 Fields
 
-Being a struct, a mouse event conains the following data:
+Being a struct, a mouse event contains the following data:
 
 =over
 
 =item C<x> - horizontal position of the event
 
-=item C<y> - vertical positon of the event
+=item C<y> - vertical position of the event
 
 =item C<width> - full width of the area
 
@@ -77,6 +77,8 @@ the same terms as Perl itself.
 =head1 AUTHOR
 
 Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+=for stopwords struct
 
 =cut
 

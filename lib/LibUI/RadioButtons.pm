@@ -5,27 +5,32 @@ package LibUI::RadioButtons 0.02 {
     use Affix;
     use parent 'LibUI::Control';
     #
-    affix( LibUI::lib(), 'uiNewRadioButtons', [Void] => InstanceOf ['LibUI::RadioButtons'], 'new' );
     affix(
-        LibUI::lib(), 'uiRadioButtonsAppend', [ InstanceOf ['LibUI::RadioButtons'], Str ] => Void,
-        'append'
+        LibUI::lib(),
+        [ 'uiNewRadioButtons', 'new' ],
+        [Void] => InstanceOf ['LibUI::RadioButtons']
     );
     affix(
         LibUI::lib(),
-        'uiRadioButtonsOnSelected',
+        [ 'uiRadioButtonsAppend',             'append' ],
+        [ InstanceOf ['LibUI::RadioButtons'], Str ] => Void
+    );
+    affix(
+        LibUI::lib(),
+        [ 'uiRadioButtonsOnSelected', 'onSelected' ],
         [   InstanceOf ['LibUI::RadioButtons'],
             CodeRef [ [ InstanceOf ['LibUI::RadioButtons'], Any ] => Void ], Any
-        ] => Void,
-        'onSelected'
+        ] => Void
     );
     affix(
-        LibUI::lib(), 'uiRadioButtonsSelected', [ InstanceOf ['LibUI::RadioButtons'] ] => Int,
-        'selected'
+        LibUI::lib(),
+        [ 'uiRadioButtonsSelected', 'selected' ],
+        [ InstanceOf ['LibUI::RadioButtons'] ] => Int
     );
     affix(
-        LibUI::lib(), 'uiRadioButtonsSetSelected',
-        [ InstanceOf ['LibUI::RadioButtons'], Int ] => Void,
-        'setSelected'
+        LibUI::lib(),
+        [ 'uiRadioButtonsSetSelected',        'setSelected' ],
+        [ InstanceOf ['LibUI::RadioButtons'], Int ] => Void
     );
 };
 1;

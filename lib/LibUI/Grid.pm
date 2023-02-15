@@ -9,29 +9,28 @@ package LibUI::Grid 0.02 {
     #
     affix(
         LibUI::lib(),
-        'uiGridAppend',
+        [ 'uiGridAppend', 'append' ],
         [   InstanceOf ['LibUI::Grid'],
             InstanceOf ['LibUI::Control'],
             Int, Int, Int, Int, Int, LibUI::Align, Int, LibUI::Align
-        ] => Void,
-        'append'
+        ] => Void
     );
     affix(
         LibUI::lib(),
-        'uiGridInsertAt',
+        [ 'uiGridInsertAt', 'insertAt' ],
         [   InstanceOf ['LibUI::Grid'],
             InstanceOf ['LibUI::Control'],
             InstanceOf ['LibUI::Control'],
             LibUI::At, Int, Int, Int, LibUI::Align, Int, LibUI::Align
-        ] => Void,
-        'insertAt'
+        ] => Void
     );
-    affix( LibUI::lib(), 'uiGridPadded', [ InstanceOf ['LibUI::Grid'] ] => Int, 'padded' );
+    affix( LibUI::lib(), [ 'uiGridPadded', 'padded' ], [ InstanceOf ['LibUI::Grid'] ] => Int );
     affix(
-        LibUI::lib(), 'uiGridSetPadded', [ InstanceOf ['LibUI::Grid'], Int ] => Void,
-        'setPadded'
+        LibUI::lib(),
+        [ 'uiGridSetPadded',          'setPadded' ],
+        [ InstanceOf ['LibUI::Grid'], Int ] => Void
     );
-    affix( LibUI::lib(), 'uiNewGrid', [Void] => InstanceOf ['LibUI::Grid'], 'new' );
+    affix( LibUI::lib(), [ 'uiNewGrid', 'new' ], [Void] => InstanceOf ['LibUI::Grid'] );
 };
 1;
 #

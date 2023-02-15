@@ -7,49 +7,57 @@ package LibUI::Draw::Path 0.02 {
     typedef 'LibUI::Draw::FillMode' => Enum [qw[Winding Alternate]];
     #
     affix(
-        LibUI::lib(), 'uiDrawNewPath',
-        [ Void, LibUI::Draw::FillMode() ] => InstanceOf ['LibUI::Draw::Path'],
-        'new'
+        LibUI::lib(),
+        [ 'uiDrawNewPath', 'new' ],
+        [ Void,            LibUI::Draw::FillMode() ] => InstanceOf ['LibUI::Draw::Path']
     );
-    affix( LibUI::lib(), 'uiDrawFreePath', [ InstanceOf ['LibUI::Draw::Path'] ] => Void, 'free' );
+    affix(
+        LibUI::lib(),
+        [ 'uiDrawFreePath', 'free' ],
+        [ InstanceOf ['LibUI::Draw::Path'] ] => Void
+    );
     #
     affix(
-        LibUI::lib(), 'uiDrawPathNewFigure',
-        [ InstanceOf ['LibUI::Draw::Path'], Double, Double ] => Void,
-        'newFigure'
+        LibUI::lib(),
+        [ 'uiDrawPathNewFigure', 'newFigure' ],
+        [ InstanceOf ['LibUI::Draw::Path'], Double, Double ] => Void
     );
     affix(
-        LibUI::lib(), 'uiDrawPathNewFigureWithArc',
-        [ InstanceOf ['LibUI::Draw::Path'], Double, Double, Double, Double, Double, Int ] => Void,
-        'newFigureWithArc'
+        LibUI::lib(),
+        [ 'uiDrawPathNewFigureWithArc',     'newFigureWithArc' ],
+        [ InstanceOf ['LibUI::Draw::Path'], Double, Double, Double, Double, Double, Int ] => Void
     );
     affix(
-        LibUI::lib(), 'uiDrawPathLineTo',
-        [ InstanceOf ['LibUI::Draw::Path'], Double, Double ] => Void,
-        'lineTo'
+        LibUI::lib(),
+        [ 'uiDrawPathLineTo', 'lineTo' ],
+        [ InstanceOf ['LibUI::Draw::Path'], Double, Double ] => Void
     );
     affix(
-        LibUI::lib(), 'uiDrawPathArcTo',
-        [ InstanceOf ['LibUI::Draw::Path'], Double, Double, Double, Double, Double, Int ] => Void,
-        'arcTo'
+        LibUI::lib(),
+        [ 'uiDrawPathArcTo', 'arcTo' ],
+        [ InstanceOf ['LibUI::Draw::Path'], Double, Double, Double, Double, Double, Int ] => Void
     );
     affix(
-        LibUI::lib(), 'uiDrawPathBezierTo',
-        [ InstanceOf ['LibUI::Draw::Path'], Double, Double, Double, Double, Double, Double ] =>
-            Void,
-        'bezierTo'
+        LibUI::lib(),
+        [ 'uiDrawPathBezierTo', 'bezierTo' ],
+        [ InstanceOf ['LibUI::Draw::Path'], Double, Double, Double, Double, Double, Double ] => Void
     );
     affix(
-        LibUI::lib(), 'uiDrawPathCloseFigure', [ InstanceOf ['LibUI::Draw::Path'] ] => Void,
-        'closeFigure'
+        LibUI::lib(),
+        [ 'uiDrawPathCloseFigure', 'closeFigure' ],
+        [ InstanceOf ['LibUI::Draw::Path'] ] => Void
     );
     affix(
-        LibUI::lib(), 'uiDrawPathAddRectangle',
-        [ InstanceOf ['LibUI::Draw::Path'], Double, Double, Double, Double ] => Void,
-        'addRectangle'
+        LibUI::lib(),
+        [ 'uiDrawPathAddRectangle', 'addRectangle' ],
+        [ InstanceOf ['LibUI::Draw::Path'], Double, Double, Double, Double ] => Void
     );
-    affix( LibUI::lib(), 'uiDrawPathEnded', [ InstanceOf ['LibUI::Draw::Path'] ] => Int,  'ended' );
-    affix( LibUI::lib(), 'uiDrawPathEnd',   [ InstanceOf ['LibUI::Draw::Path'] ] => Void, 'end' );
+    affix(
+        LibUI::lib(),
+        [ 'uiDrawPathEnded', 'ended' ],
+        [ InstanceOf ['LibUI::Draw::Path'] ] => Int
+    );
+    affix( LibUI::lib(), [ 'uiDrawPathEnd', 'end' ], [ InstanceOf ['LibUI::Draw::Path'] ] => Void );
 };
 1;
 #
@@ -199,8 +207,6 @@ Expected parameters include:
 
 =back
 
-uiDrawPathCloseFigure
-
 =head2 C<closeFigure( )>
 
     $path->closeFigure( );
@@ -211,7 +217,7 @@ Closes the current path.
 
     $path->addRectangle( 100, 100, 50, 50 );
 
-Adds a rectable to the path with a given size at a given position.
+Adds a rectangle to the path with a given size at a given position.
 
 Expected parameters include:
 
@@ -238,79 +244,6 @@ Returns a boolean value indicating if the path is finished.
    $path->end( );
 
 Ends the path.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=head2 C<onClicked( ... )>
-
-    $btn->onClicked(
-    sub {
-        my ($ctrl, $data) = @_;
-        ...;
-    }, undef);
-
-Registers a callback for when the button is clicked.
-
-Expected parameters include:
-
-=over
-
-=item C<$callback> - CodeRef that should expect the following:
-
-=over
-
-=item C<$btn> - backreference to the instance that initiated the callback
-
-=item C<$data> - user data registered with the sender instance
-
-=back
-
-=item C<$data> - user data to be passed to the callback
-
-=back
-
-=head2 C<setText( ... )>
-
-    $btn->setText( 'Scan' );
-
-Sets the button label text.
-
-=head2 C<text( )>
-
-    my $txt = $btn->text;
-
-Sets the button label text.
-
-
 
 =head1 Enumerations
 
@@ -340,7 +273,7 @@ the same terms as Perl itself.
 
 Sanko Robinson E<lt>sanko@cpan.orgE<gt>
 
-=for stopwords checkbox backreference
+=for stopwords checkbox backreference bezier struct enum
 
 =cut
 

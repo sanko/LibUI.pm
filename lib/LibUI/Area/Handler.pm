@@ -68,7 +68,7 @@ following keys:
 
 =item C<draw>
 
-Provide a codereference which should expect...
+Provide a code reference which should expect...
 
 =over
 
@@ -85,7 +85,7 @@ Provide a codereference which should expect...
 
 =item C<mouseEvent>
 
-Provide a codereference which should expect...
+Provide a code reference which should expect...
 
 =over
 
@@ -101,7 +101,7 @@ Provide a codereference which should expect...
 
 =item C<mouseCrossed>
 
-Provide a codereference which should expect...
+Provide a code reference which should expect...
 
 =over
 
@@ -157,6 +157,8 @@ the same terms as Perl itself.
 =head1 AUTHOR
 
 Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+=for stopwords MacOS
 
 =cut
 

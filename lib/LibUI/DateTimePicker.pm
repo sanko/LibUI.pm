@@ -7,16 +7,16 @@ package LibUI::DateTimePicker 0.02 {
     use LibUI::Time;
     #
     affix(
-        LibUI::lib(), 'uiNewDateTimePicker', [Void] => InstanceOf ['LibUI::DateTimePicker'],
-        'new'
+        LibUI::lib(),
+        [ 'uiNewDateTimePicker', 'new' ],
+        [Void] => InstanceOf ['LibUI::DateTimePicker']
     );
     affix(
         LibUI::lib(),
-        'uiDateTimePickerOnChanged',
+        [ 'uiDateTimePickerOnChanged', 'onChanged' ],
         [   InstanceOf ['LibUI::DateTimePicker'],
             CodeRef [ [ InstanceOf ['LibUI::DateTimePicker'], Any ] => Void ], Any
-        ] => Void,
-        'onChanged'
+        ] => Void
     );
 
     sub setTime ($$) {

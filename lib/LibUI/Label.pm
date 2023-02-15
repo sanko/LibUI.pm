@@ -5,12 +5,13 @@ package LibUI::Label 0.02 {
     use Affix;
     use parent 'LibUI::Control';
     #
-    affix( LibUI::lib(), 'uiLabelText', [ InstanceOf ['LibUI::Label'] ] => Str, 'text' );
+    affix( LibUI::lib(), [ 'uiLabelText', 'text' ], [ InstanceOf ['LibUI::Label'] ] => Str );
     affix(
-        LibUI::lib(), 'uiLabelSetText', [ InstanceOf ['LibUI::Label'], Str ] => Void,
-        'setText'
+        LibUI::lib(),
+        [ 'uiLabelSetText',            'setText' ],
+        [ InstanceOf ['LibUI::Label'], Str ] => Void
     );
-    affix( LibUI::lib(), 'uiNewLabel', [ Void, Str ] => InstanceOf ['LibUI::Label'], 'new' );
+    affix( LibUI::lib(), [ 'uiNewLabel', 'new' ], [ Void, Str ] => InstanceOf ['LibUI::Label'] );
 };
 1;
 #

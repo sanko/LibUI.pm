@@ -14,51 +14,54 @@ package LibUI::Draw::Matrix 0.02 {
     ];
     #
     affix(
-        LibUI::lib(), 'uiDrawMatrixSetIdentity', [ Pointer [ LibUI::Draw::Matrix() ] ] => Void,
-        'setIdentity'
+        LibUI::lib(),
+        [ 'uiDrawMatrixSetIdentity', 'setIdentity' ],
+        [ Pointer [ LibUI::Draw::Matrix() ] ] => Void
     );
     affix(
-        LibUI::lib(), 'uiDrawMatrixTranslate',
-        [ Pointer [ LibUI::Draw::Matrix() ], Double, Double ] => Void,
-        'translate'
+        LibUI::lib(),
+        [ 'uiDrawMatrixTranslate', 'translate' ],
+        [ Pointer [ LibUI::Draw::Matrix() ], Double, Double ] => Void
     );
     affix(
-        LibUI::lib(), 'uiDrawMatrixScale',
-        [ Pointer [ LibUI::Draw::Matrix() ], Double, Double, Double, Double ] => Void,
-        'scale'
+        LibUI::lib(),
+        [ 'uiDrawMatrixScale', 'scale' ],
+        [ Pointer [ LibUI::Draw::Matrix() ], Double, Double, Double, Double ] => Void
     );
     affix(
-        LibUI::lib(), 'uiDrawMatrixRotate',
-        [ Pointer [ LibUI::Draw::Matrix() ], Double, Double, Double ] => Void,
-        'rotate'
+        LibUI::lib(),
+        [ 'uiDrawMatrixRotate', 'rotate' ],
+        [ Pointer [ LibUI::Draw::Matrix() ], Double, Double, Double ] => Void
     );
     affix(
-        LibUI::lib(), 'uiDrawMatrixSkew',
-        [ Pointer [ LibUI::Draw::Matrix() ], Double, Double, Double, Double ] => Void,
-        'skew'
+        LibUI::lib(),
+        [ 'uiDrawMatrixSkew', 'skew' ],
+        [ Pointer [ LibUI::Draw::Matrix() ], Double, Double, Double, Double ] => Void
     );
     affix(
-        LibUI::lib(), 'uiDrawMatrixMultiply',
-        [ Pointer [ LibUI::Draw::Matrix() ], Pointer [ LibUI::Draw::Matrix() ] ] => Void,
-        'multiply'
+        LibUI::lib(),
+        [ 'uiDrawMatrixMultiply',            'multiply' ],
+        [ Pointer [ LibUI::Draw::Matrix() ], Pointer [ LibUI::Draw::Matrix() ] ] => Void
     );
     affix(
-        LibUI::lib(), 'uiDrawMatrixInvertible', [ Pointer [ LibUI::Draw::Matrix() ] ] => Int,
-        'invertible'
+        LibUI::lib(),
+        [ 'uiDrawMatrixInvertible', 'invertible' ],
+        [ Pointer [ LibUI::Draw::Matrix() ] ] => Int
     );
     affix(
-        LibUI::lib(), 'uiDrawMatrixInvert', [ Pointer [ LibUI::Draw::Matrix() ] ] => Int,
-        'invert'
+        LibUI::lib(),
+        [ 'uiDrawMatrixInvert', 'invert' ],
+        [ Pointer [ LibUI::Draw::Matrix() ] ] => Int
     );
     affix(
-        LibUI::lib(), 'uiDrawMatrixTransformPoint',
-        [ Pointer [ LibUI::Draw::Matrix() ], Pointer [Double], Pointer [Double] ] => Void,
-        'transformPoint'
+        LibUI::lib(),
+        [ 'uiDrawMatrixTransformPoint', 'transformPoint' ],
+        [ Pointer [ LibUI::Draw::Matrix() ], Pointer [Double], Pointer [Double] ] => Void
     );
     affix(
-        LibUI::lib(), 'uiDrawMatrixTransformSize',
-        [ Pointer [ LibUI::Draw::Matrix() ], Pointer [Double], Pointer [Double] ] => Void,
-        'transformSize'
+        LibUI::lib(),
+        [ 'uiDrawMatrixTransformSize', 'transformSize' ],
+        [ Pointer [ LibUI::Draw::Matrix() ], Pointer [Double], Pointer [Double] ] => Void
     );
 };
 1;

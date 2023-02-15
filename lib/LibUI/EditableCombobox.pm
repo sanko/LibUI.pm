@@ -6,30 +6,31 @@ package LibUI::EditableCombobox 0.02 {
     use parent 'LibUI::Control';
     #
     affix(
-        LibUI::lib(), 'uiEditableComboboxAppend',
-        [ InstanceOf ['LibUI::EditableCombobox'], Str ] => Void,
-        'append'
+        LibUI::lib(),
+        [ 'uiEditableComboboxAppend',             'append' ],
+        [ InstanceOf ['LibUI::EditableCombobox'], Str ] => Void
     );
     affix(
         LibUI::lib(),
-        'uiEditableComboboxOnChanged',
+        [ 'uiEditableComboboxOnChanged', 'onChanged' ],
         [   InstanceOf ['LibUI::EditableCombobox'],
             CodeRef [ [ InstanceOf ['LibUI::EditableCombobox'], Any ] => Void ], Any
-        ] => Void,
-        'onChanged'
+        ] => Void
     );
     affix(
-        LibUI::lib(), 'uiEditableComboboxSetText',
-        [ InstanceOf ['LibUI::EditableCombobox'], Str ] => Void,
-        'setText'
+        LibUI::lib(),
+        [ 'uiEditableComboboxSetText',            'setText' ],
+        [ InstanceOf ['LibUI::EditableCombobox'], Str ] => Void
     );
     affix(
-        LibUI::lib(), 'uiEditableComboboxText', [ InstanceOf ['LibUI::EditableCombobox'] ] => Str,
-        'text'
+        LibUI::lib(),
+        [ 'uiEditableComboboxText', 'text' ],
+        [ InstanceOf ['LibUI::EditableCombobox'] ] => Str
     );
     affix(
-        LibUI::lib(), 'uiNewEditableCombobox', [Void] => InstanceOf ['LibUI::EditableCombobox'],
-        'new'
+        LibUI::lib(),
+        [ 'uiNewEditableCombobox', 'new' ],
+        [Void] => InstanceOf ['LibUI::EditableCombobox']
     );
 };
 1;

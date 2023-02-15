@@ -28,7 +28,7 @@ package LibUI 0.02 {
         $name =~ s[::New(.+)$][::$1::new];
 
         #warn sprintf '%30s => %-50s', $func, $name;
-        affix( lib, $func, $params, $ret, $name );
+        affix( lib, [ $func, $name ], $params, $ret );
     }
     #
     sub Init {
@@ -65,8 +65,9 @@ package LibUI 0.02 {
         func( 'uiQueueMain', [ CodeRef [ [ Pointer [Void] ] => Void ], Any ] => Void );
         #
         affix(
-            lib(), 'uiOnShouldQuit', [ CodeRef [ [Any] => Int ], Any ] => Void,
-            'LibUI::onShouldQuit'
+            lib(),
+            [ 'uiOnShouldQuit',         'LibUI::onShouldQuit' ],
+            [ CodeRef [ [Any] => Int ], Any ] => Void
         );
         func( 'uiFreeText', [Str] => Void );
     }

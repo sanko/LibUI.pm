@@ -6,14 +6,20 @@ package LibUI::ProgressBar 0.02 {
     use parent 'LibUI::Control';
     #
     affix(
-        LibUI::lib(), 'uiProgressBarValue', [ InstanceOf ['LibUI::ProgressBar'] ] => Int,
-        'value'
+        LibUI::lib(),
+        [ 'uiProgressBarValue', 'value' ],
+        [ InstanceOf ['LibUI::ProgressBar'] ] => Int
     );
     affix(
-        LibUI::lib(), 'uiProgressBarSetValue', [ InstanceOf ['LibUI::ProgressBar'], Int ] => Void,
-        'setValue'
+        LibUI::lib(),
+        [ 'uiProgressBarSetValue',           'setValue' ],
+        [ InstanceOf ['LibUI::ProgressBar'], Int ] => Void
     );
-    affix( LibUI::lib(), 'uiNewProgressBar', [Void] => InstanceOf ['LibUI::ProgressBar'], 'new' );
+    affix(
+        LibUI::lib(),
+        [ 'uiNewProgressBar', 'new' ],
+        [Void] => InstanceOf ['LibUI::ProgressBar']
+    );
 };
 1;
 #

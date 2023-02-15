@@ -7,13 +7,14 @@ package LibUI::ScrollingArea 0.02 {
     use parent 'LibUI::Area';
     #
     affix(
-        LibUI::lib(), 'uiAreaSetSize', [ InstanceOf ['LibUI::Area'], Int, Int ] => Void,
-        'setSize'
+        LibUI::lib(),
+        [ 'uiAreaSetSize', 'setSize' ],
+        [ InstanceOf ['LibUI::Area'], Int, Int ] => Void
     );
     affix(
-        LibUI::lib(), 'uiAreaScrollTo',
-        [ InstanceOf ['LibUI::Area'], Double, Double, Double, Double ] => Void,
-        'scrollTo'
+        LibUI::lib(),
+        [ 'uiAreaScrollTo', 'scrollTo' ],
+        [ InstanceOf ['LibUI::Area'], Double, Double, Double, Double ] => Void
     );
 };
 1;
@@ -181,6 +182,8 @@ the same terms as Perl itself.
 =head1 AUTHOR
 
 Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+=for stopwords scrollbars
 
 =cut
 

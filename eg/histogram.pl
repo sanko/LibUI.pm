@@ -16,6 +16,7 @@ use LibUI::Draw;
 use LibUI::Draw::Matrix;
 #
 my $currentPoint = -1;
+my $dps          = 10;
 my ( $window, $histogram, $colorButton, @datapoints );
 #
 # some metrics
@@ -50,11 +51,11 @@ sub DodgerBlue() {0x1E90FF}
 #
 sub pointLocations {
     my ( $width, $height ) = @_;
-    my $xincr = $width / 9;      # 10 - 1 to make the last point be at the end
+    my $xincr = $width / ( $dps - 1 );    # 10 - 1 to make the last point be at the end
     my $yincr = $height / 100;
     my ( $xs, $ys );
     my $n = 0;
-    for ( 0 .. 9 ) {
+    for ( 0 .. ( $dps - 1 ) ) {
         $n = $datapoints[$_]->value();    # get the value of the point
 
         # because y=0 is the top but n=0 is the bottom, we need to flip
@@ -70,7 +71,7 @@ sub constructGraph {
     my ( $xs, $ys ) = pointLocations( $width, $height );
     my $path = LibUI::Draw::Path->new( LibUI::Draw::FillMode::Winding() );
     $path->newFigure( $xs->[0], $ys->[0] );
-    $path->lineTo( $xs->[$_], $ys->[$_] ) for 1 .. 9;
+    $path->lineTo( $xs->[$_], $ys->[$_] ) for 1 .. ( $dps - 1 );
     if ($extend) {
         $path->lineTo( $width, $height );
         $path->lineTo( 0,      $height );
@@ -102,9 +103,7 @@ sub handlerDraw {    #(uiAreaHandler *a, uiArea *area, uiAreaDrawParams *p)
         cap        => LibUI::Draw::LineCap::Flat(),
         join       => LibUI::Draw::LineJoin::Miter(),
         thickness  => 2,
-        miterLimit => 10,                               # uiDrawDefaultMiterLimit;
-        numDashes  => 0,
-        dashPhase  => 0
+        miterLimit => 10                                # uiDrawDefaultMiterLimit;
     };
 
     # draw the axes
@@ -118,7 +117,7 @@ sub handlerDraw {    #(uiAreaHandler *a, uiArea *area, uiAreaDrawParams *p)
     $path->free;
 
     # now transform the coordinate space so (0, 0) is the top-left corner of the graph
-    my $m;
+    my $m;    # TODO: I hate this. Should identity() create a matrix?
     LibUI::Draw::Matrix::setIdentity($m);
     LibUI::Draw::Matrix::translate( $m, xoffLeft, yoffTop );
     LibUI::Draw::transform( $p->{context}, $m );
@@ -175,7 +174,7 @@ sub handlerMouseEvent {
     my ( $graphWidth, $graphHeight ) = graphSize( $e->{width}, $e->{height} );
     my ( $xs,         $ys )          = pointLocations( $graphWidth, $graphHeight );
     $currentPoint = -1;
-    for my $i ( 0 .. 9 ) {
+    for my $i ( 0 .. ( $dps - 1 ) ) {
         if ( inPoint( $e->{x}, $e->{y}, $xs->[$i], $ys->[$i] ) ) {
             $currentPoint = $i;
             last;
@@ -226,7 +225,7 @@ my $vbox = LibUI::VBox->new;
 $vbox->setPadded(1);
 $hbox->append( $vbox, 0 );
 #
-for ( 0 .. 9 ) {
+for ( 0 .. ( $dps - 1 ) ) {
     $datapoints[$_] = LibUI::Spinbox->new( 0, 100 );
     $datapoints[$_]->setValue( rand() * 101 );
     $datapoints[$_]->onChanged( \&onDatapointChanged, undef );

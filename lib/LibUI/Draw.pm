@@ -12,23 +12,22 @@ package LibUI::Draw 0.02 {
     #
     affix(
         LibUI::lib(),
-        'uiDrawStroke',
+        [ 'uiDrawStroke', 'stroke' ],
         [   Pointer [Void],
             InstanceOf ['LibUI::Draw::Path'],
             Pointer [LibUI::Draw::Brush],
             Pointer [LibUI::Draw::StrokeParams],
-        ] => Void,
-        'stroke'
+        ] => Void
     );
     affix(
-        LibUI::lib(), 'uiDrawFill',
-        [ Pointer [Void], InstanceOf ['LibUI::Draw::Path'], Pointer [LibUI::Draw::Brush] ] => Void,
-        'fill'
+        LibUI::lib(),
+        [ 'uiDrawFill',   'fill' ],
+        [ Pointer [Void], InstanceOf ['LibUI::Draw::Path'], Pointer [LibUI::Draw::Brush] ] => Void
     );
     affix(
-        LibUI::lib(), 'uiDrawTransform',
-        [ Pointer [Void], Pointer [ LibUI::Draw::Matrix() ] ] => Void,
-        'transform'
+        LibUI::lib(),
+        [ 'uiDrawTransform', 'transform' ],
+        [ Pointer [Void],    Pointer [ LibUI::Draw::Matrix() ] ] => Void
     );
 };
 1;

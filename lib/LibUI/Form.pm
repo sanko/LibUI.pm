@@ -6,21 +6,24 @@ package LibUI::Form 0.02 {
     use parent 'LibUI::Control';
     #
     affix(
-        LibUI::lib(), 'uiFormAppend',
-        [ InstanceOf ['LibUI::Form'], Str, InstanceOf ['LibUI::Control'], Int ] => Void,
-        'append'
+        LibUI::lib(),
+        [ 'uiFormAppend', 'append' ],
+        [ InstanceOf ['LibUI::Form'], Str, InstanceOf ['LibUI::Control'], Int ] => Void
     );
-    affix( LibUI::lib(), 'uiFormDelete', [ InstanceOf ['LibUI::Form'], Int ] => Void, 'delete' );
+    affix( LibUI::lib(), [ 'uiFormDelete', 'delete' ],
+        [ InstanceOf ['LibUI::Form'], Int ] => Void );
     affix(
-        LibUI::lib(), 'uiFormNumChildren', [ InstanceOf ['LibUI::Form'] ] => Int,
-        'numChildren'
+        LibUI::lib(),
+        [ 'uiFormNumChildren', 'numChildren' ],
+        [ InstanceOf ['LibUI::Form'] ] => Int
     );
-    affix( LibUI::lib(), 'uiFormPadded', [ InstanceOf ['LibUI::Form'] ] => Int, 'padded' );
+    affix( LibUI::lib(), [ 'uiFormPadded', 'padded' ], [ InstanceOf ['LibUI::Form'] ] => Int );
     affix(
-        LibUI::lib(), 'uiFormSetPadded', [ InstanceOf ['LibUI::Form'], Int ] => Void,
-        'setPadded'
+        LibUI::lib(),
+        [ 'uiFormSetPadded',          'setPadded' ],
+        [ InstanceOf ['LibUI::Form'], Int ] => Void
     );
-    affix( LibUI::lib(), 'uiNewForm', [Void] => InstanceOf ['LibUI::Form'], 'new' );
+    affix( LibUI::lib(), [ 'uiNewForm', 'new' ], [Void] => InstanceOf ['LibUI::Form'] );
 };
 1;
 #

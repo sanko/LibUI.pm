@@ -22,19 +22,22 @@ package LibUI::ColorButton 0.02 {
         ( $r, $g, $b, $a );
     }
     affix(
-        LibUI::lib(), 'uiColorButtonSetColor',
-        [ InstanceOf ['LibUI::ColorButton'], Double, Double, Double, Double ] => Void,
-        'setColor'
+        LibUI::lib(),
+        [ 'uiColorButtonSetColor', 'setColor' ],
+        [ InstanceOf ['LibUI::ColorButton'], Double, Double, Double, Double ] => Void
     );
     affix(
         LibUI::lib(),
-        'uiColorButtonOnChanged',
+        [ 'uiColorButtonOnChanged', 'onChanged' ],
         [   InstanceOf ['LibUI::ColorButton'],
             CodeRef [ [ InstanceOf ['LibUI::ColorButton'], Any ] => Void ], Any
-        ] => Void,
-        'onChanged'
+        ] => Void
     );
-    affix( LibUI::lib(), 'uiNewColorButton', [Void] => InstanceOf ['LibUI::ColorButton'], 'new' );
+    affix(
+        LibUI::lib(),
+        [ 'uiNewColorButton', 'new' ],
+        [Void] => InstanceOf ['LibUI::ColorButton']
+    );
 };
 1;
 #
