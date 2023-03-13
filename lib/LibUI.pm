@@ -1,6 +1,6 @@
 use 5.008001;
 
-package LibUI 0.02 {
+package LibUI 0.03 {
     use strict;
     use warnings;
     use lib '../lib', '../blib/arch', '../blib/lib';

@@ -1,8 +1,9 @@
-package LibUI::Area::MouseEvent 0.02 {
+package LibUI::Area::MouseEvent 0.03 {
     use 5.008001;
     use strict;
     use warnings;
     use Affix;
+    use LibUI::Area::Modifiers;
     typedef 'LibUI::Area::MouseEvent' => Struct [
         x => Double,
         y => Double,

@@ -1,10 +1,12 @@
-package LibUI::Area 0.02 {
+package LibUI::Area 0.03 {
     use 5.008001;
     use strict;
     use warnings;
     use Affix;
-    use LibUI::Area::Handler;
     use LibUI::Window::ResizeEdge;
+    use LibUI::Area::DrawParams;
+    use LibUI::Area::MouseEvent;
+    use LibUI::Area::KeyEvent;
     use parent 'LibUI::Control';
     #
     sub new {
@@ -12,8 +14,44 @@ package LibUI::Area 0.02 {
         CORE::state $new;
         my $func = $class;    # A little work to make it auto-wrap sublcasses
         $func =~ s[LibUI::][uiNew];
-        $new->{$class} //= wrap( LibUI::lib(), $func,
-            [ Pointer [ InstanceOf ['LibUI::Area::Handler'] ] ] => InstanceOf [$class] );
+        $new->{$class} //= wrap(
+            LibUI::lib(),
+            $func,
+            [   Pointer [
+                    Struct [
+                        draw => CodeRef [
+                            [   Pointer [ InstanceOf ['LibUI::Area::Handler'] ],
+                                Pointer [ InstanceOf ['LibUI::Area'] ],
+                                Pointer [ InstanceOf ['LibUI::Area::DrawParams'] ]
+                            ] => Void
+                        ],
+                        mouseEvent => CodeRef [
+                            [   Pointer [ InstanceOf ['LibUI::Area::Handler'] ],
+                                Pointer [ InstanceOf ['LibUI::Area'] ],
+                                Pointer [ InstanceOf ['LibUI::Area::MouseEvent'] ]
+                            ] => Void
+                        ],
+                        mouseCrossed => CodeRef [
+                            [   Pointer [ InstanceOf ['LibUI::Area::Handler'] ],
+                                Pointer [ InstanceOf ['LibUI::Area'] ],
+                                Int
+                            ] => Void
+                        ],
+                        dragBroken => CodeRef [
+                            [   Pointer [ InstanceOf ['LibUI::Area::Handler'] ],
+                                Pointer [ InstanceOf ['LibUI::Area'] ]
+                            ] => Void
+                        ],
+                        keyEvent => CodeRef [
+                            [   Pointer [ InstanceOf ['LibUI::Area::Handler'] ],
+                                Pointer [ InstanceOf ['LibUI::Area'] ],
+                                Pointer [ InstanceOf ['LibUI::Area::KeyEvent'] ]
+                            ] => Int
+                        ]
+                    ]
+                ]
+            ] => InstanceOf [$class]
+        );
 
         # wrap handler methods to auto-dereference pointers
         $new->{$class}->(
@@ -21,7 +59,6 @@ package LibUI::Area 0.02 {
                     sub {
                     my ( $handler, $area, $drawParams ) = @_;
                     $h->{draw}->(
-                        Affix::ptr2sv( $handler, Pointer [ InstanceOf ['LibUI::Area::Handler'] ] ),
                         $area,
                         Affix::ptr2sv(
                             $drawParams, Pointer [ InstanceOf ['LibUI::Area::DrawParams'] ]
@@ -32,17 +69,13 @@ package LibUI::Area 0.02 {
                 dragBroken => defined $h->{dragBroken} ?
                     sub {
                     my ( $handler, $area ) = @_;
-                    $h->{dragBroken}->(
-                        Affix::ptr2sv( $handler, Pointer [ InstanceOf ['LibUI::Area::Handler'] ] ),
-                        $area
-                    );
+                    $h->{dragBroken}->($area);
                     } :
                     sub { },
                 keyEvent => defined $h->{keyEvent} ?
                     sub {
                     my ( $handler, $area, $event ) = @_;
                     $h->{keyEvent}->(
-                        Affix::ptr2sv( $handler, Pointer [ InstanceOf ['LibUI::Area::Handler'] ] ),
                         $area,
                         Affix::ptr2sv( $event, Pointer [ InstanceOf ['LibUI::Area::KeyEvent'] ] )
                     );
@@ -51,17 +84,13 @@ package LibUI::Area 0.02 {
                 mouseCrossed => defined $h->{mouseCrossed} ?
                     sub {
                     my ( $handler, $area, $left ) = @_;
-                    $h->{mouseCrossed}->(
-                        Affix::ptr2sv( $handler, Pointer [ InstanceOf ['LibUI::Area::Handler'] ] ),
-                        $area, $left
-                    );
+                    $h->{mouseCrossed}->( $area, $left );
                     } :
                     sub { },
                 mouseEvent => defined $h->{mouseEvent} ?
                     sub {
                     my ( $handler, $area, $event ) = @_;
                     $h->{mouseEvent}->(
-                        Affix::ptr2sv( $handler, Pointer [ InstanceOf ['LibUI::Area::Handler'] ] ),
                         $area,
                         Affix::ptr2sv( $event, Pointer [ InstanceOf ['LibUI::Area::MouseEvent'] ] )
                     );
@@ -100,31 +129,7 @@ LibUI::Area - Control Representing a Canvas You May Draw On
 
 =head1 SYNOPSIS
 
-    use LibUI ':all';
-    use LibUI::Grid;
-    use LibUI::Window;
-    use LibUI::Align qw[Center Fill];
-    use LibUI::At    qw[Bottom];
-    use LibUI::Label;
-    Init && die;
-    my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
-    $window->setMargined( 1 );
-    my $grid   = LibUI::Grid->new();
-    my $lbl    = LibUI::Label->new('Top Left');
-    $grid->append( $lbl,                           0, 0, 1, 1, 1, Fill, 1, Fill );
-    $grid->append( LibUI::Label->new('Top Right'), 1, 0, 1, 1, 1, Fill, 1, Fill );
-    $grid->insertAt( LibUI::Label->new('Bottom Center and Span two cols'),
-        $lbl, Bottom, 2, 1, 1, Center, 1, Center );
-    $window->setChild($grid);
-    $window->onClosing(
-        sub {
-            Quit();
-            return 1;
-        },
-        undef
-    );
-    $window->show;
-    Main();
+    TODO
 
 =head1 DESCRIPTION
 
@@ -145,100 +150,84 @@ Not a lot here but... well, it's just a, interactive box.
 
 Creates a new form.
 
-=head2 C<append( ... )>
+A LibUI::Area may accept several methods that are called to handle certain
+tasks.
 
-    $grid->append( LibUI::Label->new('Top Left'),
-        0, 0, 1, 1, 1, Fill, 1, Fill );
-    $grid->append( LibUI::Label->new('Top Right'),
-        1, 0, 1, 1, 1, Fill, 1, Fill );
-
-Appends a control to the grid.
-
-Expected parameters include:
+To create an area handler, pass a hash reference which contains the following
+keys (all are optional):
 
 =over
 
-=item C<$child> - LibUI::Control instance to insert
+=item C<draw>
 
-=item C<$left> - Placement as number of columns from left
-
-=item C<$top> - Placement as number of rows from the top
-
-=item C<$xspan> - Number of columns to span
-
-=item C<$yspan> - Number of rows to span
-
-=item C<$hexpand> - Boolean value; true to expand reserved area horizontally; otherwise false
-
-=item C<$halign> - Horizontal alignment of the control within the reserved space
-
-=item C<$vexpand> - Bolean value; true to expand reserved area vertically; otherwise false
-
-=item C<$valign> - Vertical alignment of the control within the reserved space
-
-=back
-
-See L<LibUI::Align> for possible values of C<$halign> and C<$valign>.
-
-=head2 C<insertAt( ... )>
-
-    my $grid   = LibUI::Grid->new();
-    my $lbl    = LibUI::Label->new('Top Left');
-    $grid->append( $lbl, 0, 0, 1, 1, 1, Fill, 1, Fill );
-    $grid->append( LibUI::Label->new('Top Right'),
-        1, 0, 1, 1, 1, Fill, 1, Fill );
-    # Insert below $lbl and span two columns
-    $grid->insertAt( LibUI::Label->new('Bottom Center and Stretch'),
-        $lbl, Bottom, 2, 1, 1, Center, 1, Center );
-
-Appends a control to the grid.
-
-Expected parameters include:
+Provide a code reference which should expect...
 
 =over
 
-=item C<$child> - LibUI::Control instance to insert
+=item C<$area> - pointer to the LibUI::Area object
 
-=item C<$existing> - The existing LibUI::Control instance to position relatively to
-
-=item C<$at> - Placement specifier in relation to C<$existing> control
-
-=item C<$xspan> - Number of columns to span
-
-=item C<$yspan> - Number of rows to span
-
-=item C<$hexpand> - Boolean value; true to expand reserved area horizontally; otherwise false
-
-=item C<$halign> - Horizontal alignment of the control within the reserved space
-
-=item C<$vexpand> - Bolean value; true to expand reserved area vertically; otherwise false
-
-=item C<$valign> - Vertical alignment of the control within the reserved space
+=item C<$drawParams> - pointer to the LibUI::Area::DrawParams structure
 
 =back
 
-See L<LibUI::Align> for possible values of C<$halign> and C<$valign>.
+...and return void.
 
-See L<LibUI::At> for possible values of C<$at>.
 
-=head2 C<padded( )>
+=item C<mouseEvent>
 
-    if( $grid->padded ) {
-        ...;
-    }
+Provide a code reference which should expect...
 
-Returns whether or not controls within the grid are padded.
+=over
 
-Padding is defined as space between individual controls.
+=item C<$area> - pointer to the LibUI::Area object
 
-=head2 C<setPadded( ... )>
+=item C<$event> - pointer to the LibUI::Area::MouseEvent structure
 
-    $grid->setPadded( 1 );
+=back
 
-Sets whether or not controls within the grid are padded.
+...and return void.
 
-Padding is defined as space between individual controls. The padding size is
-determined by the OS defaults.
+=item C<mouseCrossed>
+
+Provide a code reference which should expect...
+
+=over
+
+=item C<$area> - pointer to the LibUI::Area object
+
+=back
+
+...and return void.
+
+=item C<dragBroken>
+
+Provide a code reference which should expect...
+
+=over
+
+=item C<$area> - pointer to the LibUI::Area object
+
+=back
+
+...and return void.
+
+Note that there is no support for this event on GTK+ or MacOS.
+
+=item C<keyEvent>
+
+Provide a code reference which should expect...
+
+=over
+
+=item C<$area> - pointer to the LibUI::Area object
+
+=item C<$event> - pointer to the LibUI::Area::KeyEvent structure
+
+=back
+
+...and return an integer.
+
+=back
 
 =head1 LICENSE
 
@@ -251,7 +240,7 @@ the same terms as Perl itself.
 
 Sanko Robinson E<lt>sanko@cpan.orgE<gt>
 
-=for stopwords scrollbars
+=for stopwords MacOS scrollbars
 
 =cut
 

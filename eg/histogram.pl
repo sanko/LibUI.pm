@@ -87,7 +87,7 @@ sub graphSize {
 }
 
 sub handlerDraw {    #(uiAreaHandler *a, uiArea *area, uiAreaDrawParams *p)
-    my ( $a, $area, $p ) = @_;
+    my ( $area, $p ) = @_;
 
     # fill the are with white
     my $brush = setSolidBrush( White, 1.0 );
@@ -168,7 +168,7 @@ sub inPoint {
 }
 
 sub handlerMouseEvent {
-    my ( $a, $area, $e ) = @_;
+    my ( $area, $e ) = @_;
 
     # (uiAreaHandler *a, uiArea *area, uiAreaMouseEvent *e)
     my ( $graphWidth, $graphHeight ) = graphSize( $e->{width}, $e->{height} );

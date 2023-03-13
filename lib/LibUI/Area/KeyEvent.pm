@@ -1,8 +1,9 @@
-package LibUI::Area::KeyEvent 0.02 {
+package LibUI::Area::KeyEvent 0.03 {
     use 5.008001;
     use strict;
     use warnings;
     use Affix;
+    use LibUI::Area::Modifiers;
     #
     typedef 'LibUI::Area::ExtKey' => Enum [
         [ ExtKeyEscape => 1 ], qw[ExtKeyInsert
