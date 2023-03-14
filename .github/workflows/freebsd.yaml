@@ -23,7 +23,7 @@ jobs:
       uses: vmactions/freebsd-vm@v0.3.0
       with:
         usesh: true
-        prepare: pkg install -y lang/perl${{matrix.perl}} p5-App-cpanminus gtk3 python3 meson ninja pkgconf x11-servers/xorg-vfbserver
+        prepare: pkg install -y lang/perl${{matrix.perl}} p5-App-cpanminus gtk3 python3 meson ninja pkgconf xorg-vfbserver
         run: |
           freebsd-version
           perl -V
