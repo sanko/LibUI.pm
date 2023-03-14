@@ -111,7 +111,7 @@ Sets the button label text.
 
     my $txt = $btn->text;
 
-Sets the button label text.
+Returns the button label text.
 
 =head1 LICENSE
 
