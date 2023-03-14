@@ -1,9 +1,7 @@
 use strict;
 use warnings;
 use lib '../lib';
-use LibUI ':all';
-use LibUI::Window;
-use LibUI::Label;
+use LibUI qw[:all ::Window ::Label];
 Init() && die;
 my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
 $window->setMargined(1);

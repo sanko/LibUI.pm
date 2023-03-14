@@ -6,14 +6,47 @@ package LibUI 0.03 {
     use lib '../lib', '../blib/arch', '../blib/lib';
     use Affix;
     use Alien::libui;
-    use Exporter 'import';    # gives you Exporter's import() method directly
+    use parent 'Exporter';    # gives you Exporter's import() method directly
     use Config;
+    use Carp;
     our %EXPORT_TAGS;
     $|++;
     #
     #my $path = '/home/sanko/Downloads/libui-ng-master/build/meson-out/libui.so.0';
     sub lib () { CORE::state $lib //= Alien::libui->dynamic_libs; $lib }
     #
+    my @exports;
+
+    sub import {
+        my ( $pkg, @args ) = @_;
+        my $callpkg = caller(0);
+        for my $arg (@args) {
+            if ( $arg =~ m[^::(.+)$] ) {
+                my $widget = 'LibUI' . $arg;
+                eval qq{use $widget};
+                croak $@ if $@;
+                {
+                    my $hash = $widget::{EXPORT_TAGS};
+                    for my $key ( keys %$hash ) {
+                        warn $key;
+                        if ( exists $EXPORT_TAGS{$key} ) {
+                            push @{ $EXPORT_TAGS{$key} }, $hash->{$key};
+                        }
+                        else {
+                            $EXPORT_TAGS{$key} = $hash->{$key};
+                        }
+                    }
+                }
+            }
+            elsif ( $arg =~ m[^:(.+)$] ) {
+                push @exports, @{ $EXPORT_TAGS{$1} };
+            }
+        }
+        no strict 'refs';
+        *{"$callpkg\::$_"} = \&{"$pkg\::$_"} for @exports;
+    }
+
+    # TODO: unimport
     sub export {
         my ( $tag, @funcs ) = @_;
         push @{ $EXPORT_TAGS{$tag} }, map { m[^ui]; $'; } @funcs;
@@ -94,9 +127,7 @@ LibUI - Simple, Portable, Native GUI Library
 
 =head1 SYNOPSIS
 
-    use LibUI ':all';
-    use LibUI::Window;
-    use LibUI::Label;
+    use LibUI qw[:all ::Window ::Label];
     Init( ) && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
     $window->setMargined( 1 );
@@ -303,6 +334,23 @@ Return a true value from your C<$func> to make your timer repeating.
 Any userdata you feel like passing. It'll be handed off to your function.
 
 =back
+
+=head1 Importing Widgets
+
+You're free to import widgets manually...
+
+    use LibUI;
+    use LibUI::Window;
+    use LibUI::Button;
+    use LibUI::VBox;
+    use LibUI::Area;
+    use LibUI::Entry;
+
+...or, you can let LibUI take care of it:
+
+    use LibUI qw[::Window ::Button ::VBox ::Area ::Entry];
+
+Note the
 
 =head1 Requirements
 
