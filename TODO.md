@@ -11,7 +11,6 @@ uiDrawTextLayoutParams
 
 Control
 
-
 Image
 
 Table
@@ -29,6 +28,5 @@ Enum:
 
 Values:
     DrawDefaultMiterLimit
-    Pi
     TableModelColunAlwaysEditable
     TableModelColumnNeverEditable

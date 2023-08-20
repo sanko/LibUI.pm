@@ -5,9 +5,175 @@ LibUI - Simple, Portable, Native GUI Library
 
 # SYNOPSIS
 
-    use LibUI ':all';
-    use LibUI::Window;
-    use LibUI::Label;
+    use LibUI;
+
+    sub onClosing ( $window, $data ) {
+        uiQuit();
+        return 1;
+    }
+
+    my $err = uiInit( { size => 0 } );
+    if ( defined $err ) {
+        printf "Error initializing libui-ng: %s\n", $err;
+        uiFreeInitError($err);
+        return 1;
+    }
+
+    # Create a new window
+    my $w = uiNewWindow( "Hello, World!", 320, 120, 0 );
+    uiWindowOnClosing( $w, \&onClosing, undef );
+    uiWindowSetMargined( $w, 1 );
+
+    #
+    my $l = uiNewLabel("Hello, World!");
+    uiWindowSetChild( $w, $l );
+
+    #
+    uiControlShow($w);
+    uiMain();
+    uiUninit();
+
+<div>
+    <h2>Screenshots</h2> <div style="text-align: center"> <h3>Linux</h3><img
+    alt="Linux"
+    src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/linux.png" />
+    <h3>MacOS</h3><img alt="MacOS"
+    src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/macos.png" />
+    <h3>Windows</h3><img alt="Windows"
+    src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/windows.png" />
+    </div>
+</div>
+
+# DESCRIPTION
+
+LibUI is a simple and portable (but not inflexible) GUI library in C that uses
+the native GUI technologies of each platform it supports.
+
+This distribution is under construction. It works but is incomplete.
+
+# Functions
+
+LibUI, keeping with the ethos of simplicity, is functional.
+
+## `uiInit( ... )`
+
+    my $err = uiInit({ Size => 0 });
+
+Ask LibUI to do all the platform specific work to get up and running. If LibUI
+fails to initialize itself, this will return a string. Weird upstream choice, I
+know...
+
+You **must** call this before creating widgets.
+
+## `uiUninit( )`
+
+    uiUninit( );
+
+Ask LibUI to break everything down before quitting.
+
+## `uiFreeInitError( ... )`
+
+    uiFreeInitError( $err );
+
+Frees the string returned when [&lt;uiInit( ... )](https://metacpan.org/pod/uiInit%28%20...%20%29)> fails.
+
+## `uiMain( )`
+
+    uiMain( );
+
+Let LibUI's event loop run until interrupted.
+
+## `uiMainSteps( )`
+
+    uiMainSteps( );
+
+You may call this instead of `uiMain( )` if you want to run the main loop
+yourself.
+
+## `uiMainStep( ... )`
+
+    my $ok = uiMainStep( 1 );
+
+Runs one iteration of the main loop.
+
+It takes a single boolean argument indicating whether to wait for an even to
+occur or not.
+
+It returns true if an event was processed (or if no even is available if you
+don't wish to wait) and false if the event loop was told to stop (for instance,
+[<`uiQuit()`](https://metacpan.org/pod/uiQuit%28%20%29)> was called).
+
+## `uiQuit( )`
+
+    uiQuit( );
+
+Signals LibUI that you are ready to quit.
+
+## `uiQueueMain( )`
+
+    uiQueueMain( sub { }, $values );
+
+Trigger a callback on the main thread from any other thread. This is likely
+unstable. It's for sure untested as long as perl threads are garbage.
+
+## `uiTimer( ... )`
+
+    uiTimer( 1000, sub { die 'do not do this here' }, undef);
+
+    uiTime(
+        1000,
+        sub {
+            my $data = shift;
+            return 1 unless ++$data->{ticks} == 5;
+            0;
+        },
+        { ticks => 0 }
+    );
+
+Expected parameters include:
+
+- `$time`
+
+    Time in milliseconds.
+
+- `$func`
+
+    CodeRef that will be triggered when `$time` runs out.
+
+    Return a true value from your `$func` to make your timer repeating.
+
+- `$data`
+
+    Any userdata you feel like passing. It'll be handed off to your function.
+
+# Requirements
+
+See [Alien::libui](https://metacpan.org/pod/Alien%3A%3Alibui)
+
+# See Also
+
+`eg/demo.pl` - Very basic example
+
+`eg/widgets.pl` - Demo of basic controls
+
+# LICENSE
+
+Copyright (C) Sanko Robinson.
+
+This library is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself.
+
+# AUTHOR
+
+Sanko Robinson <sanko@cpan.org>
+
+# NAME
+
+LibUI - Simple, Portable, Native GUI Library
+
+# SYNOPSIS
+
+    use LibUI qw[:all ::Window ::Label];
     Init( ) && die;
     my $window = LibUI::Window->new( 'Hi', 320, 100, 0 );
     $window->setMargined( 1 );
@@ -158,6 +324,23 @@ Expected parameters include:
 - `$data`
 
     Any userdata you feel like passing. It'll be handed off to your function.
+
+# Importing Widgets
+
+You're free to import widgets manually...
+
+    use LibUI;
+    use LibUI::Window;
+    use LibUI::Button;
+    use LibUI::VBox;
+    use LibUI::Area;
+    use LibUI::Entry;
+
+...or, you can let LibUI take care of it:
+
+    use LibUI qw[::Window ::Button ::VBox ::Area ::Entry];
+
+Note the
 
 # Requirements
 

@@ -75,7 +75,7 @@
          "web" : "https://github.com/sanko/LibUI.pm"
       }
    },
-   "version" : "0.03",
+   "version" : "1.00",
    "x_authority" : "cpan:SANKO",
    "x_serialization_backend" : "JSON::PP version 4.16",
    "x_static_install" : 1

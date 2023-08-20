@@ -1,10 +1,610 @@
+package LibUI 1.00 {
+    use strict;
+    use warnings;
+    use Affix;
+    use Alien::libui;
+    my $lib = Alien::libui->dynamic_libs;
+    use Exporter 'import';
+    our %EXPORT_TAGS = (
+        default  => [qw[uiInit uiQueueMain uiMain uiQuit uiUninit uiFreeInitError uiTimer]],
+        controls => [qw[uiControlShow uiControlDestroy]],
+        window   => [qw[uiNewWindow uiWindowOnClosing uiWindowSetMargined uiWindowSetChild]],
+        label    => [qw[uiNewLabel]],
+    );
+    {
+        my %seen;
+        push @{ $EXPORT_TAGS{controls} }, grep { !$seen{$_}++ } @{ $EXPORT_TAGS{$_} }
+            for qw[window box label];
+    }
+    {
+        my %seen;
+        push @{ $EXPORT_TAGS{all} }, grep { !$seen{$_}++ } @{ $EXPORT_TAGS{$_} }
+            for keys %EXPORT_TAGS;
+    }
+    our @EXPORT_OK = @{ $EXPORT_TAGS{all} };
+
+    #~ use Data::Dump;
+    #~ ddx \@EXPORT_OK;
+    #~ ddx \%EXPORT_TAGS;
+
+=pod
+
+=encoding utf-8
+
+=head1 NAME
+
+LibUI - Simple, Portable, Native GUI Library
+
+=head1 SYNOPSIS
+
+    use LibUI;
+
+    sub onClosing ( $window, $data ) {
+        uiQuit();
+        return 1;
+    }
+
+    my $err = uiInit( { size => 0 } );
+    if ( defined $err ) {
+        printf "Error initializing libui-ng: %s\n", $err;
+        uiFreeInitError($err);
+        return 1;
+    }
+
+    # Create a new window
+    my $w = uiNewWindow( "Hello, World!", 320, 120, 0 );
+    uiWindowOnClosing( $w, \&onClosing, undef );
+    uiWindowSetMargined( $w, 1 );
+
+    #
+    my $l = uiNewLabel("Hello, World!");
+    uiWindowSetChild( $w, $l );
+
+    #
+    uiControlShow($w);
+    uiMain();
+    uiUninit();
+
+=begin html
+
+<h2>Screenshots</h2> <div style="text-align: center"> <h3>Linux</h3><img
+alt="Linux"
+src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/linux.png" />
+<h3>MacOS</h3><img alt="MacOS"
+src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/macos.png" />
+<h3>Windows</h3><img alt="Windows"
+src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/windows.png" />
+</div>
+
+=end html
+
+=head1 DESCRIPTION
+
+LibUI is a simple and portable (but not inflexible) GUI library in C that uses
+the native GUI technologies of each platform it supports.
+
+This distribution is under construction. It works but is incomplete.
+
+=head1 Functions
+
+LibUI, keeping with the ethos of simplicity, is functional.
+
+=head2 C<uiInit( ... )>
+
+    my $err = uiInit({ Size => 0 });
+
+Ask LibUI to do all the platform specific work to get up and running. If LibUI
+fails to initialize itself, this will return a string. Weird upstream choice, I
+know...
+
+You B<must> call this before creating widgets.
+
+=cut
+
+    typedef 'LibUI::InitOptions' => Struct [ Size => Size_t ];
+    affix $lib, 'uiInit', [ Pointer [ Type ['LibUI::InitOptions'] ] ] => Str;
+
+=head2 C<uiUninit( )>
+
+    uiUninit( );
+
+Ask LibUI to break everything down before quitting.
+
+=cut
+
+    affix $lib, 'uiUninit', [] => Void;
+
+=head2 C<uiFreeInitError( ... )>
+
+    uiFreeInitError( $err );
+
+Frees the string returned when L<<uiInit( ... )|C<uiInit( ... )>>> fails.
+
+=cut
+
+    affix $lib, 'uiFreeInitError', [Char] => Void;
+
+=head2 C<uiMain( )>
+
+    uiMain( );
+
+Let LibUI's event loop run until interrupted.
+
+=cut
+
+    affix $lib, 'uiMain', [] => Void;
+
+=head2 C<uiMainSteps( )>
+
+    uiMainSteps( );
+
+You may call this instead of C<uiMain( )> if you want to run the main loop
+yourself.
+
+=cut
+
+    affix $lib, 'uiMainSteps', [] => Void;
+
+=head2 C<uiMainStep( ... )>
+
+    my $ok = uiMainStep( 1 );
+
+Runs one iteration of the main loop.
+
+It takes a single boolean argument indicating whether to wait for an even to
+occur or not.
+
+It returns true if an event was processed (or if no even is available if you
+don't wish to wait) and false if the event loop was told to stop (for instance,
+L<<C<uiQuit()>|C<uiQuit( )>>> was called).
+
+=cut
+
+    affix $lib, 'uiMainStep', [Bool] => Bool;
+
+=head2 C<uiQuit( )>
+
+    uiQuit( );
+
+Signals LibUI that you are ready to quit.
+
+=cut
+
+    affix $lib, 'uiQuit', [] => Void;
+
+=head2 C<uiQueueMain( )>
+
+    uiQueueMain( sub { }, $values );
+
+Trigger a callback on the main thread from any other thread. This is likely
+unstable. It's for sure untested as long as perl threads are garbage.
+
+=cut
+
+    affix $lib, 'uiQueueMain', [ CodeRef [ [ Pointer [SV] ] => Void ], Pointer [SV] ] => Void;
+
+=head2 C<uiTimer( ... )>
+
+    uiTimer( 1000, sub { die 'do not do this here' }, undef);
+
+    uiTime(
+        1000,
+        sub {
+            my $data = shift;
+            return 1 unless ++$data->{ticks} == 5;
+            0;
+        },
+        { ticks => 0 }
+    );
+
+Expected parameters include:
+
+=over
+
+=item C<$time>
+
+Time in milliseconds.
+
+=item C<$func>
+
+CodeRef that will be triggered when C<$time> runs out.
+
+Return a true value from your C<$func> to make your timer repeating.
+
+=item C<$data>
+
+Any userdata you feel like passing. It'll be handed off to your function.
+
+=back
+
+=cut
+
+    affix $lib, 'uiTimer', [ Int, CodeRef [ [ Pointer [SV] ] => Int ], Pointer [SV] ] => Void;
+
+    #
+    affix $lib, 'uiOnShouldQuit', [ CodeRef [ [ Pointer [Void] ] => Int ], Pointer [Void] ] => Void;
+    #
+    affix $lib, 'uiFreeText', [Str] => Void;
+
+    # Base class for GUI controls providing common methods.
+    typedef 'LibUI::Control' => Pointer [
+        Struct [
+            signature      => UInt,
+            os_signature   => UInt,
+            type_signature => UInt,
+            destroy        => Pointer [Void],
+            handle         => Pointer [Void],
+            parent         => Pointer [Void],
+            set_parent     => Pointer [Void],
+            top_level      => Int,
+            visible        => Int,
+            show           => Pointer [Void],
+            hide           => Pointer [Void],
+            enabled        => Int,
+            enable         => Pointer [Void],
+            disable        => Pointer [Void]
+        ]
+    ];
+    #
+    affix $lib, 'uiControlDestroy', [ Pointer [Void] ] => Void;
+    #
+    affix $lib, 'uiControlHandle', [ Type ['LibUI::Control'] ] => Pointer [Void];
+    #
+    affix $lib, 'uiControlParent',    [ Type ['LibUI::Control'] ] => Type ['LibUI::Control'];
+    affix $lib, 'uiControlSetParent', [ Type ['LibUI::Control'], Type ['LibUI::Control'] ] => Void;
+    affix $lib, 'uiControlToplevel',  [ Type ['LibUI::Control'] ]                          => Int;
+    #
+    affix $lib, 'uiControlShow', [ Pointer [Void] ] => Void;
+    #
+    typedef 'LibUI::Box'              => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::Checkbox'         => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::Menu'             => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::MenuItem'         => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::Group'            => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::Button'           => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::Label'            => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::Separator'        => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::DatePicker'       => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::TimePicker'       => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::DateTimePicker'   => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::FontButton'       => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::ColorButton'      => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::SpinBox'          => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::Slider'           => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::ProgressBar'      => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::Combobox'         => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::EditableCombobox' => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::Radiobuttons'     => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::Tab'              => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::TextEntry'        => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::Area'             => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::DrawPath'         => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::TextFont'         => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::TextLayout'       => Type ['LibUI::Control'];    #  Rename this Isa?
+
+    #
+    typedef 'LibUI::Window' => Struct [
+        c         => Pointer [Void],
+        w         => Pointer [Void],
+        child     => Pointer [ Type ['LibUI::Control'] ],
+        onClosing => Pointer [Void]
+    ];
+    #
+    typedef 'LibUI::AreaDrawParams' => Struct [
+        draw_context => Pointer [Void],
+        width        => Double,
+        height       => Double,
+        clip_x       => Double,
+        clip_y       => Double,
+        clip_width   => Double,
+        clip_height  => Double
+    ];
+    #
+    typedef 'LibUI::AreaHandler' => Struct [
+        draw_event    => CodeRef [ [ Pointer [Void], Pointer [Void], Pointer [Void] ] => Void ],
+        mouse_event   => CodeRef [ [ Pointer [Void], Pointer [Void], Pointer [Void] ] => Void ],
+        mouse_crossed => CodeRef [ [ Pointer [Void], Pointer [Void], Int ]            => Void ],
+        drag_broken   => CodeRef [ [ Pointer [Void], Pointer [Void] ]                 => Void ],
+        key_event     => CodeRef [ [ Pointer [Void], Pointer [Void], Pointer [Void] ] => Int ]
+    ];
+
+=begin todo
+
+    KEY_MODIFIERS = enum(:ctrl, 1 << 0, :alt, 1 << 1, :shift, 1 << 2, :super, 1 << 3)
+    LINE_CAPS  = enum(:flat, :round, :square)
+    LINE_JOINS = enum(:miter, :round, :bevel)
+    TEXT_WEIGHTS = enum(:thin,
+      :ultra_light,
+      :light, :book,
+      :normal,
+      :medium,
+      :semi_bold,
+      :bold,
+      :ultra_bold,
+      :heavy,
+      :ultra_heavy
+    )
+
+    TEXT_ITALIC = enum(:normal, :oblique, :italic)
+    TEXT_STRETCH = enum(:ultra_condensed,
+      :extra_condensed,
+      :condensed,
+      :semi_condensed,
+      :normal,
+      :semi_expanded,
+      :expanded,
+      :extra_expanded,
+      :ultra_expanded
+    )
+
+    class AreaMouseEvent < FFI::Struct
+      layout :x,      :double,
+        :y,           :double,
+        :area_width,  :double,
+        :area_height, :double,
+        :down,        :uintmax_t,
+        :up,          :uintmax_t,
+        :count,       :uintmax_t,
+        :modifiers,   KEY_MODIFIERS,
+        :held1to64,   :uint64_t
+    end
+
+    class FontFamilies < FFI::Struct
+      layout :ff, :pointer
+    end
+
+    class FontDescriptor < FFI::Struct
+      layout :family, :string,
+        :size, :double,
+        :weight, TEXT_WEIGHTS,
+        :italic, TEXT_ITALIC,
+        :stretch, TEXT_STRETCH
+    end
+
+    class FontMetrics < FFI::Struct
+      layout :ascent, :double,
+        :descent, :double,
+        :leading, :double,
+        :underline_pos, :double,
+        :underline_thickness, :double
+    end
+
+    class DrawStrokeParams < FFI::Struct
+      layout :cap, LINE_CAPS,
+        :join, LINE_JOINS,
+        :thickness, :double,
+        :miter_limit, :double,
+        :dashes, :pointer, #double?
+        :num_dashes, :size_t,
+        :dash_phase, :double
+    end
+
+    BRUSH_TYPES = enum(:solid, :linear_gradient, :radial_gradient, :image)
+    FILL_MODES  = enum(:winding, :alternate)
+
+    class DrawBrush < FFI::Struct
+      layout :type,  BRUSH_TYPES,
+             :red,   :double,
+             :green, :double,
+             :blue,  :double,
+             :alpha, :double,
+
+             :x0, :double, # linear: start X, radial: start X
+             :y0, :double, # linear: start Y, radial: start Y
+             :x1, :double, # linear: end X, radial: outer circle center X
+             :y1, :double, # linear: end Y, radial: outer circle center Y
+             :outer_radius, :double, # radial gradients only
+             :stops, :pointer, # pointer to uiDrawBrushGradientStop
+             :num_stops, :size_t
+    end
+
+    class DrawMatrix < FFI::Struct
+      layout :m11, :double,
+        :m12, :double,
+        :m21, :double,
+        :m22, :double,
+        :m31, :double,
+        :m32, :double
+    end
+
+=end todo
+
+=cut
+
+    #
+    #
+    affix $lib, 'uiNewWindow', [ Str, Int, Int, Int ] => InstanceOf ['LibUI::Window'];
+    affix $lib, 'uiWindowOnClosing',
+        [
+        Pointer [ Type ['LibUI::Window'] ],
+        CodeRef [ [ Pointer [ Type ['LibUI::Window'] ], Pointer [SV] ] => Int ],
+        Pointer [SV]
+        ] => Void;
+    affix $lib, 'uiWindowSetChild',
+        [ Pointer [ Type ['LibUI::Window'] ], Type ['LibUI::Control'] ] => Void;
+    affix $lib, 'uiWindowSetTitle',    [ Pointer [ Type ['LibUI::Window'] ], Str ] => Void;
+    affix $lib, 'uiWindowSetMargined', [ Pointer [ Type ['LibUI::Window'] ], Int ] => Void;
+    #
+    affix $lib, 'uiNewHorizontalBox', [] => InstanceOf ['LibUI::Box'];
+    affix $lib, 'uiNewVerticalBox',   [] => InstanceOf ['LibUI::Box'];
+    affix $lib, 'uiBoxSetPadded',     [ InstanceOf ['LibUI::Box'], Int ] => Void;
+    affix $lib, 'uiBoxAppend',
+        [ InstanceOf ['LibUI::Box'], InstanceOf ['LibUI::Control'], Int ] => Void;
+    #
+    affix $lib, 'uiNewCheckbox',     [Str] => InstanceOf ['LibUI::Checkbox'];
+    affix $lib, 'uiCheckboxChecked', [ InstanceOf ['LibUI::Checkbox'] ]      => Int;
+    affix $lib, 'uiCheckboxSetText', [ InstanceOf ['LibUI::Checkbox'], Str ] => Void;
+    affix $lib, 'uiCheckboxOnToggled',
+        [
+        InstanceOf ['LibUI::Checkbox'],
+        CodeRef [ [ InstanceOf ['LibUI::Checkbox'] ] => Int ],
+        Pointer [SV]
+        ] => Void;
+    #
+    #~ callback :menu_item_clicked, [:pointer], :int
+    #~ attach_function :uiNewMenu,                   [:string],       Menu
+    #~ attach_function :uiMenuAppendItem,            [Menu, :string], MenuItem
+    #~ attach_function :uiMenuAppendPreferencesItem, [Menu],          MenuItem
+    #~ attach_function :uiMenuAppendAboutItem,       [Menu],          MenuItem
+    #~ attach_function :uiMenuItemDisable,           [MenuItem],      :void
+    #~ attach_function :uiMenuAppendQuitItem,        [Menu],          :void
+    #~ attach_function :uiMenuAppendCheckItem,       [Menu, :string], :void
+    #~ attach_function :uiMenuAppendSeparator,       [Menu],          :void
+    #~ attach_function :uiMenuItemOnClicked,
+    #~ [Menu,
+    #~ :menu_item_clicked,
+    #~ :pointer],
+    #~ :void
+    affix $lib, 'uiNewGroup',         [Str] => InstanceOf ['LibUI::Group'];
+    affix $lib, 'uiGroupSetMargined', [ InstanceOf ['LibUI::Group'], Int ] => Void;
+    affix $lib, 'uiGroupMargined',    [ InstanceOf ['LibUI::Group'] ]      => Int;
+    affix $lib, 'uiGroupSetChild',
+        [ InstanceOf ['LibUI::Group'], InstanceOf ['LibUI::Group'] ] => Void;
+    affix $lib, 'uiGroupSetTitle', [ InstanceOf ['LibUI::Group'], Str ] => Void;
+    #
+    affix $lib, 'uiNewDatePicker',          []    => InstanceOf ['LibUI::DatePicker'];
+    affix $lib, 'uiNewTimePicker',          [Str] => InstanceOf ['LibUI::TimePicker'];
+    affix $lib, 'uiNewDateTimePicker',      []    => InstanceOf ['LibUI::DateTimePicker'];
+    affix $lib, 'uiNewFontButton',          []    => InstanceOf ['LibUI::FontButton'];
+    affix $lib, 'uiNewHorizontalSeparator', []    => InstanceOf ['LibUI::Separator'];
+    affix $lib, 'uiNewProgressBar',         []    => InstanceOf ['LibUI::ProgressBar'];
+    affix $lib, 'uiProgressBarValue',       [ InstanceOf ['LibUI::ProgressBar'] ]      => Int;
+    affix $lib, 'uiProgressBarSetValue',    [ InstanceOf ['LibUI::ProgressBar'], Int ] => Void;
+    #
+    affix $lib, 'uiMsgBox',      [ InstanceOf ['LibUI::Window'], Str, Str ] => Void;
+    affix $lib, 'uiMsgBoxError', [ InstanceOf ['LibUI::Window'], Str, Str ] => Void;
+    #
+    affix $lib, 'uiNewArea',
+        [ Pointer [ Type ['LibUI::AreaHandler'] ] ] => InstanceOf ['LibUI::Area'];
+    #
+    affix $lib, 'uiNewLabel', [Str] => InstanceOf ['LibUI::Label'];
+
+=head1 Requirements
+
+See L<Alien::libui>
+
+=head1 See Also
+
+F<eg/demo.pl> - Very basic example
+
+F<eg/widgets.pl> - Demo of basic controls
+
+=head1 LICENSE
+
+Copyright (C) Sanko Robinson.
+
+This library is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself.
+
+=head1 AUTHOR
+
+Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+
+=for stopwords draggable gotta userdata
+
+=cut
+
+    #
+    $|++;
+    if (0) {
+        uiInit( {} ) && die;
+        #
+        my $win      = uiNewWindow( 'Hi', 320, 30, 0 );
+        my $quitting = 0;
+        uiWindowOnClosing( $win, sub { warn 'closing'; uiQuit(); $quitting++; return 1; }, undef );
+        my $box = uiNewVerticalBox();
+        warn ref $box;
+        uiWindowSetChild( $win, $box );
+        uiBoxSetPadded( $box, 1 );
+
+        #~ my $check = uiNewCheckbox('Check');
+        #~ uiCheckboxOnToggled(
+        #~ $check,
+        #~ sub {
+        #~ warn uiCheckboxChecked(shift);
+        #~ },
+        #~ undef
+        #~ );
+        #~ uiBoxAppend( $box, $check, 1 );
+        my $progress = uiNewProgressBar();
+        uiProgressBarSetValue( $progress, 19 );
+        uiBoxAppend( $box, $progress, 1 );
+
+        #~ my $check = uiNewArea(
+        #~ {   draw_event    => sub { warn 'draw' },
+        #~ mouse_event   => sub { warn 'mouse' },
+        #~ mouse_crossed => sub { warn 'crossed' },
+        #~ drag_broken   => sub { warn 'broken' },
+        #~ key_event     => sub { warn 'key' },
+        #~ }
+        #~ );
+        uiControlShow($win);
+        warn ref $win;
+
+        #~ my $value = 0;
+        uiTimer(
+            10,
+            sub {
+                #~ use Data::Dump; ddx \@_;
+                return 0 if $quitting;
+
+                #~ my $value = uiProgressBarValue($progress);
+                $_[0] = 0 if ++$_[0] >= 100;
+                uiProgressBarSetValue( $progress, $_[0] );
+                1;
+            },
+            my $value = 50
+        );
+        uiTimer(
+            100,
+            sub {
+                return 0 if $quitting;
+                print '.';
+                warn 'tick';
+                1;
+            },
+            undef
+        );
+
+        #~ uiMsgBox($win, 'Hi', 'Oh, well, that is something else...');
+        #~ ddx $win;
+        uiMain();
+        uiUninit();
+    }
+}
+1;
+__END__
+use strict;
+use warnings;
+use lib '../lib';
+use LibUI qw[:all ::Window ::Label];
+#
+Init() && die;
+my $window = LibUI::Window->new( 'Hi', 320, 30, 0 );
+$window->setMargined(1);
+$window->setChild( LibUI::Label->new('Hello, World!') );
+$window->onClosing(
+    sub {
+        Quit();
+        return 1;
+    },
+    undef
+);
+$window->setMargined(1);
+$window->show;
+Main();
+Uninit();
+
+
+
+__END__
 use 5.008001;
 
 package LibUI 0.03 {
     use strict;
     use warnings;
     use lib '../lib', '../blib/arch', '../blib/lib';
-    use Affix;
+    use Affix qw[:default :types typedef];
     use Alien::libui;
     use parent 'Exporter';    # gives you Exporter's import() method directly
     use Config;
@@ -13,7 +613,10 @@ package LibUI 0.03 {
     $|++;
     #
     #my $path = '/home/sanko/Downloads/libui-ng-master/build/meson-out/libui.so.0';
-    sub lib () { CORE::state $lib //= Alien::libui->dynamic_libs; $lib }
+    our $lib;
+
+#~ $lib = '/home/s/Desktop/Projects/alien-libui/_alien/build_M08j/libui-ng-master/build/meson-out/libui.so.0';
+    sub lib () { $lib //= Alien::libui->dynamic_libs; $lib }
     #
     my @exports;
 
@@ -67,14 +670,14 @@ package LibUI 0.03 {
     sub Init {
         my $aggs = @_ ? shift : { Size => 1024 };
         CORE::state $func
-            //= wrap( lib(), 'uiInit', [ Pointer [ Struct [ Size => Size_t ] ] ], Str );
+            //= Affix::wrap( lib(), 'uiInit', [ Pointer [ Struct [ Size => Size_t ] ] ], Str );
         $func->($aggs);
     }
 
     sub Timer($&;$) {
         my ( $timeout, $coderef, $agg ) = @_;
-        CORE::state $func
-            //= wrap( lib(), 'uiTimer', [ Int, CodeRef [ [Any] => Int ], Any ] => Void );
+        CORE::state $func //= Affix::wrap( lib(), 'uiTimer',
+            [ Int, CodeRef [ [ Pointer [SV] ] => Int ], Pointer [SV] ] => Void );
         $func->( $timeout, $coderef, $agg // undef );
     }
     typedef uiForEach => Enum [qw[uiForEachContinue uiForEachStop]];
@@ -95,12 +698,12 @@ package LibUI 0.03 {
         func( 'uiMainSteps', []    => Void );
         func( 'uiMainStep',  [Int] => Int );
         #
-        func( 'uiQueueMain', [ CodeRef [ [ Pointer [Void] ] => Void ], Any ] => Void );
+        func( 'uiQueueMain', [ CodeRef [ [ Pointer [SV] ] => Void ], Pointer [SV] ] => Void );
         #
         affix(
             lib(),
-            [ 'uiOnShouldQuit',         'LibUI::onShouldQuit' ],
-            [ CodeRef [ [Any] => Int ], Any ] => Void
+            [ 'uiOnShouldQuit',                    'LibUI::onShouldQuit' ],
+            [ CodeRef [ [ Pointer [SV] ] => Int ], Pointer [SV] ] => Void
         );
         func( 'uiFreeText', [Str] => Void );
     }
