@@ -12,7 +12,7 @@ LibUI - Simple, Portable, Native GUI Library
         return 1;
     }
 
-    my $err = uiInit( { size => 0 } );
+    my $err = uiInit( { Size => 0 } );
     if ( defined $err ) {
         printf "Error initializing libui-ng: %s\n", $err;
         uiFreeInitError($err);
