@@ -288,6 +288,274 @@ Returns whether or not the control can be interacted with by the user.
 Checks if the control and all its parents are enabled to make sure it can be
 interacted with by the user.
 
+## Window Functions
+
+A window control that represents a top-level window.
+
+A window contains exactly one child control that occupies the entire window and
+cannot be a child of another control.
+
+These functions may be imported with the `:window` tag.
+
+### `uiWindowTitle( ... )`
+
+    my $title = uiWindowTitle( $window );
+
+Returns the window title.
+
+### `uiWindowSetTitle( ... )`
+
+    uiWindowSetTitle( $window, 'Petris 1.0' );
+
+Sets the window title.
+
+### `uiWindowPosition( ... )`
+
+    uiWindowPosition( $window, my $x, my $y );
+
+Gets the window position.
+
+Coordinates are measured from the top left corner of the screen. This method
+may return inaccurate or dummy values on X11.
+
+### `uiWindowSetPosition( ... )`
+
+    uiWindowSetPosition( $window, 300, 50 );
+
+Moves the window to the specified position.
+
+Coordinates are measured from the top left corner of the screen. This method is
+merely a hint and may be ignored on X11.
+
+### `uiWindowOnPositionChanged( ... )`
+
+    uiWindowOnPositionChanged(
+        $window,
+        sub {
+            my ($w, $data) = @_;
+            uiWindowPosition( $w, my $x, my $y );
+            warn sprintf 'x: %d, y: %d', $x, $y;
+        },
+        undef
+    );
+
+Registers a callback for when the window moved.
+
+Expected parameters include:
+
+- `$window`
+
+    The window to bind.
+
+- `$code_ref`
+
+    Code reference that should expect a reference back to the instance that
+    triggered the callback and user data registered with the sender instance.
+
+- `$user_data`
+
+    Whatever you feel like passing along.
+
+The callback is not triggered when calling `uiWindowSetPosition( ... )`.
+
+### `uiWindowContentSize( ... )`
+
+    uiWindowContentSize( $window, my $w, my $h );
+
+Gets the window content size.
+
+The content size does NOT include window decorations like menus or title bars.
+
+### `uiWindowSetContentSize( ... )`
+
+    uiWindowSetContentSize( $window, 500, 100 );
+
+Sets the window content size.
+
+The content size does NOT include window decorations like menus or title bars.
+
+This method is merely a hint and may be ignored by the system.
+
+### `uiWindowFullscreen( ... )`
+
+    my $full = uiWindowFullscreen( $window );
+
+Returns whether or not the window is full screen.
+
+### `uiWindowSetFullscreen( ... )`
+
+    uiWindowSetFullscreen( $window, 1 );
+
+Sets whether or not the window is full screen.
+
+This method is merely a hint and may be ignored by the system.
+
+### `uiWindowOnContentSizeChanged( ... )`
+
+    uiWindowOnContentSizeChanged(
+        $w,
+        sub {
+            uiWindowContentSize( $w, my $w, my $h );
+            say "w: $w, h: $h";
+        },
+        undef
+    );
+
+Registers a callback for when the window content size is changed.
+
+Expected parameters include:
+
+- `$window`
+
+    The window to bind.
+
+- `$code_ref`
+
+    Code reference that should expect a reference back to the instance that
+    triggered the callback and user data registered with the sender instance.
+
+- `$user_data`
+
+    Whatever you feel like passing along.
+
+The callback is not triggered when calling `uiWindowSetContentSize( ... )`.
+
+### `uiWindowOnClosing( ... )`
+
+    uiWindowOnClosing(
+        $w,
+        sub {
+            say 'Goodbye...';
+            return 1;
+        },
+        undef
+    );
+
+Registers a callback for when the window is to be closed.
+
+Expected parameters include:
+
+- `$window`
+
+    The window to bind.
+
+- `$code_ref`
+
+    Code reference that should expect a reference back to the instance that
+    triggered the callback and user data registered with the sender instance.
+
+    Return a true value to destroy the window. Return an untrue value to abort
+    closing and keep the window alive and visible.
+
+- `$user_data`
+
+    Whatever you feel like passing along.
+
+The callback is not triggered when calling `uiWindowSetContentSize( ... )`.
+
+### `uiWindowOnFocusChanged( ... )`
+
+    uiWindowOnFocusChanged(
+        $w,
+        sub {
+            say LibUI::uiWindowFocused($w) ? 'in focus' : 'lost focus';
+        },
+        undef
+    );
+
+Registers a callback for when the window focus changes.
+
+Expected parameters include:
+
+- `$window`
+
+    The window to bind.
+
+- `$code_ref`
+
+    Code reference that should expect a reference back to the instance that
+    triggered the callback and user data registered with the sender instance.
+
+- `$user_data`
+
+    Whatever you feel like passing along.
+
+### `uiWindowFocused( ... )`
+
+    my $in_focus = uiWindowFocused( $w );
+
+Returns whether or not the window is focused.
+
+### `uiWindowBorderless( ... )`
+
+    my $no_border = uiWindowBorderless( $w );
+
+Returns whether or not the window is borderless.
+
+### `uiWindowSetBorderless( ... )`
+
+    uiWindowSetBorderless( $w, 1 );
+
+Sets whether or not the window is borderless.
+
+This method is merely a hint and may be ignored by the system.
+
+### `uiWindowSetChild( ... )`
+
+    uiWindowSetChild( $w, $box );
+
+Sets the window's child.
+
+### `uiWindowMargined( ... )`
+
+    my $comfortable = uiWindowMargined( $w );
+
+Returns whether or not the window has a margin.
+
+### `uiWindowSetMargined( ... )`
+
+    uiWindowSetMargined( $w, 1 );
+
+Sets whether or not the window has a margin.
+
+The margin size is determined by the OS defaults.
+
+### `uiWindowResizeable( ... )`
+
+    my $resizable = uiWindowResizeable( $w );
+
+Returns whether or not the window is user resizable.
+
+### `uiWindowSetResizeable( ... )`
+
+    uiWindowSetResizeable( $w, 1 );
+
+Sets whether or not the window is user resizable.
+
+The margin size is determined by the OS defaults.
+
+### `uiNewWindow( ... )`
+
+Creates a new uiWindow.
+
+Expected parameters include:
+
+- `$title`
+
+    Window title.
+
+- `$width`
+
+    Window width in pixels.
+
+- `$height`
+
+    Window height in pixels.
+
+- `$hasMenubar`
+
+    Whether or not the window should display a menu bar.
+
 # Requirements
 
 See [Alien::libui](https://metacpan.org/pod/Alien%3A%3Alibui)

@@ -7,8 +7,9 @@ package LibUI 1.00 {
     use Exporter 'import';
     our %EXPORT_TAGS = (
         default => [
-            'uiInit',   'uiQueueMain',     'uiMain',  'uiQuit',
-            'uiUninit', 'uiFreeInitError', 'uiTimer', 'uiOnShouldQuit'
+            'uiInit',      'uiUninit',   'uiFreeInitError', 'uiMain',
+            'uiMainSteps', 'uiMainStep', 'uiQuit',          'uiQueueMain',
+            'uiTimer',     'uiOnShouldQuit'
         ],
         controls => [
             'uiControlDestroy',       'uiControlHandle',
@@ -20,8 +21,20 @@ package LibUI 1.00 {
             'uiFreeControl',          'uiControlVerifySetParent',
             'uiControlEnabledToUser', 'uiUserBugCannotSetParentOnToplevel'
         ],
-        window => [ 'uiNewWindow', 'uiWindowOnClosing', 'uiWindowSetMargined', 'uiWindowSetChild' ],
-        label  => ['uiNewLabel']
+        window => [
+            'uiWindowTitle',             'uiWindowSetTitle',
+            'uiWindowPosition',          'uiWindowSetPosition',
+            'uiWindowOnPositionChanged', 'uiWindowContentSize',
+            'uiWindowSetContentSize',    'uiWindowFullscreen',
+            'uiWindowSetFullscreen',     'uiWindowOnContentSizeChanged',
+            'uiWindowOnClosing',         'uiWindowOnFocusChanged',
+            'uiWindowFocused',           'uiWindowBorderless',
+            'uiWindowSetBorderless',     'uiWindowSetChild',
+            'uiWindowMargined',          'uiWindowSetMargined',
+            'uiWindowResizeable',        'uiWindowSetResizeable',
+            ,                            'uiNewWindow'
+        ],
+        label => ['uiNewLabel']
     );
     {
         my %seen;
@@ -179,7 +192,7 @@ L<<C<uiQuit()>|C<uiQuit( )>>> was called).
 
 =cut
 
-    affix $lib, 'uiMainStep', [Bool] => Bool;
+    affix $lib, 'uiMainStep', [Int] => Int;
 
 =head3 C<uiQuit( )>
 
@@ -494,6 +507,412 @@ interacted with by the user.
 
     affix $lib, 'uiUserBugCannotSetParentOnToplevel', [Str] => Void;
 
+=head2 Window Functions
+
+A window control that represents a top-level window.
+
+A window contains exactly one child control that occupies the entire window and
+cannot be a child of another control.
+
+These functions may be imported with the C<:window> tag.
+
+=cut
+
+    typedef 'LibUI::Window' => Pointer [
+        Struct [
+            c         => Pointer [Void],
+            w         => Pointer [Void],
+            child     => Pointer [ Type ['LibUI::Control'] ],
+            onClosing => Pointer [Void]
+        ]
+    ];
+
+=head3 C<uiWindowTitle( ... )>
+
+    my $title = uiWindowTitle( $window );
+
+Returns the window title.
+
+=cut
+
+    affix $lib, 'uiWindowTitle', [ Type ['LibUI::Window'] ] => Str;
+
+=head3 C<uiWindowSetTitle( ... )>
+
+    uiWindowSetTitle( $window, 'Petris 1.0' );
+
+Sets the window title.
+
+=cut
+
+    affix $lib, 'uiWindowSetTitle', [ Type ['LibUI::Window'], Str ] => Void;
+
+=head3 C<uiWindowPosition( ... )>
+
+    uiWindowPosition( $window, my $x, my $y );
+
+Gets the window position.
+
+Coordinates are measured from the top left corner of the screen. This method
+may return inaccurate or dummy values on X11.
+
+
+=cut
+
+    affix $lib, 'uiWindowPosition',
+        [ Type ['LibUI::Window'], Pointer [Int], Pointer [Int] ] => Void;
+
+=head3 C<uiWindowSetPosition( ... )>
+
+    uiWindowSetPosition( $window, 300, 50 );
+
+Moves the window to the specified position.
+
+Coordinates are measured from the top left corner of the screen. This method is
+merely a hint and may be ignored on X11.
+
+=cut
+
+    affix $lib, 'uiWindowSetPosition', [ Type ['LibUI::Window'], Int, Int ] => Void;
+
+=head3 C<uiWindowOnPositionChanged( ... )>
+
+    uiWindowOnPositionChanged(
+        $window,
+        sub {
+            my ($w, $data) = @_;
+            uiWindowPosition( $w, my $x, my $y );
+            warn sprintf 'x: %d, y: %d', $x, $y;
+        },
+        undef
+    );
+
+Registers a callback for when the window moved.
+
+Expected parameters include:
+
+=over
+
+=item C<$window>
+
+The window to bind.
+
+=item C<$code_ref>
+
+Code reference that should expect a reference back to the instance that
+triggered the callback and user data registered with the sender instance.
+
+=item C<$user_data>
+
+Whatever you feel like passing along.
+
+=back
+
+The callback is not triggered when calling C<uiWindowSetPosition( ... )>.
+
+=cut
+
+    affix $lib, 'uiWindowOnPositionChanged',
+        [
+        Type ['LibUI::Window'],
+        CodeRef [ [ Type ['LibUI::Window'], Pointer [SV] ] => Void ],
+        Pointer [SV]
+        ] => Void;
+
+=head3 C<uiWindowContentSize( ... )>
+
+    uiWindowContentSize( $window, my $w, my $h );
+
+Gets the window content size.
+
+The content size does NOT include window decorations like menus or title bars.
+
+=cut
+
+    affix $lib, 'uiWindowContentSize',
+        [ Type ['LibUI::Window'], Pointer [Int], Pointer [Int] ] => Void;
+
+=head3 C<uiWindowSetContentSize( ... )>
+
+    uiWindowSetContentSize( $window, 500, 100 );
+
+Sets the window content size.
+
+The content size does NOT include window decorations like menus or title bars.
+
+This method is merely a hint and may be ignored by the system.
+
+=cut
+
+    affix $lib, 'uiWindowSetContentSize', [ Type ['LibUI::Window'], Int, Int ] => Void;
+
+=head3 C<uiWindowFullscreen( ... )>
+
+    my $full = uiWindowFullscreen( $window );
+
+Returns whether or not the window is full screen.
+
+=cut
+
+    affix $lib, 'uiWindowFullscreen', [ Type ['LibUI::Window'] ] => Bool;
+
+=head3 C<uiWindowSetFullscreen( ... )>
+
+    uiWindowSetFullscreen( $window, 1 );
+
+Sets whether or not the window is full screen.
+
+This method is merely a hint and may be ignored by the system.
+
+=cut
+
+    affix $lib, 'uiWindowSetFullscreen', [ Type ['LibUI::Window'], Bool ] => Void;
+
+=head3 C<uiWindowOnContentSizeChanged( ... )>
+
+    uiWindowOnContentSizeChanged(
+        $w,
+        sub {
+            uiWindowContentSize( $w, my $w, my $h );
+            say "w: $w, h: $h";
+        },
+        undef
+    );
+
+Registers a callback for when the window content size is changed.
+
+Expected parameters include:
+
+=over
+
+=item C<$window>
+
+The window to bind.
+
+=item C<$code_ref>
+
+Code reference that should expect a reference back to the instance that
+triggered the callback and user data registered with the sender instance.
+
+=item C<$user_data>
+
+Whatever you feel like passing along.
+
+=back
+
+The callback is not triggered when calling C<uiWindowSetContentSize( ... )>.
+
+=cut
+
+    affix $lib, 'uiWindowOnContentSizeChanged',
+        [
+        Type ['LibUI::Window'],
+        CodeRef [ [ Type ['LibUI::Window'], Pointer [SV] ] => Void ],
+        Pointer [SV]
+        ] => Void;
+
+=head3 C<uiWindowOnClosing( ... )>
+
+    uiWindowOnClosing(
+        $w,
+        sub {
+            say 'Goodbye...';
+            return 1;
+        },
+        undef
+    );
+
+Registers a callback for when the window is to be closed.
+
+Expected parameters include:
+
+=over
+
+=item C<$window>
+
+The window to bind.
+
+=item C<$code_ref>
+
+Code reference that should expect a reference back to the instance that
+triggered the callback and user data registered with the sender instance.
+
+Return a true value to destroy the window. Return an untrue value to abort
+closing and keep the window alive and visible.
+
+=item C<$user_data>
+
+Whatever you feel like passing along.
+
+=back
+
+The callback is not triggered when calling C<uiWindowSetContentSize( ... )>.
+
+=cut
+
+    affix $lib, 'uiWindowOnClosing',
+        [
+        Type ['LibUI::Window'],
+        CodeRef [ [ Type ['LibUI::Window'], Pointer [SV] ] => Bool ],
+        Pointer [SV]
+        ] => Void;
+
+=head3 C<uiWindowOnFocusChanged( ... )>
+
+    uiWindowOnFocusChanged(
+        $w,
+        sub {
+            say LibUI::uiWindowFocused($w) ? 'in focus' : 'lost focus';
+        },
+        undef
+    );
+
+Registers a callback for when the window focus changes.
+
+Expected parameters include:
+
+=over
+
+=item C<$window>
+
+The window to bind.
+
+=item C<$code_ref>
+
+Code reference that should expect a reference back to the instance that
+triggered the callback and user data registered with the sender instance.
+
+=item C<$user_data>
+
+Whatever you feel like passing along.
+
+=back
+
+=cut
+
+    affix $lib, 'uiWindowOnFocusChanged',
+        [
+        Type ['LibUI::Window'],
+        CodeRef [ [ Type ['LibUI::Window'], Pointer [SV] ] => Void ],
+        Pointer [SV]
+        ] => Void;
+
+=head3 C<uiWindowFocused( ... )>
+
+    my $in_focus = uiWindowFocused( $w );
+
+Returns whether or not the window is focused.
+
+=cut
+
+    affix $lib, 'uiWindowFocused', [ Type ['LibUI::Window'] ] => Bool;
+
+=head3 C<uiWindowBorderless( ... )>
+
+    my $no_border = uiWindowBorderless( $w );
+
+Returns whether or not the window is borderless.
+
+=cut
+
+    affix $lib, 'uiWindowBorderless', [ Type ['LibUI::Window'] ] => Bool;
+
+=head3 C<uiWindowSetBorderless( ... )>
+
+    uiWindowSetBorderless( $w, 1 );
+
+Sets whether or not the window is borderless.
+
+This method is merely a hint and may be ignored by the system.
+
+=cut
+
+    affix $lib, 'uiWindowSetBorderless', [ Type ['LibUI::Window'], Bool ] => Void;
+
+=head3 C<uiWindowSetChild( ... )>
+
+    uiWindowSetChild( $w, $box );
+
+Sets the window's child.
+
+=cut
+
+    affix $lib, 'uiWindowSetChild', [ Type ['LibUI::Window'], Type ['LibUI::Control'] ] => Void;
+
+=head3 C<uiWindowMargined( ... )>
+
+    my $comfortable = uiWindowMargined( $w );
+
+Returns whether or not the window has a margin.
+
+=cut
+
+    affix $lib, 'uiWindowMargined', [ Type ['LibUI::Window'] ] => Bool;
+
+=head3 C<uiWindowSetMargined( ... )>
+
+    uiWindowSetMargined( $w, 1 );
+
+Sets whether or not the window has a margin.
+
+The margin size is determined by the OS defaults.
+
+=cut
+
+    affix $lib, 'uiWindowSetMargined', [ Type ['LibUI::Window'], Bool ] => Void;
+
+=head3 C<uiWindowResizeable( ... )>
+
+    my $resizable = uiWindowResizeable( $w );
+
+Returns whether or not the window is user resizable.
+
+=cut
+
+    affix $lib, 'uiWindowResizeable', [ Type ['LibUI::Window'] ] => Bool;
+
+=head3 C<uiWindowSetResizeable( ... )>
+
+    uiWindowSetResizeable( $w, 1 );
+
+Sets whether or not the window is user resizable.
+
+The margin size is determined by the OS defaults.
+
+=cut
+
+    affix $lib, 'uiWindowSetResizeable', [ Type ['LibUI::Window'], Bool ] => Void;
+
+=head3 C<uiNewWindow( ... )>
+
+Creates a new uiWindow.
+
+Expected parameters include:
+
+=over
+
+=item C<$title>
+
+Window title.
+
+=item C<$width>
+
+Window width in pixels.
+
+=item C<$height>
+
+Window height in pixels.
+
+=item C<$hasMenubar>
+
+Whether or not the window should display a menu bar.
+
+=back
+
+=cut
+
+    #
+    affix $lib, 'uiNewWindow', [ Str, Int, Int, Int ] => InstanceOf ['LibUI::Window'];
     #
     typedef 'LibUI::Box'              => Type ['LibUI::Control'];    #  Rename this Isa?
     typedef 'LibUI::Checkbox'         => Type ['LibUI::Control'];    #  Rename this Isa?
@@ -521,13 +940,6 @@ interacted with by the user.
     typedef 'LibUI::TextFont'         => Type ['LibUI::Control'];    #  Rename this Isa?
     typedef 'LibUI::TextLayout'       => Type ['LibUI::Control'];    #  Rename this Isa?
 
-    #
-    typedef 'LibUI::Window' => Struct [
-        c         => Pointer [Void],
-        w         => Pointer [Void],
-        child     => Pointer [ Type ['LibUI::Control'] ],
-        onClosing => Pointer [Void]
-    ];
     #
     typedef 'LibUI::AreaDrawParams' => Struct [
         draw_context => Pointer [Void],
@@ -651,18 +1063,7 @@ interacted with by the user.
 =cut
 
     #
-    #
-    affix $lib, 'uiNewWindow', [ Str, Int, Int, Int ] => InstanceOf ['LibUI::Window'];
-    affix $lib, 'uiWindowOnClosing',
-        [
-        Pointer [ Type ['LibUI::Window'] ],
-        CodeRef [ [ Pointer [ Type ['LibUI::Window'] ], Pointer [SV] ] => Int ],
-        Pointer [SV]
-        ] => Void;
-    affix $lib, 'uiWindowSetChild',
-        [ Pointer [ Type ['LibUI::Window'] ], Type ['LibUI::Control'] ] => Void;
-    affix $lib, 'uiWindowSetTitle',    [ Pointer [ Type ['LibUI::Window'] ], Str ] => Void;
-    affix $lib, 'uiWindowSetMargined', [ Pointer [ Type ['LibUI::Window'] ], Int ] => Void;
+
     #
     affix $lib, 'uiNewHorizontalBox', [] => InstanceOf ['LibUI::Box'];
     affix $lib, 'uiNewVerticalBox',   [] => InstanceOf ['LibUI::Box'];
@@ -739,7 +1140,7 @@ the same terms as Perl itself.
 
 Sanko Robinson E<lt>sanko@cpan.orgE<gt>
 
-=for stopwords draggable gotta userdata
+=for stopwords draggable gotta userdata borderless uiWindow resizable
 
 =cut
 
