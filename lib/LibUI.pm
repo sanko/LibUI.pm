@@ -6,10 +6,22 @@ package LibUI 1.00 {
     my $lib = Alien::libui->dynamic_libs;
     use Exporter 'import';
     our %EXPORT_TAGS = (
-        default  => [qw[uiInit uiQueueMain uiMain uiQuit uiUninit uiFreeInitError uiTimer]],
-        controls => [qw[uiControlShow uiControlDestroy]],
-        window   => [qw[uiNewWindow uiWindowOnClosing uiWindowSetMargined uiWindowSetChild]],
-        label    => [qw[uiNewLabel]],
+        default => [
+            'uiInit',   'uiQueueMain',     'uiMain',  'uiQuit',
+            'uiUninit', 'uiFreeInitError', 'uiTimer', 'uiOnShouldQuit'
+        ],
+        controls => [
+            'uiControlDestroy',       'uiControlHandle',
+            'uiControlParent',        'uiControlSetParent',
+            'uiControlToplevel',      'uiControlVisible',
+            'uiControlShow',          'uiControlHide',
+            'uiControlEnabled',       'uiControlEnable',
+            'uiControlDisable',       'uiAllocControl',
+            'uiFreeControl',          'uiControlVerifySetParent',
+            'uiControlEnabledToUser', 'uiUserBugCannotSetParentOnToplevel'
+        ],
+        window => [ 'uiNewWindow', 'uiWindowOnClosing', 'uiWindowSetMargined', 'uiWindowSetChild' ],
+        label  => ['uiNewLabel']
     );
     {
         my %seen;
@@ -89,7 +101,14 @@ This distribution is under construction. It works but is incomplete.
 
 LibUI, keeping with the ethos of simplicity, is functional.
 
-=head2 C<uiInit( ... )>
+You may import any of them by name or with their given import tags.
+
+=head2 Default Functions
+
+These are basic functions to get the UI started and may be imported with the
+C<:default> tag.
+
+=head3 C<uiInit( ... )>
 
     my $err = uiInit({ Size => 0 });
 
@@ -104,7 +123,7 @@ You B<must> call this before creating widgets.
     typedef 'LibUI::InitOptions' => Struct [ Size => Size_t ];
     affix $lib, 'uiInit', [ Pointer [ Type ['LibUI::InitOptions'] ] ] => Str;
 
-=head2 C<uiUninit( )>
+=head3 C<uiUninit( )>
 
     uiUninit( );
 
@@ -114,7 +133,7 @@ Ask LibUI to break everything down before quitting.
 
     affix $lib, 'uiUninit', [] => Void;
 
-=head2 C<uiFreeInitError( ... )>
+=head3 C<uiFreeInitError( ... )>
 
     uiFreeInitError( $err );
 
@@ -124,7 +143,7 @@ Frees the string returned when L<<uiInit( ... )|C<uiInit( ... )>>> fails.
 
     affix $lib, 'uiFreeInitError', [Char] => Void;
 
-=head2 C<uiMain( )>
+=head3 C<uiMain( )>
 
     uiMain( );
 
@@ -134,7 +153,7 @@ Let LibUI's event loop run until interrupted.
 
     affix $lib, 'uiMain', [] => Void;
 
-=head2 C<uiMainSteps( )>
+=head3 C<uiMainSteps( )>
 
     uiMainSteps( );
 
@@ -145,7 +164,7 @@ yourself.
 
     affix $lib, 'uiMainSteps', [] => Void;
 
-=head2 C<uiMainStep( ... )>
+=head3 C<uiMainStep( ... )>
 
     my $ok = uiMainStep( 1 );
 
@@ -162,7 +181,7 @@ L<<C<uiQuit()>|C<uiQuit( )>>> was called).
 
     affix $lib, 'uiMainStep', [Bool] => Bool;
 
-=head2 C<uiQuit( )>
+=head3 C<uiQuit( )>
 
     uiQuit( );
 
@@ -172,7 +191,7 @@ Signals LibUI that you are ready to quit.
 
     affix $lib, 'uiQuit', [] => Void;
 
-=head2 C<uiQueueMain( )>
+=head3 C<uiQueueMain( )>
 
     uiQueueMain( sub { }, $values );
 
@@ -183,7 +202,7 @@ unstable. It's for sure untested as long as perl threads are garbage.
 
     affix $lib, 'uiQueueMain', [ CodeRef [ [ Pointer [SV] ] => Void ], Pointer [SV] ] => Void;
 
-=head2 C<uiTimer( ... )>
+=head3 C<uiTimer( ... )>
 
     uiTimer( 1000, sub { die 'do not do this here' }, undef);
 
@@ -221,10 +240,47 @@ Any userdata you feel like passing. It'll be handed off to your function.
 
     affix $lib, 'uiTimer', [ Int, CodeRef [ [ Pointer [SV] ] => Int ], Pointer [SV] ] => Void;
 
-    #
-    affix $lib, 'uiOnShouldQuit', [ CodeRef [ [ Pointer [Void] ] => Int ], Pointer [Void] ] => Void;
-    #
+=head3 C<uiOnShouldQuit( ... )>
+
+    uiOnShouldQuit( sub {}, undef );
+
+Callback triggered when the GUI is prepared to quit.
+
+Expected parameters include:
+
+=over
+
+=item C<$func>
+
+CodeRef that will be triggered.
+
+=item C<$user_data>
+
+User data passed to the callback.
+
+=back
+
+=cut
+
+    affix $lib, 'uiOnShouldQuit', [ CodeRef [ [ Pointer [SV] ] => Int ], Pointer [SV] ] => Void;
+
+=head3 C<uiFreeText( ... )>
+
+    uiFreeText( $title );
+
+Free a string with LibUI.
+
+=cut
+
     affix $lib, 'uiFreeText', [Str] => Void;
+
+=head2 Control Functions
+
+These functions may be used by all subclasses of the base control.
+
+Import them with the C<:control> tag.
+
+=cut
 
     # Base class for GUI controls providing common methods.
     typedef 'LibUI::Control' => Pointer [
@@ -245,16 +301,199 @@ Any userdata you feel like passing. It'll be handed off to your function.
             disable        => Pointer [Void]
         ]
     ];
-    #
-    affix $lib, 'uiControlDestroy', [ Pointer [Void] ] => Void;
-    #
+
+=head3 C<uiControlDestroy( ... )>
+
+    uiControlDestroy( $button );
+
+Dispose and free all allocated resources related to a control.
+
+=cut
+
+    affix $lib, 'uiControlDestroy', [ Type ['LibUI::Control'] ] => Void;
+
+=head3 C<uiControlHandle( ... )>
+
+    my $ptr = uiControlHandle( $button );
+
+Returns the control's OS-level handle.
+
+=cut
+
     affix $lib, 'uiControlHandle', [ Type ['LibUI::Control'] ] => Pointer [Void];
-    #
-    affix $lib, 'uiControlParent',    [ Type ['LibUI::Control'] ] => Type ['LibUI::Control'];
+
+=head3 C<uiControlParent( ... )>
+
+    my $window = uiControlParent( $button );
+
+Returns the parent control.
+
+=cut
+
+    affix $lib, 'uiControlParent', [ Type ['LibUI::Control'] ] => Type ['LibUI::Control'];
+
+=head3 C<uiControlSetParent( ... )>
+
+    my $ptr = uiControlSetParent( $button, $window );
+
+Sets the control's parent.
+
+=cut
+
     affix $lib, 'uiControlSetParent', [ Type ['LibUI::Control'], Type ['LibUI::Control'] ] => Void;
-    affix $lib, 'uiControlToplevel',  [ Type ['LibUI::Control'] ]                          => Int;
-    #
-    affix $lib, 'uiControlShow', [ Pointer [Void] ] => Void;
+
+=head3 C<uiControlToplevel( ... )>
+
+    my $top = uiControlToplevel( $window );
+
+Returns whether or not the control is a top level control.
+
+=cut
+
+    affix $lib, 'uiControlToplevel', [ Type ['LibUI::Control'] ] => Bool;
+
+=head3 C<uiControlVisible( ... )>
+
+    my $visible = uiControlVisible( $label );
+
+Returns whether or not the control is visible.
+
+=cut
+
+    affix $lib, 'uiControlVisible', [ Type ['LibUI::Control'] ] => Bool;
+
+=head3 C<uiControlShow( ... )>
+
+    uiControlShow( $window );
+
+Shows the control.
+
+=cut
+
+    affix $lib, 'uiControlShow', [ Type ['LibUI::Control'] ] => Void;
+
+=head3 C<uiControlHide( ... )>
+
+    uiControlHide( $label );
+
+Hides the control.
+
+Hidden controls do not take up space within the layout.
+
+=cut
+
+    affix $lib, 'uiControlHide', [ Type ['LibUI::Control'] ] => Void;
+
+=head3 C<uiControlEnabled( ... )>
+
+    my $enabled = uiControlEnabled( $label );
+
+Returns whether or not the control is enabled.
+
+=cut
+
+    affix $lib, 'uiControlEnabled', [ Type ['LibUI::Control'] ] => Bool;
+
+=head3 C<uiControlEnable( ... )>
+
+    uiControlEnable( $label );
+
+Enables the control.
+
+=cut
+
+    affix $lib, 'uiControlEnable', [ Type ['LibUI::Control'] ] => Void;
+
+=head3 C<uiControlDisable( ... )>
+
+    uiControlDisable( $label );
+
+Disables the control.
+
+=cut
+
+    affix $lib, 'uiControlDisable', [ Type ['LibUI::Control'] ] => Void;
+
+=head3 C<uiAllocControl( ... )>
+
+    uiAllocControl( $label );
+
+Allocates a new custom C<uiControl>.
+
+This function is undocumented upstream. Expected parameters include:
+
+=over
+
+=item C<$n>
+
+Size of the control (in bytes).
+
+=item C<$OSsig>
+
+=item C<$typesig>
+
+
+=item C<$typename>
+
+Name of the type as a string.
+
+=back
+
+=cut
+
+    affix $lib, 'uiAllocControl', [ Size_t, UInt, UInt, Str ] => Type ['LibUI::Control'];
+
+=head3 C<uiFreeControl( ... )>
+
+    uiFreeControl( $button );
+
+Frees a control.
+
+=cut
+
+    affix $lib, 'uiFreeControl', [ Type ['LibUI::Control'] ] => Void;
+
+=head3 C<uiControlVerifySetParent( ... )>
+
+    uiControlVerifySetParent( $button, $window );
+
+Makes sure the control's parent can be set to parent.
+
+=cut
+
+    affix $lib, 'uiControlVerifySetParent',
+        [ Type ['LibUI::Control'], Type ['LibUI::Control'] ] => Void;
+
+=head3 C<uiControlEnabledToUser( ... )>
+
+    my $enabled = uiControlEnabledToUser( $label );
+
+Returns whether or not the control can be interacted with by the user.
+
+Checks if the control and all its parents are enabled to make sure it can be
+interacted with by the user.
+
+=cut
+
+    affix $lib, 'uiControlEnabledToUser', [ Type ['LibUI::Control'] ] => Bool;
+
+=begin private
+
+=head3 C<uiControlEnabledToUser( ... )>
+
+    my $enabled = uiControlEnabledToUser( $label );
+
+Returns whether or not the control can be interacted with by the user.
+
+Checks if the control and all its parents are enabled to make sure it can be
+interacted with by the user.
+
+=end private
+
+=cut
+
+    affix $lib, 'uiUserBugCannotSetParentOnToplevel', [Str] => Void;
+
     #
     typedef 'LibUI::Box'              => Type ['LibUI::Control'];    #  Rename this Isa?
     typedef 'LibUI::Checkbox'         => Type ['LibUI::Control'];    #  Rename this Isa?
@@ -573,7 +812,7 @@ Sanko Robinson E<lt>sanko@cpan.orgE<gt>
     }
 }
 1;
-__END__
+__DATA__
 use strict;
 use warnings;
 use lib '../lib';
@@ -875,7 +1114,7 @@ Some basics you gotta use just to keep a modern GUI running.
 
 This is incomplete but... well, I'm working on it.
 
-=head2 C<Init( [...] )>
+=head3 C<Init( [...] )>
 
     Init( );
 
@@ -885,26 +1124,26 @@ choice, I know...
 
 You B<must> call this before creating widgets.
 
-=head2 C<Main( ... )>
+=head3 C<Main( ... )>
 
     Main( );
 
 Let LibUI's event loop run until interrupted.
 
-=head2 C<Uninit( ... )>
+=head3 C<Uninit( ... )>
 
     Uninit( );
 
 Ask LibUI to break everything down before quitting.
 
-=head2 C<Quit( ... )>
+=head3 C<Quit( ... )>
 
     Quit( );
 
 Quit.
 
 
-=head2 C<Timer( ... )>
+=head3 C<Timer( ... )>
 
     Timer( 1000, sub { die 'do not do this here' }, undef);
 

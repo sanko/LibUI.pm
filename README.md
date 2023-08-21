@@ -55,7 +55,14 @@ This distribution is under construction. It works but is incomplete.
 
 LibUI, keeping with the ethos of simplicity, is functional.
 
-## `uiInit( ... )`
+You may import any of them by name or with their given import tags.
+
+## Default Functions
+
+These are basic functions to get the UI started and may be imported with the
+`:default` tag.
+
+### `uiInit( ... )`
 
     my $err = uiInit({ Size => 0 });
 
@@ -65,32 +72,32 @@ know...
 
 You **must** call this before creating widgets.
 
-## `uiUninit( )`
+### `uiUninit( )`
 
     uiUninit( );
 
 Ask LibUI to break everything down before quitting.
 
-## `uiFreeInitError( ... )`
+### `uiFreeInitError( ... )`
 
     uiFreeInitError( $err );
 
 Frees the string returned when [&lt;uiInit( ... )](https://metacpan.org/pod/uiInit%28%20...%20%29)> fails.
 
-## `uiMain( )`
+### `uiMain( )`
 
     uiMain( );
 
 Let LibUI's event loop run until interrupted.
 
-## `uiMainSteps( )`
+### `uiMainSteps( )`
 
     uiMainSteps( );
 
 You may call this instead of `uiMain( )` if you want to run the main loop
 yourself.
 
-## `uiMainStep( ... )`
+### `uiMainStep( ... )`
 
     my $ok = uiMainStep( 1 );
 
@@ -103,20 +110,20 @@ It returns true if an event was processed (or if no even is available if you
 don't wish to wait) and false if the event loop was told to stop (for instance,
 [<`uiQuit()`](https://metacpan.org/pod/uiQuit%28%20%29)> was called).
 
-## `uiQuit( )`
+### `uiQuit( )`
 
     uiQuit( );
 
 Signals LibUI that you are ready to quit.
 
-## `uiQueueMain( )`
+### `uiQueueMain( )`
 
     uiQueueMain( sub { }, $values );
 
 Trigger a callback on the main thread from any other thread. This is likely
 unstable. It's for sure untested as long as perl threads are garbage.
 
-## `uiTimer( ... )`
+### `uiTimer( ... )`
 
     uiTimer( 1000, sub { die 'do not do this here' }, undef);
 
@@ -145,6 +152,141 @@ Expected parameters include:
 - `$data`
 
     Any userdata you feel like passing. It'll be handed off to your function.
+
+### `uiOnShouldQuit( ... )`
+
+    uiOnShouldQuit( sub {}, undef );
+
+Callback triggered when the GUI is prepared to quit.
+
+Expected parameters include:
+
+- `$func`
+
+    CodeRef that will be triggered.
+
+- `$user_data`
+
+    User data passed to the callback.
+
+### `uiFreeText( ... )`
+
+    uiFreeText( $title );
+
+Free a string with LibUI.
+
+## Control Functions
+
+These functions may be used by all subclasses of the base control.
+
+Import them with the `:control` tag.
+
+### `uiControlDestroy( ... )`
+
+    uiControlDestroy( $button );
+
+Dispose and free all allocated resources related to a control.
+
+### `uiControlHandle( ... )`
+
+    my $ptr = uiControlHandle( $button );
+
+Returns the control's OS-level handle.
+
+### `uiControlParent( ... )`
+
+    my $window = uiControlParent( $button );
+
+Returns the parent control.
+
+### `uiControlSetParent( ... )`
+
+    my $ptr = uiControlSetParent( $button, $window );
+
+Sets the control's parent.
+
+### `uiControlToplevel( ... )`
+
+    my $top = uiControlToplevel( $window );
+
+Returns whether or not the control is a top level control.
+
+### `uiControlVisible( ... )`
+
+    my $visible = uiControlVisible( $label );
+
+Returns whether or not the control is visible.
+
+### `uiControlShow( ... )`
+
+    uiControlShow( $window );
+
+Shows the control.
+
+### `uiControlHide( ... )`
+
+    uiControlHide( $label );
+
+Hides the control.
+
+Hidden controls do not take up space within the layout.
+
+### `uiControlEnabled( ... )`
+
+    my $enabled = uiControlEnabled( $label );
+
+Returns whether or not the control is enabled.
+
+### `uiControlEnable( ... )`
+
+    uiControlEnable( $label );
+
+Enables the control.
+
+### `uiControlDisable( ... )`
+
+    uiControlDisable( $label );
+
+Disables the control.
+
+### `uiAllocControl( ... )`
+
+    uiAllocControl( $label );
+
+Allocates a new custom `uiControl`.
+
+This function is undocumented upstream. Expected parameters include:
+
+- `$n`
+
+    Size of the control (in bytes).
+
+- `$OSsig`
+- `$typesig`
+- `$typename`
+
+    Name of the type as a string.
+
+### `uiFreeControl( ... )`
+
+    uiFreeControl( $button );
+
+Frees a control.
+
+### `uiControlVerifySetParent( ... )`
+
+    uiControlVerifySetParent( $button, $window );
+
+Makes sure the control's parent can be set to parent.
+
+### `uiControlEnabledToUser( ... )`
+
+    my $enabled = uiControlEnabledToUser( $label );
+
+Returns whether or not the control can be interacted with by the user.
+
+Checks if the control and all its parents are enabled to make sure it can be
+interacted with by the user.
 
 # Requirements
 
@@ -267,7 +409,7 @@ Some basics you gotta use just to keep a modern GUI running.
 
 This is incomplete but... well, I'm working on it.
 
-## `Init( [...] )`
+### `Init( [...] )`
 
     Init( );
 
@@ -277,25 +419,25 @@ choice, I know...
 
 You **must** call this before creating widgets.
 
-## `Main( ... )`
+### `Main( ... )`
 
     Main( );
 
 Let LibUI's event loop run until interrupted.
 
-## `Uninit( ... )`
+### `Uninit( ... )`
 
     Uninit( );
 
 Ask LibUI to break everything down before quitting.
 
-## `Quit( ... )`
+### `Quit( ... )`
 
     Quit( );
 
 Quit.
 
-## `Timer( ... )`
+### `Timer( ... )`
 
     Timer( 1000, sub { die 'do not do this here' }, undef);
 
