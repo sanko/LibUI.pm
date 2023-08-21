@@ -44,6 +44,10 @@ package LibUI 1.00 {
             'uiCheckboxOnToggled',  'uiCheckboxChecked',
             'uiCheckboxSetChecked', 'uiNewCheckbox'
         ],
+        entry => [
+            'uiEntryText',        'uiEntrySetText', 'uiEntryOnChanged',   'uiEntryReadOnly',
+            'uiEntrySetReadOnly', 'uiNewEntry',     'uiNewPasswordEntry', 'uiNewSearchEntry'
+        ],
         label => ['uiNewLabel']
     );
     {
@@ -311,22 +315,24 @@ Import them with the C<:control> tag.
 
     # Base class for GUI controls providing common methods.
     typedef 'LibUI::Control' => Pointer [
-        Struct [
-            signature      => UInt,
-            os_signature   => UInt,
-            type_signature => UInt,
-            destroy        => Pointer [Void],
-            handle         => Pointer [Void],
-            parent         => Pointer [Void],
-            set_parent     => Pointer [Void],
-            top_level      => Int,
-            visible        => Int,
-            show           => Pointer [Void],
-            hide           => Pointer [Void],
-            enabled        => Int,
-            enable         => Pointer [Void],
-            disable        => Pointer [Void]
-        ]
+        Void
+
+            #~ Struct [
+            #~ signature      => UInt,
+            #~ os_signature   => UInt,
+            #~ type_signature => UInt,
+            #~ destroy        => Pointer [Void],
+            #~ handle         => Pointer [Void],
+            #~ parent         => Pointer [Void],
+            #~ set_parent     => Pointer [Void],
+            #~ top_level      => Int,
+            #~ visible        => Int,
+            #~ show           => Pointer [Void],
+            #~ hide           => Pointer [Void],
+            #~ enabled        => Int,
+            #~ enable         => Pointer [Void],
+            #~ disable        => Pointer [Void]
+            #~ ]
     ];
 
 =head3 C<uiControlDestroy( ... )>
@@ -1171,7 +1177,7 @@ Sets whether or not the checkbox is checked.
 
 =head3 C<uiNewCheckbox( ... )>
 
-    my $chk = ( 'Save automatically' );
+    my $chk = uiNewCheckbox( 'Save automatically' );
 
 Creates a new checkbox.
 
@@ -1179,14 +1185,109 @@ Creates a new checkbox.
 
     affix $lib, 'uiNewCheckbox', [Str] => Type ['LibUI::Checkbox'];
 
-    #~ *
-    #~ * @param text Label text.\n
-    #~ *             A valid, `NUL` terminated UTF-8 string.\n
-    #~ *             Data is copied internally. Ownership is not transferred.
-    #~ * @returns A new uiCheckbox instance.
-    #~ * @memberof uiCheckbox @static
-    #~ */
-    #~ _UI_EXTERN uiCheckbox *uiNewCheckbox(const char *text);
+=head2 Entry Functions
+
+An entry is a control with a single line text entry field.
+
+You may import these functions with the C<:entry> tag.
+
+=cut
+
+    typedef 'LibUI::Entry' => Type ['LibUI::Control'];
+
+=head3 C<uiEntryText( ... )>
+
+    my $text = uiEntryText( $field );
+
+Returns the entry's text.
+
+=cut
+
+    affix $lib, 'uiEntryText', [ Type ['LibUI::Entry'] ] => Str;
+
+=head3 C<uiEntrySetText( ... )>
+
+    uiEntrySetText( $field, 'Once upon a time ' );
+
+Sets the entry's text.
+
+=cut
+
+    affix $lib, 'uiEntrySetText', [ Type ['LibUI::Entry'], Str ] => Void;
+
+=head3 C<uiEntryOnChanged( ... )>
+
+    uiEntryOnChanged( $field, sub { my ($txt, $data) = @_; }, undef );
+
+Registers a callback for when the user changes the entry's text.
+
+The callback is not triggered when calling C<uiEntrySetText( ... )>.
+
+=cut
+
+    affix $lib, 'uiEntryOnChanged',
+        [
+        Type ['LibUI::Entry'],
+        CodeRef [ [ Type ['LibUI::Entry'], Pointer [SV] ] => Void ],
+        Pointer [SV]
+        ] => Void;
+
+=head3 C<uiEntryReadOnly( ... )>
+
+    my $ro = uiEntryReadOnly( $field );
+
+Returns whether or not the entry's text can be changed. A true value if
+readonly, otherwise false.
+
+=cut
+
+    affix $lib, 'uiEntryReadOnly', [ Type ['LibUI::Entry'] ] => Bool;
+
+=head3 C<uiEntrySetReadOnly( ... )>
+
+    uiEntrySetReadOnly( $field, 1 );
+
+Sets whether or not the entry's text is read only.
+
+=cut
+
+    affix $lib, 'uiEntrySetReadOnly', [ Type ['LibUI::Entry'], Bool ] => Void;
+
+=head3 C<uiNewEntry( )>
+
+    my $field = uiNewEntry( );
+
+Creates a new entry.
+
+=cut
+
+    affix $lib, 'uiNewEntry', [] => Type ['LibUI::Entry'];
+
+=head3 C<uiNewPasswordEntry( ... )>
+
+    my $pass = uiNewPasswordEntry( );
+
+Creates a new entry suitable for sensitive inputs like passwords.
+
+The entered text is NOT readable by the user but masked as C<*******>.
+
+=cut
+
+    affix $lib, 'uiNewPasswordEntry', [] => Type ['LibUI::Entry'];
+
+=head3 C<uiNewSearchEntry( ... )>
+
+    my $search = uiNewSearchEntry();
+
+Creates a new entry suitable for search.
+
+Some systems will deliberately delay the C<uiEntryOnChanged( ... )> callback
+for a more natural feel.
+
+=cut
+
+    affix $lib, 'uiNewSearchEntry', [] => Type ['LibUI::Entry'];
+
     #
     typedef 'LibUI::Menu'             => Type ['LibUI::Control'];
     typedef 'LibUI::MenuItem'         => Type ['LibUI::Control'];
@@ -1205,7 +1306,6 @@ Creates a new checkbox.
     typedef 'LibUI::EditableCombobox' => Type ['LibUI::Control'];
     typedef 'LibUI::Radiobuttons'     => Type ['LibUI::Control'];
     typedef 'LibUI::Tab'              => Type ['LibUI::Control'];
-    typedef 'LibUI::TextEntry'        => Type ['LibUI::Control'];
     typedef 'LibUI::Area'             => Type ['LibUI::Control'];
     typedef 'LibUI::DrawPath'         => Type ['LibUI::Control'];
     typedef 'LibUI::TextFont'         => Type ['LibUI::Control'];
@@ -1396,7 +1496,7 @@ the same terms as Perl itself.
 
 Sanko Robinson E<lt>sanko@cpan.orgE<gt>
 
-=for stopwords draggable gotta userdata borderless uiWindow resizable checkbox
+=for stopwords draggable gotta userdata borderless uiWindow resizable checkbox readonly
 
 =cut
 

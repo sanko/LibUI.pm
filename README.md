@@ -699,9 +699,71 @@ Sets whether or not the checkbox is checked.
 
 ### `uiNewCheckbox( ... )`
 
-    my $chk = ( 'Save automatically' );
+    my $chk = uiNewCheckbox( 'Save automatically' );
 
 Creates a new checkbox.
+
+## Entry Functions
+
+An entry is a control with a single line text entry field.
+
+You may import these functions with the `:entry` tag.
+
+### `uiEntryText( ... )`
+
+    my $text = uiEntryText( $field );
+
+Returns the entry's text.
+
+### `uiEntrySetText( ... )`
+
+    uiEntrySetText( $field, 'Once upon a time ' );
+
+Sets the entry's text.
+
+### `uiEntryOnChanged( ... )`
+
+    uiEntryOnChanged( $field, sub { my ($txt, $data) = @_; }, undef );
+
+Registers a callback for when the user changes the entry's text.
+
+The callback is not triggered when calling `uiEntrySetText( ... )`.
+
+### `uiEntryReadOnly( ... )`
+
+    my $ro = uiEntryReadOnly( $field );
+
+Returns whether or not the entry's text can be changed. A true value if
+readonly, otherwise false.
+
+### `uiEntrySetReadOnly( ... )`
+
+    uiEntrySetReadOnly( $field, 1 );
+
+Sets whether or not the entry's text is read only.
+
+### `uiNewEntry( )`
+
+    my $field = uiNewEntry( );
+
+Creates a new entry.
+
+### `uiNewPasswordEntry( ... )`
+
+    my $pass = uiNewPasswordEntry( );
+
+Creates a new entry suitable for sensitive inputs like passwords.
+
+The entered text is NOT readable by the user but masked as `*******`.
+
+### `uiNewSearchEntry( ... )`
+
+    my $search = uiNewSearchEntry();
+
+Creates a new entry suitable for search.
+
+Some systems will deliberately delay the `uiEntryOnChanged( ... )` callback
+for a more natural feel.
 
 # Requirements
 
