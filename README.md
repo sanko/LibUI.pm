@@ -556,6 +556,41 @@ Expected parameters include:
 
     Whether or not the window should display a menu bar.
 
+## Button Functions
+
+These functions create and wrap a control that visually represents a button to
+be clicked by the user to trigger an action.
+
+Import these functions with the `:button` tag.
+
+### `uiButtonText( ... )`
+
+    my $label = uiButtonText( $button );
+
+Returns the button label text.
+
+### `uiButtonSetText( ... )`
+
+    uiButtonSetText( $button, 'Click again' );
+
+Sets the button label text.
+
+### `uiButtonOnClicked( ... )`
+
+    uiButtonOnClicked( $button, sub { my ($btn, data) = @_; }, undef );
+
+Registers a callback for when the button is clicked.
+
+### `uiNewButton( ... )`
+
+    my $button = uiNewButton( 'Click me' );
+
+Creates a new button.
+
+Expected parameters include:
+
+- `$label`
+
 # Requirements
 
 See [Alien::libui](https://metacpan.org/pod/Alien%3A%3Alibui)

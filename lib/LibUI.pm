@@ -32,14 +32,15 @@ package LibUI 1.00 {
             'uiWindowSetBorderless',     'uiWindowSetChild',
             'uiWindowMargined',          'uiWindowSetMargined',
             'uiWindowResizeable',        'uiWindowSetResizeable',
-            ,                            'uiNewWindow'
+            'uiNewWindow'
         ],
-        label => ['uiNewLabel']
+        button => [ 'uiButtonText', 'uiButtonSetText', 'uiButtonOnClicked', 'uiNewButton' ],
+        label  => ['uiNewLabel']
     );
     {
         my %seen;
         push @{ $EXPORT_TAGS{controls} }, grep { !$seen{$_}++ } @{ $EXPORT_TAGS{$_} }
-            for qw[window box label];
+            for qw[window button box label];
     }
     {
         my %seen;
@@ -69,7 +70,7 @@ LibUI - Simple, Portable, Native GUI Library
         return 1;
     }
 
-    my $err = uiInit( { size => 0 } );
+    my $err = uiInit( { Size => 0 } );
     if ( defined $err ) {
         printf "Error initializing libui-ng: %s\n", $err;
         uiFreeInitError($err);
@@ -911,15 +912,78 @@ Whether or not the window should display a menu bar.
 
 =cut
 
-    #
     affix $lib, 'uiNewWindow', [ Str, Int, Int, Int ] => InstanceOf ['LibUI::Window'];
+
+=head2 Button Functions
+
+These functions create and wrap a control that visually represents a button to
+be clicked by the user to trigger an action.
+
+Import these functions with the C<:button> tag.
+
+=cut
+
+    typedef 'LibUI::Button' => Type ['LibUI::Control'];    #  Rename this Isa?
+
+=head3 C<uiButtonText( ... )>
+
+    my $label = uiButtonText( $button );
+
+Returns the button label text.
+
+=cut
+
+    affix $lib, 'uiButtonText', [ Type ['LibUI::Button'] ] => Str;
+
+=head3 C<uiButtonSetText( ... )>
+
+    uiButtonSetText( $button, 'Click again' );
+
+Sets the button label text.
+
+=cut
+
+    affix $lib, 'uiButtonSetText', [ Type ['LibUI::Button'], Str ] => Void;
+
+=head3 C<uiButtonOnClicked( ... )>
+
+    uiButtonOnClicked( $button, sub { my ($btn, data) = @_; }, undef );
+
+Registers a callback for when the button is clicked.
+
+=cut
+
+    affix $lib, 'uiButtonOnClicked',
+        [
+        Type ['LibUI::Button'],
+        CodeRef [ [ Type ['LibUI::Button'], Pointer [SV] ] => Void ],
+        Pointer [SV]
+        ] => Void;
+
+=head3 C<uiNewButton( ... )>
+
+    my $button = uiNewButton( 'Click me' );
+
+Creates a new button.
+
+Expected parameters include:
+
+=over
+
+=item C<$label>
+
+=back
+
+=cut
+
+    #
+    affix $lib, 'uiNewButton', [Str] => Type ['LibUI::Button'];
     #
     typedef 'LibUI::Box'              => Type ['LibUI::Control'];    #  Rename this Isa?
     typedef 'LibUI::Checkbox'         => Type ['LibUI::Control'];    #  Rename this Isa?
     typedef 'LibUI::Menu'             => Type ['LibUI::Control'];    #  Rename this Isa?
     typedef 'LibUI::MenuItem'         => Type ['LibUI::Control'];    #  Rename this Isa?
     typedef 'LibUI::Group'            => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::Button'           => Type ['LibUI::Control'];    #  Rename this Isa?
     typedef 'LibUI::Label'            => Type ['LibUI::Control'];    #  Rename this Isa?
     typedef 'LibUI::Separator'        => Type ['LibUI::Control'];    #  Rename this Isa?
     typedef 'LibUI::DatePicker'       => Type ['LibUI::Control'];    #  Rename this Isa?
