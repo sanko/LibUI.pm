@@ -39,12 +39,17 @@ package LibUI 1.00 {
             'uiBoxAppend',    'uiBoxNumChildren',   'uiBoxDelete', 'uiBoxPadded',
             'uiBoxSetPadded', 'uiNewHorizontalBox', 'uiNewVerticalBox'
         ],
+        checkbox => [
+            'uiCheckboxText',       'uiCheckboxSetText',
+            'uiCheckboxOnToggled',  'uiCheckboxChecked',
+            'uiCheckboxSetChecked', 'uiNewCheckbox'
+        ],
         label => ['uiNewLabel']
     );
     {
         my %seen;
         push @{ $EXPORT_TAGS{controls} }, grep { !$seen{$_}++ } @{ $EXPORT_TAGS{$_} }
-            for qw[window button box label];
+            for qw[window button box checkbox label];
     }
     {
         my %seen;
@@ -1070,7 +1075,7 @@ determined by the OS defaults.
 
 =cut
 
-    affix $lib, 'uiBoxSetPadded', [ InstanceOf ['LibUI::Box'], Int ] => Void;
+    affix $lib, 'uiBoxSetPadded', [ Type ['LibUI::Box'], Int ] => Void;
 
 =head3 C<uiNewHorizontalBox( )>
 
@@ -1082,7 +1087,7 @@ Controls within the box are placed next to each other horizontally.
 
 =cut
 
-    affix $lib, 'uiNewHorizontalBox', [] => InstanceOf ['LibUI::Box'];
+    affix $lib, 'uiNewHorizontalBox', [] => Type ['LibUI::Box'];
 
 =head3 C<uiNewVerticalBox( )>
 
@@ -1094,10 +1099,95 @@ Controls within the box are placed next to each other vertically.
 
 =cut
 
-    affix $lib, 'uiNewVerticalBox', [] => InstanceOf ['LibUI::Box'];
+    affix $lib, 'uiNewVerticalBox', [] => Type ['LibUI::Box'];
 
+=head2 Checkbox Functions
+
+The functions wrap a control with a user checkable box accompanied by a text
+label.
+
+You may import them with the C<:checkbox> tag.
+
+=cut
+
+    typedef 'LibUI::Checkbox' => Type ['LibUI::Control'];
+
+=head3 C<uiCheckboxText( ... )>
+
+    my $label = uiCheckboxText( $chk );
+
+Returns the checkbox label text.
+
+=cut
+
+    affix $lib, 'uiCheckboxText', [ Type ['LibUI::Checkbox'] ] => Str;
+
+=head3 C<uiCheckboxSetText( ... )>
+
+    uiCheckboxSetText( $chk, 'Show Small Files' );
+
+Sets the checkbox label text.
+
+=cut
+
+    affix $lib, 'uiCheckboxSetText', [ Type ['LibUI::Checkbox'], Str ] => Void;
+
+=head3 C<uiCheckboxOnToggled( ... )>
+
+    uiCheckboxOnToggled( $chk, sub { my ($check, $data) = @_; }, undef );
+
+Registers a callback for when the checkbox is toggled by the user.
+
+The callback is not triggered when calling C<uiCheckboxSetChecked( ... )>.
+
+=cut
+
+    affix $lib, 'uiCheckboxOnToggled',
+        [
+        Type ['LibUI::Checkbox'],
+        CodeRef [ [ Type ['LibUI::Checkbox'], Pointer [SV] ] => Void ],
+        Pointer [SV]
+        ] => Void;
+
+=head3 C<uiCheckboxChecked( ... )>
+
+    my $on = uiCheckboxChecked( $chk );
+
+Returns whether or the checkbox is checked.
+
+=cut
+
+    affix $lib, 'uiCheckboxChecked', [ Type ['LibUI::Checkbox'] ] => Bool;
+
+=head3 C<uiCheckboxChecked( ... )>
+
+    uiCheckboxSetChecked( $chk, 1 );
+
+Sets whether or not the checkbox is checked.
+
+=cut
+
+    affix $lib, 'uiCheckboxSetChecked', [ Type ['LibUI::Checkbox'], Bool ] => Void;
+
+=head3 C<uiNewCheckbox( ... )>
+
+    my $chk = ( 'Save automatically' );
+
+Creates a new checkbox.
+
+=cut
+
+    affix $lib, 'uiNewCheckbox', [Str] => Type ['LibUI::Checkbox'];
+
+    #~ *
+    #~ * @param text Label text.\n
+    #~ *             A valid, `NUL` terminated UTF-8 string.\n
+    #~ *             Data is copied internally. Ownership is not transferred.
+    #~ * @returns A new uiCheckbox instance.
+    #~ * @memberof uiCheckbox @static
+    #~ */
+    #~ _UI_EXTERN uiCheckbox *uiNewCheckbox(const char *text);
     #
-    typedef 'LibUI::Checkbox'         => Type ['LibUI::Control'];
     typedef 'LibUI::Menu'             => Type ['LibUI::Control'];
     typedef 'LibUI::MenuItem'         => Type ['LibUI::Control'];
     typedef 'LibUI::Group'            => Type ['LibUI::Control'];
@@ -1246,15 +1336,6 @@ Controls within the box are placed next to each other vertically.
 
     #
     #
-    affix $lib, 'uiNewCheckbox',     [Str] => InstanceOf ['LibUI::Checkbox'];
-    affix $lib, 'uiCheckboxChecked', [ InstanceOf ['LibUI::Checkbox'] ]      => Int;
-    affix $lib, 'uiCheckboxSetText', [ InstanceOf ['LibUI::Checkbox'], Str ] => Void;
-    affix $lib, 'uiCheckboxOnToggled',
-        [
-        InstanceOf ['LibUI::Checkbox'],
-        CodeRef [ [ InstanceOf ['LibUI::Checkbox'] ] => Int ],
-        Pointer [SV]
-        ] => Void;
     #
     #~ callback :menu_item_clicked, [:pointer], :int
     #~ attach_function :uiNewMenu,                   [:string],       Menu
@@ -1315,7 +1396,7 @@ the same terms as Perl itself.
 
 Sanko Robinson E<lt>sanko@cpan.orgE<gt>
 
-=for stopwords draggable gotta userdata borderless uiWindow resizable
+=for stopwords draggable gotta userdata borderless uiWindow resizable checkbox
 
 =cut
 

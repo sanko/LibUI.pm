@@ -658,6 +658,51 @@ Creates a new vertical box.
 
 Controls within the box are placed next to each other vertically.
 
+## Checkbox Functions
+
+The functions wrap a control with a user checkable box accompanied by a text
+label.
+
+You may import them with the `:checkbox` tag.
+
+### `uiCheckboxText( ... )`
+
+    my $label = uiCheckboxText( $chk );
+
+Returns the checkbox label text.
+
+### `uiCheckboxSetText( ... )`
+
+    uiCheckboxSetText( $chk, 'Show Small Files' );
+
+Sets the checkbox label text.
+
+### `uiCheckboxOnToggled( ... )`
+
+    uiCheckboxOnToggled( $chk, sub { my ($check, $data) = @_; }, undef );
+
+Registers a callback for when the checkbox is toggled by the user.
+
+The callback is not triggered when calling `uiCheckboxSetChecked( ... )`.
+
+### `uiCheckboxChecked( ... )`
+
+    my $on = uiCheckboxChecked( $chk );
+
+Returns whether or the checkbox is checked.
+
+### `uiCheckboxChecked( ... )`
+
+    uiCheckboxSetChecked( $chk, 1 );
+
+Sets whether or not the checkbox is checked.
+
+### `uiNewCheckbox( ... )`
+
+    my $chk = ( 'Save automatically' );
+
+Creates a new checkbox.
+
 # Requirements
 
 See [Alien::libui](https://metacpan.org/pod/Alien%3A%3Alibui)
