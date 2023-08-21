@@ -35,7 +35,11 @@ package LibUI 1.00 {
             'uiNewWindow'
         ],
         button => [ 'uiButtonText', 'uiButtonSetText', 'uiButtonOnClicked', 'uiNewButton' ],
-        label  => ['uiNewLabel']
+        box    => [
+            'uiBoxAppend',    'uiBoxNumChildren',   'uiBoxDelete', 'uiBoxPadded',
+            'uiBoxSetPadded', 'uiNewHorizontalBox', 'uiNewVerticalBox'
+        ],
+        label => ['uiNewLabel']
     );
     {
         my %seen;
@@ -147,11 +151,15 @@ Ask LibUI to break everything down before quitting.
 
     affix $lib, 'uiUninit', [] => Void;
 
+=begin private
+
 =head3 C<uiFreeInitError( ... )>
 
     uiFreeInitError( $err );
 
-Frees the string returned when L<<uiInit( ... )|C<uiInit( ... )>>> fails.
+Frees the string returned when C<uiInit( ... )> fails.
+
+=end private
 
 =cut
 
@@ -434,7 +442,7 @@ Disables the control.
 
 Allocates a new custom C<uiControl>.
 
-This function is undocumented upstream. Expected parameters include:
+Expected parameters include:
 
 =over
 
@@ -446,12 +454,13 @@ Size of the control (in bytes).
 
 =item C<$typesig>
 
-
 =item C<$typename>
 
 Name of the type as a string.
 
 =back
+
+This function is undocumented upstream.
 
 =cut
 
@@ -523,7 +532,7 @@ These functions may be imported with the C<:window> tag.
         Struct [
             c         => Pointer [Void],
             w         => Pointer [Void],
-            child     => Pointer [ Type ['LibUI::Control'] ],
+            child     => Type ['LibUI::Control'],
             onClosing => Pointer [Void]
         ]
     ];
@@ -923,7 +932,7 @@ Import these functions with the C<:button> tag.
 
 =cut
 
-    typedef 'LibUI::Button' => Type ['LibUI::Control'];    #  Rename this Isa?
+    typedef 'LibUI::Button' => Type ['LibUI::Control'];
 
 =head3 C<uiButtonText( ... )>
 
@@ -976,34 +985,141 @@ Expected parameters include:
 
 =cut
 
-    #
     affix $lib, 'uiNewButton', [Str] => Type ['LibUI::Button'];
-    #
-    typedef 'LibUI::Box'              => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::Checkbox'         => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::Menu'             => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::MenuItem'         => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::Group'            => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::Label'            => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::Separator'        => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::DatePicker'       => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::TimePicker'       => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::DateTimePicker'   => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::FontButton'       => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::ColorButton'      => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::SpinBox'          => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::Slider'           => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::ProgressBar'      => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::Combobox'         => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::EditableCombobox' => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::Radiobuttons'     => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::Tab'              => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::TextEntry'        => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::Area'             => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::DrawPath'         => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::TextFont'         => Type ['LibUI::Control'];    #  Rename this Isa?
-    typedef 'LibUI::TextLayout'       => Type ['LibUI::Control'];    #  Rename this Isa?
 
+=head2 Box Functions
+
+These functions wrap a boxlike container that holds a group of controls.
+
+The contained controls are arranged to be displayed either horizontally or
+vertically next to each other.
+
+You may import these functions with the C<:box> tag.
+
+=cut
+
+    typedef 'LibUI::Box' => Type ['LibUI::Control'];
+
+=head3 C<uiBoxAppend( ... )>
+
+    uiBoxAppend( $box, $child, 1 );
+
+Appends a control to the box.
+
+Stretchy items expand to use the remaining space within the box. In the case of
+multiple stretchy items the space is shared equally.
+
+Expected parameters include:
+
+=over
+
+=item C<$box>
+
+=item C<$child>
+
+=item C<$stretchy>
+
+True value to stretch the child, otherwise false.
+
+=back
+
+=cut
+
+    affix $lib, 'uiBoxAppend', [ Type ['LibUI::Box'], Type ['LibUI::Control'], Bool ] => Void;
+
+=head3 C<uiBoxNumChildren( ... )>
+
+    my $kids = uiBoxNumChildren( $box );
+
+Returns the number of controls contained within the box.
+
+=cut
+
+    affix $lib, 'uiBoxNumChildren', [ Type ['LibUI::Box'] ] => Int;
+
+=head3 C<uiBoxDelete( ... )>
+
+    uiBoxDelete( $box, 3 );
+
+Removes the control at a given index from the box.
+
+=cut
+
+    affix $lib, 'uiBoxDelete', [ Type ['LibUI::Box'], Int ] => Void;
+
+=head3 C<uiBoxPadded( ... )>
+
+    my $comfortable = uiBoxPadded( $box );
+
+Returns whether or not controls within the box are padded.
+
+Padding is defined as space between individual controls.
+
+=cut
+
+    affix $lib, 'uiBoxPadded', [ Type ['LibUI::Box'] ] => Bool;
+
+=head3 C<uiBoxSetPadded( ... )>
+
+    uiBoxSetPadded( $box, 1 );
+
+Sets whether or not controls within the box are padded.
+
+Padding is defined as space between individual controls. The padding size is
+determined by the OS defaults.
+
+=cut
+
+    affix $lib, 'uiBoxSetPadded', [ InstanceOf ['LibUI::Box'], Int ] => Void;
+
+=head3 C<uiNewHorizontalBox( )>
+
+    uiNewHorizontalBox( );
+
+Creates a new horizontal box.
+
+Controls within the box are placed next to each other horizontally.
+
+=cut
+
+    affix $lib, 'uiNewHorizontalBox', [] => InstanceOf ['LibUI::Box'];
+
+=head3 C<uiNewVerticalBox( )>
+
+    my $vbox = uiNewVerticalBox( );
+
+Creates a new vertical box.
+
+Controls within the box are placed next to each other vertically.
+
+=cut
+
+    affix $lib, 'uiNewVerticalBox', [] => InstanceOf ['LibUI::Box'];
+
+    #
+    typedef 'LibUI::Checkbox'         => Type ['LibUI::Control'];
+    typedef 'LibUI::Menu'             => Type ['LibUI::Control'];
+    typedef 'LibUI::MenuItem'         => Type ['LibUI::Control'];
+    typedef 'LibUI::Group'            => Type ['LibUI::Control'];
+    typedef 'LibUI::Label'            => Type ['LibUI::Control'];
+    typedef 'LibUI::Separator'        => Type ['LibUI::Control'];
+    typedef 'LibUI::DatePicker'       => Type ['LibUI::Control'];
+    typedef 'LibUI::TimePicker'       => Type ['LibUI::Control'];
+    typedef 'LibUI::DateTimePicker'   => Type ['LibUI::Control'];
+    typedef 'LibUI::FontButton'       => Type ['LibUI::Control'];
+    typedef 'LibUI::ColorButton'      => Type ['LibUI::Control'];
+    typedef 'LibUI::SpinBox'          => Type ['LibUI::Control'];
+    typedef 'LibUI::Slider'           => Type ['LibUI::Control'];
+    typedef 'LibUI::ProgressBar'      => Type ['LibUI::Control'];
+    typedef 'LibUI::Combobox'         => Type ['LibUI::Control'];
+    typedef 'LibUI::EditableCombobox' => Type ['LibUI::Control'];
+    typedef 'LibUI::Radiobuttons'     => Type ['LibUI::Control'];
+    typedef 'LibUI::Tab'              => Type ['LibUI::Control'];
+    typedef 'LibUI::TextEntry'        => Type ['LibUI::Control'];
+    typedef 'LibUI::Area'             => Type ['LibUI::Control'];
+    typedef 'LibUI::DrawPath'         => Type ['LibUI::Control'];
+    typedef 'LibUI::TextFont'         => Type ['LibUI::Control'];
+    typedef 'LibUI::TextLayout'       => Type ['LibUI::Control'];
     #
     typedef 'LibUI::AreaDrawParams' => Struct [
         draw_context => Pointer [Void],
@@ -1129,11 +1245,6 @@ Expected parameters include:
     #
 
     #
-    affix $lib, 'uiNewHorizontalBox', [] => InstanceOf ['LibUI::Box'];
-    affix $lib, 'uiNewVerticalBox',   [] => InstanceOf ['LibUI::Box'];
-    affix $lib, 'uiBoxSetPadded',     [ InstanceOf ['LibUI::Box'], Int ] => Void;
-    affix $lib, 'uiBoxAppend',
-        [ InstanceOf ['LibUI::Box'], InstanceOf ['LibUI::Control'], Int ] => Void;
     #
     affix $lib, 'uiNewCheckbox',     [Str] => InstanceOf ['LibUI::Checkbox'];
     affix $lib, 'uiCheckboxChecked', [ InstanceOf ['LibUI::Checkbox'] ]      => Int;

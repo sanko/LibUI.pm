@@ -78,12 +78,6 @@ You **must** call this before creating widgets.
 
 Ask LibUI to break everything down before quitting.
 
-### `uiFreeInitError( ... )`
-
-    uiFreeInitError( $err );
-
-Frees the string returned when [&lt;uiInit( ... )](https://metacpan.org/pod/uiInit%28%20...%20%29)> fails.
-
 ### `uiMain( )`
 
     uiMain( );
@@ -255,7 +249,7 @@ Disables the control.
 
 Allocates a new custom `uiControl`.
 
-This function is undocumented upstream. Expected parameters include:
+Expected parameters include:
 
 - `$n`
 
@@ -266,6 +260,8 @@ This function is undocumented upstream. Expected parameters include:
 - `$typename`
 
     Name of the type as a string.
+
+This function is undocumented upstream.
 
 ### `uiFreeControl( ... )`
 
@@ -590,6 +586,77 @@ Creates a new button.
 Expected parameters include:
 
 - `$label`
+
+## Box Functions
+
+These functions wrap a boxlike container that holds a group of controls.
+
+The contained controls are arranged to be displayed either horizontally or
+vertically next to each other.
+
+You may import these functions with the `:box` tag.
+
+### `uiBoxAppend( ... )`
+
+    uiBoxAppend( $box, $child, 1 );
+
+Appends a control to the box.
+
+Stretchy items expand to use the remaining space within the box. In the case of
+multiple stretchy items the space is shared equally.
+
+Expected parameters include:
+
+- `$box`
+- `$child`
+- `$stretchy`
+
+    True value to stretch the child, otherwise false.
+
+### `uiBoxNumChildren( ... )`
+
+    my $kids = uiBoxNumChildren( $box );
+
+Returns the number of controls contained within the box.
+
+### `uiBoxDelete( ... )`
+
+    uiBoxDelete( $box, 3 );
+
+Removes the control at a given index from the box.
+
+### `uiBoxPadded( ... )`
+
+    my $comfortable = uiBoxPadded( $box );
+
+Returns whether or not controls within the box are padded.
+
+Padding is defined as space between individual controls.
+
+### `uiBoxSetPadded( ... )`
+
+    uiBoxSetPadded( $box, 1 );
+
+Sets whether or not controls within the box are padded.
+
+Padding is defined as space between individual controls. The padding size is
+determined by the OS defaults.
+
+### `uiNewHorizontalBox( )`
+
+    uiNewHorizontalBox( );
+
+Creates a new horizontal box.
+
+Controls within the box are placed next to each other horizontally.
+
+### `uiNewVerticalBox( )`
+
+    my $vbox = uiNewVerticalBox( );
+
+Creates a new vertical box.
+
+Controls within the box are placed next to each other vertically.
 
 # Requirements
 
