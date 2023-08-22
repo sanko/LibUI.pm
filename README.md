@@ -1060,6 +1060,74 @@ Creates a new horizontal separator.
 
 Creates a new vertical separator.
 
+## Combobox Functions
+
+A combobox is a control to select one item from a predefined list of items via
+a drop down menu.
+
+You may import these functions with the `:combobox` tag.
+
+### `uiComboboxAppend( ... )`
+
+    uiComboboxAppend( $combo, 'Candy' );
+
+Appends an item to the combo box.
+
+### `uiComboboxInsertAt( ... )`
+
+    uiComboboxInsertAt( $combo, 4, 'Salty snacks' );
+
+Inserts an item at `$index` to the combo box.
+
+### `uiComboboxDelete( ... )`
+
+    uiComboboxDelete( $combo, 4 );
+
+Deletes an item at `$index` from the combo box.
+
+Deleting the index of the item currently selected will move the selection to
+the next item in the combo box or `-1` if no such item exists.
+
+### `uiComboboxClear( ... )`
+
+    uiComboboxClear( $combo );
+
+Deletes all items from the combo box.
+
+### `uiComboboxNumItems( ... )`
+
+    my $options = uiComboboxNumItems( $combo );
+
+Returns the number of items contained within the combo box.
+
+### `uiComboboxSelected( ... )`
+
+    my $current = uiComboboxSelected( $combo );
+
+Returns the index of the item selected or `-1` on empty selection.
+
+### `uiComboboxSetSelected( ... )`
+
+    uiComboboxSetSelected( $combo, 2 );
+
+Sets the item selected. `-1` to clear selection.
+
+### `uiComboboxOnSelected( ... )`
+
+    uiComboboxOnSelected( $combo, sub { my ($c, $user_data) = @_; }, undef );
+
+Registers a callback for when a combo box item is selected.
+
+The callback is not triggered when calling `uiComboboxSetSelected( ... )`,
+`uiComboboxInsertAt( ... )`, `uiComboboxDelete( ... )`, or `uiComboboxClear(
+... )`.
+
+### `uiNewCombobox( )`
+
+    my $combo = uiNewCombobox( );
+
+Creates a new combo box.
+
 # Requirements
 
 [Affix](https://metacpan.org/pod/Affix) and [Alien::libui](https://metacpan.org/pod/Alien%3A%3Alibui)

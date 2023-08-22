@@ -65,13 +65,20 @@ package LibUI 1.00 {
             'uiSliderSetRange',          'uiNewSlider'
         ],
         progressbar => [ 'uiProgressBarValue', 'uiProgressBarSetValue', 'uiNewProgressBar' ],
-        separator   => [ 'uiNewHorizontalSeparator', 'uiNewVerticalSeparator' ]
+        separator   => [ 'uiNewHorizontalSeparator', 'uiNewVerticalSeparator' ],
+        combobox    => [
+            'uiComboboxAppend',      'uiComboboxInsertAt',
+            'uiComboboxDelete',      'uiComboboxClear',
+            'uiComboboxNumItems',    'uiComboboxSelected',
+            'uiComboboxSetSelected', 'uiComboboxOnSelected',
+            'uiNewCombobox',
+        ]
     );
     {
         my %seen;
         push @{ $EXPORT_TAGS{control} }, grep { !$seen{$_}++ } @{ $EXPORT_TAGS{$_} }
             for 'window', 'button', 'box', 'checkbox', 'entry', 'label', 'tab', 'group', 'spinbox',
-            'slider', 'progressbar', 'separator';
+            'slider', 'progressbar', 'separator', 'combobox';
     }
     {
         my %seen;
@@ -1779,6 +1786,119 @@ Creates a new vertical separator.
 
     affix $lib, 'uiNewVerticalSeparator', [] => Type ['LibUI::VSeparator'];
 
+=head2 Combobox Functions
+
+A combobox is a control to select one item from a predefined list of items via
+a drop down menu.
+
+You may import these functions with the C<:combobox> tag.
+
+=cut
+
+    typedef 'LibUI::Combobox' => Type ['LibUI::Control'];
+
+=head3 C<uiComboboxAppend( ... )>
+
+    uiComboboxAppend( $combo, 'Candy' );
+
+Appends an item to the combo box.
+
+=cut
+
+    affix $lib, 'uiComboboxAppend', [ Type ['LibUI::Combobox'], Str ] => Void;
+
+=head3 C<uiComboboxInsertAt( ... )>
+
+    uiComboboxInsertAt( $combo, 4, 'Salty snacks' );
+
+Inserts an item at C<$index> to the combo box.
+
+=cut
+
+    affix $lib, 'uiComboboxInsertAt', [ Type ['LibUI::Combobox'], Int, Str ] => Void;
+
+=head3 C<uiComboboxDelete( ... )>
+
+    uiComboboxDelete( $combo, 4 );
+
+Deletes an item at C<$index> from the combo box.
+
+Deleting the index of the item currently selected will move the selection to
+the next item in the combo box or C<-1> if no such item exists.
+
+=cut
+
+    affix $lib, 'uiComboboxDelete', [ Type ['LibUI::Combobox'], Int ] => Void;
+
+=head3 C<uiComboboxClear( ... )>
+
+    uiComboboxClear( $combo );
+
+Deletes all items from the combo box.
+
+=cut
+
+    affix $lib, 'uiComboboxClear', [ Type ['LibUI::Combobox'] ] => Void;
+
+=head3 C<uiComboboxNumItems( ... )>
+
+    my $options = uiComboboxNumItems( $combo );
+
+Returns the number of items contained within the combo box.
+
+=cut
+
+    affix $lib, 'uiComboboxNumItems', [ Type ['LibUI::Combobox'] ] => Int;
+
+=head3 C<uiComboboxSelected( ... )>
+
+    my $current = uiComboboxSelected( $combo );
+
+Returns the index of the item selected or C<-1> on empty selection.
+
+=cut
+
+    affix $lib, 'uiComboboxSelected', [ Type ['LibUI::Combobox'] ] => Int;
+
+=head3 C<uiComboboxSetSelected( ... )>
+
+    uiComboboxSetSelected( $combo, 2 );
+
+Sets the item selected. C<-1> to clear selection.
+
+=cut
+
+    affix $lib, 'uiComboboxSetSelected', [ Type ['LibUI::Combobox'], Int ] => Void;
+
+=head3 C<uiComboboxOnSelected( ... )>
+
+    uiComboboxOnSelected( $combo, sub { my ($c, $user_data) = @_; }, undef );
+
+Registers a callback for when a combo box item is selected.
+
+The callback is not triggered when calling C<uiComboboxSetSelected( ... )>,
+C<uiComboboxInsertAt( ... )>, C<uiComboboxDelete( ... )>, or C<uiComboboxClear(
+... )>.
+
+=cut
+
+    affix $lib, 'uiComboboxOnSelected',
+        [
+        Type ['LibUI::Combobox'],
+        CodeRef [ [ Type ['LibUI::Combobox'], Pointer [SV] ] => Void ],
+        Pointer [SV]
+        ] => Void;
+
+=head3 C<uiNewCombobox( )>
+
+    my $combo = uiNewCombobox( );
+
+Creates a new combo box.
+
+=cut
+
+    affix $lib, 'uiNewCombobox', [] => Type ['LibUI::Combobox'];
+
     #
     typedef 'LibUI::Menu'             => Type ['LibUI::Control'];
     typedef 'LibUI::MenuItem'         => Type ['LibUI::Control'];
@@ -1973,7 +2093,7 @@ Sanko Robinson E<lt>sanko@cpan.orgE<gt>
 =begin stopwords
 
 draggable gotta userdata borderless uiWindow uiBox resizable checkbox readonly
-spinbox
+spinbox combobox
 
 =end stopwords
 
