@@ -102,7 +102,7 @@ occur or not.
 
 It returns true if an event was processed (or if no even is available if you
 don't wish to wait) and false if the event loop was told to stop (for instance,
-[<`uiQuit()`](https://metacpan.org/pod/uiQuit%28%20%29)> was called).
+`uiQuit()` was called).
 
 ### `uiQuit( )`
 

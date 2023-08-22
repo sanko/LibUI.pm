@@ -215,7 +215,7 @@ occur or not.
 
 It returns true if an event was processed (or if no even is available if you
 don't wish to wait) and false if the event loop was told to stop (for instance,
-L<<C<uiQuit()>|C<uiQuit( )>>> was called).
+C<uiQuit()> was called).
 
 =cut
 
