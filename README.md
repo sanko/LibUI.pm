@@ -1012,6 +1012,35 @@ The initial slider value equals the minimum value.
 In the current implementation upstream, `$min` and `$max` are swapped if
 `$min` is greater than `$max`. This may change in the future though.
 
+## ProgressBar Functions
+
+A ProgressBar is a control that visualizes the progress of a task via the fill
+level of a horizontal bar.
+
+Indeterminate values are supported via an animated bar.
+
+### `uiProgressBarValue( ... )`
+
+    my $value = uiProgressBarValue( $bar );
+
+Returns the progress bar value.
+
+### `uiProgressBarSetValue( ... )`
+
+    uiProgressBarSetValue( $bar, 100 );
+
+Sets the progress bar value.
+
+Valid values are `[0 .. 100]` for displaying a solid bar imitating a percent
+value.
+
+Use a value of `-1` to render an animated bar to convey an indeterminate
+value.
+
+### `uiNewProgressBar( )`
+
+Creates a new progress bar.
+
 # Requirements
 
 [Affix](https://metacpan.org/pod/Affix) and [Alien::libui](https://metacpan.org/pod/Alien%3A%3Alibui)

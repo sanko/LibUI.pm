@@ -63,13 +63,14 @@ package LibUI 1.00 {
             'uiSliderHasToolTip',        'uiSliderSetHasToolTip',
             'uiSliderOnChangeduiSlider', 'uiSliderOnReleased',
             'uiSliderSetRange',          'uiNewSlider'
-        ]
+        ],
+        progressbar => [ 'uiProgressBarValue', 'uiProgressBarSetValue', 'uiNewProgressBar' ]
     );
     {
         my %seen;
         push @{ $EXPORT_TAGS{control} }, grep { !$seen{$_}++ } @{ $EXPORT_TAGS{$_} }
             for 'window', 'button', 'box', 'checkbox', 'entry', 'label', 'tab', 'group', 'spinbox',
-            'slider';
+            'slider', 'progressbar';
     }
     {
         my %seen;
@@ -1697,6 +1698,52 @@ C<$min> is greater than C<$max>. This may change in the future though.
 =cut
 
     affix $lib, 'uiNewSlider', [ Int, Int ] => Type ['LibUI::Slider'];
+
+=head2 ProgressBar Functions
+
+A ProgressBar is a control that visualizes the progress of a task via the fill
+level of a horizontal bar.
+
+Indeterminate values are supported via an animated bar.
+
+=cut
+
+    typedef 'LibUI::ProgressBar' => Type ['LibUI::Control'];
+
+=head3 C<uiProgressBarValue( ... )>
+
+    my $value = uiProgressBarValue( $bar );
+
+Returns the progress bar value.
+
+=cut
+
+    affix $lib, 'uiProgressBarValue', [ Type ['LibUI::ProgressBar'] ] => Int;
+
+=head3 C<uiProgressBarSetValue( ... )>
+
+    uiProgressBarSetValue( $bar, 100 );
+
+Sets the progress bar value.
+
+Valid values are C<[0 .. 100]> for displaying a solid bar imitating a percent
+value.
+
+Use a value of C<-1> to render an animated bar to convey an indeterminate
+value.
+
+=cut
+
+    affix $lib, 'uiProgressBarSetValue', [ Type ['LibUI::ProgressBar'], Int ] => Void;
+
+=head3 C<uiNewProgressBar( )>
+
+Creates a new progress bar.
+
+=cut
+
+    affix $lib, 'uiNewProgressBar', [] => Type ['LibUI::ProgressBar'];
+
     #
     typedef 'LibUI::Menu'             => Type ['LibUI::Control'];
     typedef 'LibUI::MenuItem'         => Type ['LibUI::Control'];
@@ -1706,7 +1753,6 @@ C<$min> is greater than C<$max>. This may change in the future though.
     typedef 'LibUI::DateTimePicker'   => Type ['LibUI::Control'];
     typedef 'LibUI::FontButton'       => Type ['LibUI::Control'];
     typedef 'LibUI::ColorButton'      => Type ['LibUI::Control'];
-    typedef 'LibUI::ProgressBar'      => Type ['LibUI::Control'];
     typedef 'LibUI::Combobox'         => Type ['LibUI::Control'];
     typedef 'LibUI::EditableCombobox' => Type ['LibUI::Control'];
     typedef 'LibUI::Radiobuttons'     => Type ['LibUI::Control'];
@@ -1861,9 +1907,6 @@ C<$min> is greater than C<$max>. This may change in the future though.
     affix $lib, 'uiNewDateTimePicker',      []    => InstanceOf ['LibUI::DateTimePicker'];
     affix $lib, 'uiNewFontButton',          []    => InstanceOf ['LibUI::FontButton'];
     affix $lib, 'uiNewHorizontalSeparator', []    => InstanceOf ['LibUI::Separator'];
-    affix $lib, 'uiNewProgressBar',         []    => InstanceOf ['LibUI::ProgressBar'];
-    affix $lib, 'uiProgressBarValue',       [ InstanceOf ['LibUI::ProgressBar'] ]      => Int;
-    affix $lib, 'uiProgressBarSetValue',    [ InstanceOf ['LibUI::ProgressBar'], Int ] => Void;
     #
     affix $lib, 'uiMsgBox',      [ InstanceOf ['LibUI::Window'], Str, Str ] => Void;
     affix $lib, 'uiMsgBoxError', [ InstanceOf ['LibUI::Window'], Str, Str ] => Void;
