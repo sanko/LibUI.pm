@@ -1566,8 +1566,7 @@ Creates a new spinbox.
 The initial spinbox value equals the minimum value.
 
 In the current implementation upstream, C<$min> and C<$max> are swapped if
-C<$min> is greater than C<$max>. This may change in the future though. See
-TODO.
+C<$min> is greater than C<$max>. This may change in the future though.
 
 =cut
 

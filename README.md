@@ -937,8 +937,7 @@ Creates a new spinbox.
 The initial spinbox value equals the minimum value.
 
 In the current implementation upstream, `$min` and `$max` are swapped if
-`$min` is greater than `$max`. This may change in the future though. See
-TODO.
+`$min` is greater than `$max`. This may change in the future though.
 
 # Requirements
 
