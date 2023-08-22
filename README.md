@@ -1128,6 +1128,53 @@ The callback is not triggered when calling `uiComboboxSetSelected( ... )`,
 
 Creates a new combo box.
 
+## Editable Combobox Functions
+
+An editable combobox is a control to select one item from a predefined list of
+items or enter ones own.
+
+Predefined items can be selected from a drop down menu.
+
+A customary item can be entered by the user via an editable text field.
+
+You may import these functions with the `:editablecombobox` tag.
+
+### `uiEditableComboboxAppend( ... )`
+
+    uiEditableComboboxAppend( $combo, 'Fire' );
+
+Appends an item to the editable combo box.
+
+### `uiEditableComboboxText( ... )`
+
+    my $text = uiEditableComboboxText( $combo );
+
+Returns the text of the editable combo box.
+
+This text is either the text of one of the predefined list items or the text
+manually entered by the user.
+
+### `uiEditableComboboxSetText( ... )`
+
+    uiEditableComboboxSetText( $combo, "Floating" );
+
+Sets the editable combo box text.
+
+### `uiEditableComboboxOnChanged( )`
+
+    uiEditableComboboxOnChanged( $combo, sub { my ($cb, user_data) = @_; }, undef );
+
+Registers a callback for when an editable combo box item is selected or user
+text changed.
+
+The callback is not triggered when calling `uiEditableComboboxSetText( ... )`.
+
+### `uiNewEditableCombobox( )`
+
+    my $combo = uiNewEditableCombobox( );
+
+Creates a new editable combo box.
+
 # Requirements
 
 [Affix](https://metacpan.org/pod/Affix) and [Alien::libui](https://metacpan.org/pod/Alien%3A%3Alibui)

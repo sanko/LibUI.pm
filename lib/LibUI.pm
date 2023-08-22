@@ -72,13 +72,18 @@ package LibUI 1.00 {
             'uiComboboxNumItems',    'uiComboboxSelected',
             'uiComboboxSetSelected', 'uiComboboxOnSelected',
             'uiNewCombobox',
+        ],
+        editablecombobox => [
+            'uiEditableComboboxAppend',  'uiEditableComboboxText',
+            'uiEditableComboboxSetText', 'uiEditableComboboxOnChanged',
+            'uiNewEditableCombobox'
         ]
     );
     {
         my %seen;
         push @{ $EXPORT_TAGS{control} }, grep { !$seen{$_}++ } @{ $EXPORT_TAGS{$_} }
             for 'window', 'button', 'box', 'checkbox', 'entry', 'label', 'tab', 'group', 'spinbox',
-            'slider', 'progressbar', 'separator', 'combobox';
+            'slider', 'progressbar', 'separator', 'combobox', 'editablecombobox';
     }
     {
         my %seen;
@@ -1899,22 +1904,97 @@ Creates a new combo box.
 
     affix $lib, 'uiNewCombobox', [] => Type ['LibUI::Combobox'];
 
-    #
-    typedef 'LibUI::Menu'             => Type ['LibUI::Control'];
-    typedef 'LibUI::MenuItem'         => Type ['LibUI::Control'];
-    typedef 'LibUI::Separator'        => Type ['LibUI::Control'];
-    typedef 'LibUI::DatePicker'       => Type ['LibUI::Control'];
-    typedef 'LibUI::TimePicker'       => Type ['LibUI::Control'];
-    typedef 'LibUI::DateTimePicker'   => Type ['LibUI::Control'];
-    typedef 'LibUI::FontButton'       => Type ['LibUI::Control'];
-    typedef 'LibUI::ColorButton'      => Type ['LibUI::Control'];
-    typedef 'LibUI::Combobox'         => Type ['LibUI::Control'];
+=head2 Editable Combobox Functions
+
+An editable combobox is a control to select one item from a predefined list of
+items or enter ones own.
+
+Predefined items can be selected from a drop down menu.
+
+A customary item can be entered by the user via an editable text field.
+
+You may import these functions with the C<:editablecombobox> tag.
+
+=cut
+
     typedef 'LibUI::EditableCombobox' => Type ['LibUI::Control'];
-    typedef 'LibUI::Radiobuttons'     => Type ['LibUI::Control'];
-    typedef 'LibUI::Area'             => Type ['LibUI::Control'];
-    typedef 'LibUI::DrawPath'         => Type ['LibUI::Control'];
-    typedef 'LibUI::TextFont'         => Type ['LibUI::Control'];
-    typedef 'LibUI::TextLayout'       => Type ['LibUI::Control'];
+
+=head3 C<uiEditableComboboxAppend( ... )>
+
+    uiEditableComboboxAppend( $combo, 'Fire' );
+
+Appends an item to the editable combo box.
+
+=cut
+
+    affix $lib, 'uiEditableComboboxAppend', [ Type ['LibUI::EditableCombobox'], Str ] => Void;
+
+=head3 C<uiEditableComboboxText( ... )>
+
+    my $text = uiEditableComboboxText( $combo );
+
+Returns the text of the editable combo box.
+
+This text is either the text of one of the predefined list items or the text
+manually entered by the user.
+
+=cut
+
+    affix $lib, 'uiEditableComboboxText', [ Type ['LibUI::EditableCombobox'] ] => Str;
+
+=head3 C<uiEditableComboboxSetText( ... )>
+
+    uiEditableComboboxSetText( $combo, "Floating" );
+
+Sets the editable combo box text.
+
+=cut
+
+    affix $lib, 'uiEditableComboboxSetText', [ Type ['LibUI::EditableCombobox'], Str ] => Void;
+
+=head3 C<uiEditableComboboxOnChanged( )>
+
+    uiEditableComboboxOnChanged( $combo, sub { my ($cb, user_data) = @_; }, undef );
+
+Registers a callback for when an editable combo box item is selected or user
+text changed.
+
+The callback is not triggered when calling C<uiEditableComboboxSetText( ... )>.
+
+=cut
+
+    affix $lib, 'uiEditableComboboxOnChanged',
+        [
+        Type ['LibUI::EditableCombobox'],
+        CodeRef [ [ Type ['LibUI::EditableCombobox'], Pointer [SV] ] => Void ],
+        Pointer [SV]
+        ] => Void;
+
+=head3 C<uiNewEditableCombobox( )>
+
+    my $combo = uiNewEditableCombobox( );
+
+Creates a new editable combo box.
+
+=cut
+
+    affix $lib, 'uiNewEditableCombobox', [] => Type ['LibUI::EditableCombobox'];
+
+    #
+    typedef 'LibUI::Menu'           => Type ['LibUI::Control'];
+    typedef 'LibUI::MenuItem'       => Type ['LibUI::Control'];
+    typedef 'LibUI::Separator'      => Type ['LibUI::Control'];
+    typedef 'LibUI::DatePicker'     => Type ['LibUI::Control'];
+    typedef 'LibUI::TimePicker'     => Type ['LibUI::Control'];
+    typedef 'LibUI::DateTimePicker' => Type ['LibUI::Control'];
+    typedef 'LibUI::FontButton'     => Type ['LibUI::Control'];
+    typedef 'LibUI::ColorButton'    => Type ['LibUI::Control'];
+    typedef 'LibUI::Combobox'       => Type ['LibUI::Control'];
+    typedef 'LibUI::Radiobuttons'   => Type ['LibUI::Control'];
+    typedef 'LibUI::Area'           => Type ['LibUI::Control'];
+    typedef 'LibUI::DrawPath'       => Type ['LibUI::Control'];
+    typedef 'LibUI::TextFont'       => Type ['LibUI::Control'];
+    typedef 'LibUI::TextLayout'     => Type ['LibUI::Control'];
     #
     typedef 'LibUI::AreaDrawParams' => Struct [
         draw_context => Pointer [Void],
