@@ -53,11 +53,15 @@ package LibUI 1.00 {
             'uiTabAppend',   'uiTabInsertAt',    'uiTabDelete', 'uiTabNumPages',
             'uiTabMargined', 'uiTabSetMargined', 'uiNewTab'
         ],
+        group => [
+            'uiGroupTitle',       'uiGroupSetTitle', 'uiGroupSetChild', 'uiGroupMargined',
+            'uiGroupSetMargined', 'uiNewGroup'
+        ]
     );
     {
         my %seen;
         push @{ $EXPORT_TAGS{control} }, grep { !$seen{$_}++ } @{ $EXPORT_TAGS{$_} }
-            for qw[window button box checkbox entry label tab];
+            for qw[window button box checkbox entry label tab group];
     }
     {
         my %seen;
@@ -1416,10 +1420,86 @@ Creates a new tab container.
 
     affix $lib, 'uiNewTab', [] => Type ['LibUI::Tab'];
 
+=head2 Group Functions
+
+A group is a control container that adds a label to the contained child
+control.
+
+This control is a great way of grouping related controls in combination with
+uiBox. A visual box will or will not be drawn around the child control
+dependent on the underlying OS implementation.
+
+You may import these functions with the C<:group> tag.
+
+=cut
+
+    typedef 'LibUI::Group' => Type ['LibUI::Control'];
+
+=head3 C<uiGroupTitle( ... )>
+
+    my $title = uiGroupTitle( $group );
+
+Returns the group title.
+
+=cut
+
+    affix $lib, 'uiGroupTitle', [ Type ['LibUI::Group'] ] => Str;
+
+=head3 C<uiGroupSetTitle( ... )>
+
+    uiGroupSetTitle( $group, 'Subscriptions' );
+
+Sets the group title.
+
+=cut
+
+    affix $lib, 'uiGroupSetTitle', [ Type ['LibUI::Group'], Str ] => Void;
+
+=head3 C<uiGroupSetChild( ... )>
+
+    uiGroupSetChild( $group $box );
+
+Sets the group's child.
+
+=cut
+
+    affix $lib, 'uiGroupSetChild', [ Type ['LibUI::Group'], Type ['LibUI::Control'] ] => Void;
+
+=head3 C<uiGroupMargined( ... )>
+
+    my $comfortable = uiGroupMargined( $group );
+
+Returns whether or not the group has a margin.
+
+=cut
+
+    affix $lib, 'uiGroupMargined', [ Type ['LibUI::Group'] ] => Bool;
+
+=head3 C<uiGroupSetMargined( ... )>
+
+    uiGroupSetMargined( $group, 1 );
+
+Sets whether or not the group has a margin.
+
+The margin size is determined by the OS defaults.
+
+=cut
+
+    affix $lib, 'uiGroupSetMargined', [ Type ['LibUI::Group'], Bool ] => Void;
+
+=head3 C<uiNewGroup( ... )>
+
+    my $group = uiNewGroup( 'Introduction' );
+
+Creates a new group.
+
+=cut
+
+    affix $lib, 'uiNewGroup', [Str] => Type ['LibUI::Group'];
+
     #
     typedef 'LibUI::Menu'             => Type ['LibUI::Control'];
     typedef 'LibUI::MenuItem'         => Type ['LibUI::Control'];
-    typedef 'LibUI::Group'            => Type ['LibUI::Control'];
     typedef 'LibUI::Separator'        => Type ['LibUI::Control'];
     typedef 'LibUI::DatePicker'       => Type ['LibUI::Control'];
     typedef 'LibUI::TimePicker'       => Type ['LibUI::Control'];
@@ -1577,12 +1657,6 @@ Creates a new tab container.
     #~ :menu_item_clicked,
     #~ :pointer],
     #~ :void
-    affix $lib, 'uiNewGroup',         [Str] => InstanceOf ['LibUI::Group'];
-    affix $lib, 'uiGroupSetMargined', [ InstanceOf ['LibUI::Group'], Int ] => Void;
-    affix $lib, 'uiGroupMargined',    [ InstanceOf ['LibUI::Group'] ]      => Int;
-    affix $lib, 'uiGroupSetChild',
-        [ InstanceOf ['LibUI::Group'], InstanceOf ['LibUI::Group'] ] => Void;
-    affix $lib, 'uiGroupSetTitle', [ InstanceOf ['LibUI::Group'], Str ] => Void;
     #
     affix $lib, 'uiNewDatePicker',          []    => InstanceOf ['LibUI::DatePicker'];
     affix $lib, 'uiNewTimePicker',          [Str] => InstanceOf ['LibUI::TimePicker'];
@@ -1621,7 +1695,7 @@ the same terms as Perl itself.
 
 Sanko Robinson E<lt>sanko@cpan.orgE<gt>
 
-=for stopwords draggable gotta userdata borderless uiWindow resizable checkbox readonly
+=for stopwords draggable gotta userdata borderless uiWindow uiBox resizable checkbox readonly
 
 =cut
 

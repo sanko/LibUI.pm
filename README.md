@@ -841,6 +841,55 @@ The margin size is determined by the OS defaults.
 
 Creates a new tab container.
 
+## Group Functions
+
+A group is a control container that adds a label to the contained child
+control.
+
+This control is a great way of grouping related controls in combination with
+uiBox. A visual box will or will not be drawn around the child control
+dependent on the underlying OS implementation.
+
+You may import these functions with the `:group` tag.
+
+### `uiGroupTitle( ... )`
+
+    my $title = uiGroupTitle( $group );
+
+Returns the group title.
+
+### `uiGroupSetTitle( ... )`
+
+    uiGroupSetTitle( $group, 'Subscriptions' );
+
+Sets the group title.
+
+### `uiGroupSetChild( ... )`
+
+    uiGroupSetChild( $group $box );
+
+Sets the group's child.
+
+### `uiGroupMargined( ... )`
+
+    my $comfortable = uiGroupMargined( $group );
+
+Returns whether or not the group has a margin.
+
+### `uiGroupSetMargined( ... )`
+
+    uiGroupSetMargined( $group, 1 );
+
+Sets whether or not the group has a margin.
+
+The margin size is determined by the OS defaults.
+
+### `uiNewGroup( ... )`
+
+    my $group = uiNewGroup( 'Introduction' );
+
+Creates a new group.
+
 # Requirements
 
 See [Alien::libui](https://metacpan.org/pod/Alien%3A%3Alibui)
