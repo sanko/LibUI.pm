@@ -64,13 +64,14 @@ package LibUI 1.00 {
             'uiSliderOnChangeduiSlider', 'uiSliderOnReleased',
             'uiSliderSetRange',          'uiNewSlider'
         ],
-        progressbar => [ 'uiProgressBarValue', 'uiProgressBarSetValue', 'uiNewProgressBar' ]
+        progressbar => [ 'uiProgressBarValue', 'uiProgressBarSetValue', 'uiNewProgressBar' ],
+        separator   => [ 'uiNewHorizontalSeparator', 'uiNewVerticalSeparator' ]
     );
     {
         my %seen;
         push @{ $EXPORT_TAGS{control} }, grep { !$seen{$_}++ } @{ $EXPORT_TAGS{$_} }
             for 'window', 'button', 'box', 'checkbox', 'entry', 'label', 'tab', 'group', 'spinbox',
-            'slider', 'progressbar';
+            'slider', 'progressbar', 'separator';
     }
     {
         my %seen;
@@ -1744,6 +1745,38 @@ Creates a new progress bar.
 
     affix $lib, 'uiNewProgressBar', [] => Type ['LibUI::ProgressBar'];
 
+=head2 Separator Functions
+
+A separator is a control to visually separate controls, horizontally or
+vertically.
+
+Import these functions with the C<:separator> tag.
+
+=cut
+
+    typedef 'LibUI::HSeparator' => Type ['LibUI::Control'];
+    typedef 'LibUI::VSeparator' => Type ['LibUI::Control'];
+
+=head3 C<uiNewHorizontalSeparator( )>
+
+    my $hsplit = uiNewHorizontalSeparator( );
+
+Creates a new horizontal separator.
+
+=cut
+
+    affix $lib, 'uiNewHorizontalSeparator', [] => Type ['LibUI::HSeparator'];
+
+=head3 C<uiNewVerticalSeparator( )>
+
+    my $hsplit = uiNewVerticalSeparator( );
+
+Creates a new vertical separator.
+
+=cut
+
+    affix $lib, 'uiNewVerticalSeparator', [] => Type ['LibUI::VSeparator'];
+
     #
     typedef 'LibUI::Menu'             => Type ['LibUI::Control'];
     typedef 'LibUI::MenuItem'         => Type ['LibUI::Control'];
@@ -1902,11 +1935,10 @@ Creates a new progress bar.
     #~ :pointer],
     #~ :void
     #
-    affix $lib, 'uiNewDatePicker',          []    => InstanceOf ['LibUI::DatePicker'];
-    affix $lib, 'uiNewTimePicker',          [Str] => InstanceOf ['LibUI::TimePicker'];
-    affix $lib, 'uiNewDateTimePicker',      []    => InstanceOf ['LibUI::DateTimePicker'];
-    affix $lib, 'uiNewFontButton',          []    => InstanceOf ['LibUI::FontButton'];
-    affix $lib, 'uiNewHorizontalSeparator', []    => InstanceOf ['LibUI::Separator'];
+    affix $lib, 'uiNewDatePicker',     []    => InstanceOf ['LibUI::DatePicker'];
+    affix $lib, 'uiNewTimePicker',     [Str] => InstanceOf ['LibUI::TimePicker'];
+    affix $lib, 'uiNewDateTimePicker', []    => InstanceOf ['LibUI::DateTimePicker'];
+    affix $lib, 'uiNewFontButton',     []    => InstanceOf ['LibUI::FontButton'];
     #
     affix $lib, 'uiMsgBox',      [ InstanceOf ['LibUI::Window'], Str, Str ] => Void;
     affix $lib, 'uiMsgBoxError', [ InstanceOf ['LibUI::Window'], Str, Str ] => Void;

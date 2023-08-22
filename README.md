@@ -1041,6 +1041,25 @@ value.
 
 Creates a new progress bar.
 
+## Separator Functions
+
+A separator is a control to visually separate controls, horizontally or
+vertically.
+
+Import these functions with the `:separator` tag.
+
+### `uiNewHorizontalSeparator( )`
+
+    my $hsplit = uiNewHorizontalSeparator( );
+
+Creates a new horizontal separator.
+
+### `uiNewVerticalSeparator( )`
+
+    my $hsplit = uiNewVerticalSeparator( );
+
+Creates a new vertical separator.
+
 # Requirements
 
 [Affix](https://metacpan.org/pod/Affix) and [Alien::libui](https://metacpan.org/pod/Alien%3A%3Alibui)
