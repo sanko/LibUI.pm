@@ -57,12 +57,19 @@ package LibUI 1.00 {
             'uiGroupTitle',       'uiGroupSetTitle', 'uiGroupSetChild', 'uiGroupMargined',
             'uiGroupSetMargined', 'uiNewGroup'
         ],
-        spinbox => [ 'uiSpinboxValue', 'uiSpinboxSetValue', 'uiSpinboxOnChanged', 'uiNewSpinbox' ]
+        spinbox => [ 'uiSpinboxValue', 'uiSpinboxSetValue', 'uiSpinboxOnChanged', 'uiNewSpinbox' ],
+        slider  => [
+            'uiSliderValue',             'uiSliderSetValue',
+            'uiSliderHasToolTip',        'uiSliderSetHasToolTip',
+            'uiSliderOnChangeduiSlider', 'uiSliderOnReleased',
+            'uiSliderSetRange',          'uiNewSlider'
+        ]
     );
     {
         my %seen;
         push @{ $EXPORT_TAGS{control} }, grep { !$seen{$_}++ } @{ $EXPORT_TAGS{$_} }
-            for qw[window button box checkbox entry label tab group spinbox];
+            for 'window', 'button', 'box', 'checkbox', 'entry', 'label', 'tab', 'group', 'spinbox',
+            'slider';
     }
     {
         my %seen;
@@ -1572,6 +1579,124 @@ C<$min> is greater than C<$max>. This may change in the future though.
 
     affix $lib, 'uiNewSpinbox', [ Int, Int ] => Type ['LibUI::Spinbox'];
 
+=head2 Slider Functions
+
+A slider is a control to display and modify integer values via a user draggable
+slider.
+
+Values are guaranteed to be within the specified range.
+
+Sliders by default display a tool tip showing the current value when being
+dragged.
+
+Sliders are horizontal only.
+
+You may import these functions with the C<:slider> tag.
+
+=cut
+
+    typedef 'LibUI::Slider' => Type ['LibUI::Control'];
+
+=head3 C<uiSliderValue( ... )>
+
+    my $value = uiSliderValue( $slider );
+
+Returns the slider value.
+
+=cut
+
+    affix $lib, 'uiSliderValue', [ Type ['LibUI::Slider'] ] => Int;
+
+=head3 C<uiSliderSetValue( ... )>
+
+    uiSliderSetValue( $slider, 59 );
+
+Sets the slider value.
+
+=cut
+
+    affix $lib, 'uiSliderSetValue', [ Type ['LibUI::Slider'], Int ] => Void;
+
+=head3 C<uiSliderHasToolTip( ... )>
+
+    my $enabled = uiSliderHasToolTip( $slider );
+
+Returns whether or not the slider has a tool tip.
+
+=cut
+
+    affix $lib, 'uiSliderHasToolTip', [ Type ['LibUI::Slider'] ] => Bool;
+
+=head3 C<uiSliderSetHasToolTip( ... )>
+
+    uiSliderSetHasToolTip( $slider, 1 );
+
+Sets whether or not the slider has a tool tip.
+
+=cut
+
+    affix $lib, 'uiSliderSetHasToolTip', [ Type ['LibUI::Slider'], Bool ] => Void;
+
+=head3 C<uiSliderOnChanged( ... )>
+
+    uiSliderOnChanged( $slider, sub { my ($sl, $user_data) = @_; }, undef );
+
+Registers a callback for when the slider value is changed by the user.
+
+The callback is not triggered when calling C<uiSliderSetValue( ... )>.
+
+=cut
+
+    affix $lib, 'uiSliderOnChanged',
+        [
+        Type ['LibUI::Slider'],
+        CodeRef [ [ Type ['LibUI::Slider'], Pointer [SV] ] => Void ],
+        Pointer [SV]
+        ] => Void;
+
+=head3 C<uiSliderOnReleased( ... )>
+
+    uiSliderOnReleased( $slider, sub { my ($sl, $user_data) = @_; }, undef );
+
+Registers a callback for when the slider is released from dragging.
+
+=cut
+
+    affix $lib, 'uiSliderOnReleased',
+        [
+        Type ['LibUI::Slider'],
+        CodeRef [ [ Type ['LibUI::Slider'], Pointer [SV] ] => Void ],
+        Pointer [SV]
+        ] => Void;
+
+=head3 C<uiSliderSetRange( ... )>
+
+    uiSliderSetRange( $slider, 1, 500 );
+
+Sets the slider range.
+
+Make sure to clamp the slider value to the nearest value in range - should it
+be out of range. Manually call C<uiSliderOnChanged( ... )>'s callback in such a
+case.
+
+=cut
+
+    affix $lib, 'uiSliderSetRange', [ Type ['LibUI::Slider'], Int, Int ] => Void;
+
+=head3 C<uiNewSlider( ... )>
+
+    my $slider = uiNewSlider( 1, 100 );
+
+Creates a new slider.
+
+The initial slider value equals the minimum value.
+
+In the current implementation upstream, C<$min> and C<$max> are swapped if
+C<$min> is greater than C<$max>. This may change in the future though.
+
+=cut
+
+    affix $lib, 'uiNewSlider', [ Int, Int ] => Type ['LibUI::Slider'];
     #
     typedef 'LibUI::Menu'             => Type ['LibUI::Control'];
     typedef 'LibUI::MenuItem'         => Type ['LibUI::Control'];
@@ -1581,7 +1706,6 @@ C<$min> is greater than C<$max>. This may change in the future though.
     typedef 'LibUI::DateTimePicker'   => Type ['LibUI::Control'];
     typedef 'LibUI::FontButton'       => Type ['LibUI::Control'];
     typedef 'LibUI::ColorButton'      => Type ['LibUI::Control'];
-    typedef 'LibUI::Slider'           => Type ['LibUI::Control'];
     typedef 'LibUI::ProgressBar'      => Type ['LibUI::Control'];
     typedef 'LibUI::Combobox'         => Type ['LibUI::Control'];
     typedef 'LibUI::EditableCombobox' => Type ['LibUI::Control'];

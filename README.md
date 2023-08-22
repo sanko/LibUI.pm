@@ -939,6 +939,79 @@ The initial spinbox value equals the minimum value.
 In the current implementation upstream, `$min` and `$max` are swapped if
 `$min` is greater than `$max`. This may change in the future though.
 
+## Slider Functions
+
+A slider is a control to display and modify integer values via a user draggable
+slider.
+
+Values are guaranteed to be within the specified range.
+
+Sliders by default display a tool tip showing the current value when being
+dragged.
+
+Sliders are horizontal only.
+
+You may import these functions with the `:slider` tag.
+
+### `uiSliderValue( ... )`
+
+    my $value = uiSliderValue( $slider );
+
+Returns the slider value.
+
+### `uiSliderSetValue( ... )`
+
+    uiSliderSetValue( $slider, 59 );
+
+Sets the slider value.
+
+### `uiSliderHasToolTip( ... )`
+
+    my $enabled = uiSliderHasToolTip( $slider );
+
+Returns whether or not the slider has a tool tip.
+
+### `uiSliderSetHasToolTip( ... )`
+
+    uiSliderSetHasToolTip( $slider, 1 );
+
+Sets whether or not the slider has a tool tip.
+
+### `uiSliderOnChanged( ... )`
+
+    uiSliderOnChanged( $slider, sub { my ($sl, $user_data) = @_; }, undef );
+
+Registers a callback for when the slider value is changed by the user.
+
+The callback is not triggered when calling `uiSliderSetValue( ... )`.
+
+### `uiSliderOnReleased( ... )`
+
+    uiSliderOnReleased( $slider, sub { my ($sl, $user_data) = @_; }, undef );
+
+Registers a callback for when the slider is released from dragging.
+
+### `uiSliderSetRange( ... )`
+
+    uiSliderSetRange( $slider, 1, 500 );
+
+Sets the slider range.
+
+Make sure to clamp the slider value to the nearest value in range - should it
+be out of range. Manually call `uiSliderOnChanged( ... )`'s callback in such a
+case.
+
+### `uiNewSlider( ... )`
+
+    my $slider = uiNewSlider( 1, 100 );
+
+Creates a new slider.
+
+The initial slider value equals the minimum value.
+
+In the current implementation upstream, `$min` and `$max` are swapped if
+`$min` is greater than `$max`. This may change in the future though.
+
 # Requirements
 
 [Affix](https://metacpan.org/pod/Affix) and [Alien::libui](https://metacpan.org/pod/Alien%3A%3Alibui)
