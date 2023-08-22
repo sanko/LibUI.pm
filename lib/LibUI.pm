@@ -1211,7 +1211,9 @@ You may import these functions with the C<:entry> tag.
 
 =cut
 
-    typedef 'LibUI::Entry' => Type ['LibUI::Control'];
+    typedef 'LibUI::Entry'         => Type ['LibUI::Control'];
+    typedef 'LibUI::PasswordEntry' => Type ['LibUI::Entry'];
+    typedef 'LibUI::SearchEntry'   => Type ['LibUI::Entry'];
 
 =head3 C<uiEntryText( ... )>
 
@@ -1291,7 +1293,7 @@ The entered text is NOT readable by the user but masked as C<*******>.
 
 =cut
 
-    affix $lib, 'uiNewPasswordEntry', [] => Type ['LibUI::Entry'];
+    affix $lib, 'uiNewPasswordEntry', [] => Type ['LibUI::PasswordEntry'];
 
 =head3 C<uiNewSearchEntry( ... )>
 
@@ -1304,7 +1306,7 @@ for a more natural feel.
 
 =cut
 
-    affix $lib, 'uiNewSearchEntry', [] => Type ['LibUI::Entry'];
+    affix $lib, 'uiNewSearchEntry', [] => Type ['LibUI::SearchEntry'];
 
 =head2 Label Functions
 
