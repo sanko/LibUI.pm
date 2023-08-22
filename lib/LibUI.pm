@@ -48,12 +48,16 @@ package LibUI 1.00 {
             'uiEntryText',        'uiEntrySetText', 'uiEntryOnChanged',   'uiEntryReadOnly',
             'uiEntrySetReadOnly', 'uiNewEntry',     'uiNewPasswordEntry', 'uiNewSearchEntry'
         ],
-        label => [ 'uiLabelText', 'uiLabelSetText', 'uiNewLabel' ]
+        label => [ 'uiLabelText', 'uiLabelSetText', 'uiNewLabel' ],
+        tab   => [
+            'uiTabAppend',   'uiTabInsertAt',    'uiTabDelete', 'uiTabNumPages',
+            'uiTabMargined', 'uiTabSetMargined', 'uiNewTab'
+        ],
     );
     {
         my %seen;
         push @{ $EXPORT_TAGS{control} }, grep { !$seen{$_}++ } @{ $EXPORT_TAGS{$_} }
-            for qw[window button box checkbox entry label];
+            for qw[window button box checkbox entry label tab];
     }
     {
         my %seen;
@@ -1327,6 +1331,91 @@ Creates a new label.
 =cut
 
     affix $lib, 'uiNewLabel', [Str] => Type ['LibUI::Label'];
+
+=head2 Tab Functions
+
+A tab represents a multi-page control interface that displays one page at a
+time.
+
+Each page/tab has an associated label that can be selected to switch between
+pages/tabs.
+
+=cut
+
+    typedef 'LibUI::Tab' => Type ['LibUI::Control'];
+
+=head3 C<uiTabAppend( ... )>
+
+    uiTabAppend( $container, 'Home', $box_1 );
+
+Appends a control in form of a page/tab with label.
+
+=cut
+
+    affix $lib, 'uiTabAppend', [ Type ['LibUI::Tab'], Str, Type ['LibUI::Control'] ] => Void;
+
+=head3 C<uiTabInsertAt( ... )>
+
+    uiTabInsertAt( $container, 'Advanced', 5, $box_2 );
+
+Inserts a control in as a page/tab with label at C<$index>.
+
+=cut
+
+    affix $lib, 'uiTabInsertAt', [ Type ['LibUI::Tab'], Str, Int, Type ['LibUI::Control'] ] => Void;
+
+=head3 C<uiTabDelete( ... )>
+
+    uiTabDelete( $container, 5 );
+
+Removes the control at C<$index>.
+
+=cut
+
+    affix $lib, 'uiTabDelete', [ Type ['LibUI::Tab'], Int ] => Void;
+
+=head3 C<uiTabNumPages( ... )>
+
+    my $tabs = uiTabNumPages( $container );
+
+Returns the number of pages contained.
+
+=cut
+
+    affix $lib, 'uiTabNumPages', [ Type ['LibUI::Tab'] ] => Int;
+
+=head3 C<uiTabMargined( ... )>
+
+    my $comfortable = uiTabMargined( $container, 3 );
+
+Returns whether or not the page/tab at C<$index> has a margin.
+
+=cut
+
+    affix $lib, 'uiTabMargined', [ Type ['LibUI::Tab'], Int ] => Int;
+
+=head3 C<uiTabSetMargined( ... )>
+
+    uiTabSetMargined( $container, 3, 0 ); # where 3 is the inded and 0 is false
+
+Sets whether or not the page/tab at C<$index> has a margin.
+
+The margin size is determined by the OS defaults.
+
+=cut
+
+    affix $lib, 'uiTabSetMargined', [ Type ['LibUI::Tab'], Int, Int ] => Void;
+
+=head3 C<uiNewTab( )>
+
+    my $container = uiNewTab( );
+
+Creates a new tab container.
+
+=cut
+
+    affix $lib, 'uiNewTab', [] => Type ['LibUI::Tab'];
+
     #
     typedef 'LibUI::Menu'             => Type ['LibUI::Control'];
     typedef 'LibUI::MenuItem'         => Type ['LibUI::Control'];
@@ -1343,7 +1432,6 @@ Creates a new label.
     typedef 'LibUI::Combobox'         => Type ['LibUI::Control'];
     typedef 'LibUI::EditableCombobox' => Type ['LibUI::Control'];
     typedef 'LibUI::Radiobuttons'     => Type ['LibUI::Control'];
-    typedef 'LibUI::Tab'              => Type ['LibUI::Control'];
     typedef 'LibUI::Area'             => Type ['LibUI::Control'];
     typedef 'LibUI::DrawPath'         => Type ['LibUI::Control'];
     typedef 'LibUI::TextFont'         => Type ['LibUI::Control'];

@@ -789,6 +789,58 @@ Sets the label text.
 
 Creates a new label.
 
+## Tab Functions
+
+A tab represents a multi-page control interface that displays one page at a
+time.
+
+Each page/tab has an associated label that can be selected to switch between
+pages/tabs.
+
+### `uiTabAppend( ... )`
+
+    uiTabAppend( $container, 'Home', $box_1 );
+
+Appends a control in form of a page/tab with label.
+
+### `uiTabInsertAt( ... )`
+
+    uiTabInsertAt( $container, 'Advanced', 5, $box_2 );
+
+Inserts a control in as a page/tab with label at `$index`.
+
+### `uiTabDelete( ... )`
+
+    uiTabDelete( $container, 5 );
+
+Removes the control at `$index`.
+
+### `uiTabNumPages( ... )`
+
+    my $tabs = uiTabNumPages( $container );
+
+Returns the number of pages contained.
+
+### `uiTabMargined( ... )`
+
+    my $comfortable = uiTabMargined( $container, 3 );
+
+Returns whether or not the page/tab at `$index` has a margin.
+
+### `uiTabSetMargined( ... )`
+
+    uiTabSetMargined( $container, 3, 0 ); # where 3 is the inded and 0 is false
+
+Sets whether or not the page/tab at `$index` has a margin.
+
+The margin size is determined by the OS defaults.
+
+### `uiNewTab( )`
+
+    my $container = uiNewTab( );
+
+Creates a new tab container.
+
 # Requirements
 
 See [Alien::libui](https://metacpan.org/pod/Alien%3A%3Alibui)
