@@ -11,7 +11,7 @@ package LibUI 1.00 {
             'uiMainSteps', 'uiMainStep', 'uiQuit',          'uiQueueMain',
             'uiTimer',     'uiOnShouldQuit'
         ],
-        controls => [
+        control => [
             'uiControlDestroy',       'uiControlHandle',
             'uiControlParent',        'uiControlSetParent',
             'uiControlToplevel',      'uiControlVisible',
@@ -48,12 +48,12 @@ package LibUI 1.00 {
             'uiEntryText',        'uiEntrySetText', 'uiEntryOnChanged',   'uiEntryReadOnly',
             'uiEntrySetReadOnly', 'uiNewEntry',     'uiNewPasswordEntry', 'uiNewSearchEntry'
         ],
-        label => ['uiNewLabel']
+        label => [ 'uiLabelText', 'uiLabelSetText', 'uiNewLabel' ]
     );
     {
         my %seen;
-        push @{ $EXPORT_TAGS{controls} }, grep { !$seen{$_}++ } @{ $EXPORT_TAGS{$_} }
-            for qw[window button box checkbox label];
+        push @{ $EXPORT_TAGS{control} }, grep { !$seen{$_}++ } @{ $EXPORT_TAGS{$_} }
+            for qw[window button box checkbox entry label];
     }
     {
         my %seen;
@@ -1288,11 +1288,49 @@ for a more natural feel.
 
     affix $lib, 'uiNewSearchEntry', [] => Type ['LibUI::Entry'];
 
+=head2 Label Functions
+
+A label is a control that displays non-interactive text.
+
+You may import these functions with the C<:label> tag.
+
+=cut
+
+    typedef 'LibUI::Label' => Type ['LibUI::Control'];
+
+=head3 C<uiLabelText( ... )>
+
+    my $text = uiLabelText( $label );
+
+Returns the label text.
+
+=cut
+
+    affix $lib, 'uiLabelText', [ Type ['LibUI::Label'] ] => Str;
+
+=head3 C<uiLabelSetText( ... )>
+
+    uiLabelSetText( $label, 'Status: Okay' );
+
+Sets the label text.
+
+=cut
+
+    affix $lib, 'uiLabelSetText', [ Type ['LibUI::Label'], Str ] => Void;
+
+=head3 C<uiNewLabel( ... )>
+
+    my $label = uiNewLabel( 'Status: Init' );
+
+Creates a new label.
+
+=cut
+
+    affix $lib, 'uiNewLabel', [Str] => Type ['LibUI::Label'];
     #
     typedef 'LibUI::Menu'             => Type ['LibUI::Control'];
     typedef 'LibUI::MenuItem'         => Type ['LibUI::Control'];
     typedef 'LibUI::Group'            => Type ['LibUI::Control'];
-    typedef 'LibUI::Label'            => Type ['LibUI::Control'];
     typedef 'LibUI::Separator'        => Type ['LibUI::Control'];
     typedef 'LibUI::DatePicker'       => Type ['LibUI::Control'];
     typedef 'LibUI::TimePicker'       => Type ['LibUI::Control'];
@@ -1473,7 +1511,6 @@ for a more natural feel.
     affix $lib, 'uiNewArea',
         [ Pointer [ Type ['LibUI::AreaHandler'] ] ] => InstanceOf ['LibUI::Area'];
     #
-    affix $lib, 'uiNewLabel', [Str] => InstanceOf ['LibUI::Label'];
 
 =head1 Requirements
 

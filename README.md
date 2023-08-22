@@ -765,6 +765,30 @@ Creates a new entry suitable for search.
 Some systems will deliberately delay the `uiEntryOnChanged( ... )` callback
 for a more natural feel.
 
+## Label Functions
+
+A label is a control that displays non-interactive text.
+
+You may import these functions with the `:label` tag.
+
+### `uiLabelText( ... )`
+
+    my $text = uiLabelText( $label );
+
+Returns the label text.
+
+### `uiLabelSetText( ... )`
+
+    uiLabelSetText( $label, 'Status: Okay' );
+
+Sets the label text.
+
+### `uiNewLabel( ... )`
+
+    my $label = uiNewLabel( 'Status: Init' );
+
+Creates a new label.
+
 # Requirements
 
 See [Alien::libui](https://metacpan.org/pod/Alien%3A%3Alibui)
