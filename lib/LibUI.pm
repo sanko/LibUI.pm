@@ -56,12 +56,13 @@ package LibUI 1.00 {
         group => [
             'uiGroupTitle',       'uiGroupSetTitle', 'uiGroupSetChild', 'uiGroupMargined',
             'uiGroupSetMargined', 'uiNewGroup'
-        ]
+        ],
+        spinbox => [ 'uiSpinboxValue', 'uiSpinboxSetValue', 'uiSpinboxOnChanged', 'uiNewSpinbox' ]
     );
     {
         my %seen;
         push @{ $EXPORT_TAGS{control} }, grep { !$seen{$_}++ } @{ $EXPORT_TAGS{$_} }
-            for qw[window button box checkbox entry label tab group];
+            for qw[window button box checkbox entry label tab group spinbox];
     }
     {
         my %seen;
@@ -1497,6 +1498,81 @@ Creates a new group.
 
     affix $lib, 'uiNewGroup', [Str] => Type ['LibUI::Group'];
 
+=head2 Spinbox Functions
+
+A spinbox is a control to display and modify integer values via a text field or
++/- buttons.
+
+This is a convenient control for having the user enter integer values. Values
+are guaranteed to be within the specified range.
+
+The + button increases the held value by 1.
+
+The - button decreased the held value by 1.
+
+Entering a value out of range will clamp to the nearest value in range.
+
+You may import these functions with the C<:spinbox> tag.
+
+=cut
+
+    typedef 'LibUI::Spinbox' => Type ['LibUI::Control'];
+
+=head3 C<uiSpinboxValue( ... )>
+
+    my $value = uiSpinboxValue( $spinner );
+
+Returns the spinbox value.
+
+=cut
+
+    affix $lib, 'uiSpinboxValue', [ Type ['LibUI::Spinbox'] ] => Int;
+
+=head3 C<uiSpinboxSetValue( ... )>
+
+    uiSpinboxSetValue( $spinner, 30 );
+
+Sets the spinbox value.
+
+Setting a value out of range will clamp to the nearest value in range.
+
+=cut
+
+    affix $lib, 'uiSpinboxSetValue', [ Type ['LibUI::Spinbox'], Int ] => Void;
+
+=head3 C<uiSpinboxOnChanged( ... )>
+
+    uiSpinboxOnChanged( $spinner, sub { my ($spin, $user_data) = @_; }, undef );
+
+Registers a callback for when the spinbox value is changed by the user.
+
+The callback is not triggered when calling C<uiSpinboxSetValue( ... )>.
+
+=cut
+
+    affix $lib, 'uiSpinboxOnChanged',
+        [
+        Type ['LibUI::Spinbox'],
+        CodeRef [ [ Type ['LibUI::Spinbox'], Pointer [SV] ] => Void ],
+        Pointer [SV]
+        ] => Void;
+
+=head3 C<uiNewSpinbox( ... )>
+
+    my $spinner = uiNewSpinbox( 1, 100 );
+
+Creates a new spinbox.
+
+The initial spinbox value equals the minimum value.
+
+In the current implementation upstream, C<$min> and C<$max> are swapped if
+C<$min> is greater than C<$max>. This may change in the future though. See
+TODO.
+
+=cut
+
+    affix $lib, 'uiNewSpinbox', [ Int, Int ] => Type ['LibUI::Spinbox'];
+
     #
     typedef 'LibUI::Menu'             => Type ['LibUI::Control'];
     typedef 'LibUI::MenuItem'         => Type ['LibUI::Control'];
@@ -1506,7 +1582,6 @@ Creates a new group.
     typedef 'LibUI::DateTimePicker'   => Type ['LibUI::Control'];
     typedef 'LibUI::FontButton'       => Type ['LibUI::Control'];
     typedef 'LibUI::ColorButton'      => Type ['LibUI::Control'];
-    typedef 'LibUI::SpinBox'          => Type ['LibUI::Control'];
     typedef 'LibUI::Slider'           => Type ['LibUI::Control'];
     typedef 'LibUI::ProgressBar'      => Type ['LibUI::Control'];
     typedef 'LibUI::Combobox'         => Type ['LibUI::Control'];
@@ -1695,7 +1770,12 @@ the same terms as Perl itself.
 
 Sanko Robinson E<lt>sanko@cpan.orgE<gt>
 
-=for stopwords draggable gotta userdata borderless uiWindow uiBox resizable checkbox readonly
+=begin stopwords
+
+draggable gotta userdata borderless uiWindow uiBox resizable checkbox readonly
+spinbox
+
+=end stopwords
 
 =cut
 

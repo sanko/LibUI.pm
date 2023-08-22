@@ -890,6 +890,56 @@ The margin size is determined by the OS defaults.
 
 Creates a new group.
 
+## Spinbox Functions
+
+A spinbox is a control to display and modify integer values via a text field or
+\+/- buttons.
+
+This is a convenient control for having the user enter integer values. Values
+are guaranteed to be within the specified range.
+
+The + button increases the held value by 1.
+
+The - button decreased the held value by 1.
+
+Entering a value out of range will clamp to the nearest value in range.
+
+You may import these functions with the `:spinbox` tag.
+
+### `uiSpinboxValue( ... )`
+
+    my $value = uiSpinboxValue( $spinner );
+
+Returns the spinbox value.
+
+### `uiSpinboxSetValue( ... )`
+
+    uiSpinboxSetValue( $spinner, 30 );
+
+Sets the spinbox value.
+
+Setting a value out of range will clamp to the nearest value in range.
+
+### `uiSpinboxOnChanged( ... )`
+
+    uiSpinboxOnChanged( $spinner, sub { my ($spin, $user_data) = @_; }, undef );
+
+Registers a callback for when the spinbox value is changed by the user.
+
+The callback is not triggered when calling `uiSpinboxSetValue( ... )`.
+
+### `uiNewSpinbox( ... )`
+
+    my $spinner = uiNewSpinbox( 1, 100 );
+
+Creates a new spinbox.
+
+The initial spinbox value equals the minimum value.
+
+In the current implementation upstream, `$min` and `$max` are swapped if
+`$min` is greater than `$max`. This may change in the future though. See
+TODO.
+
 # Requirements
 
 See [Alien::libui](https://metacpan.org/pod/Alien%3A%3Alibui)
