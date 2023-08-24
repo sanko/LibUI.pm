@@ -27,6 +27,6 @@ jobs:
         run: |
           freebsd-version
           perl -V
-          cpanm -n -v https://github.com/sanko/Affix.pm.git
+          cpanm -n -v https://github.com/sanko/Affix.pm/archive/refs/heads/main.zip
           cpanm --installdeps -v -n --mirror http://cpan.cpantesters.org/ .
           cpanm -v --test-only .
