@@ -7,6 +7,7 @@ META.yml
 README.md
 cpanfile
 eg/calculator.pl
+eg/clock.pl
 eg/datetime.pl
 eg/hello_world.pl
 eg/timer.pl
