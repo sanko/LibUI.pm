@@ -1,0 +1,52 @@
+---
+abstract: 'Simple, Portable, Native GUI Library'
+author:
+  - 'Sanko Robinson'
+build_requires:
+  Test::More: '0.98'
+configure_requires:
+  Module::Build::Tiny: '0.035'
+dynamic_config: 0
+generated_by: 'App::mii v1.0.0, CPAN::Meta::Converter version 2.150013'
+keywords: []
+license: artistic_2
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: '1.4'
+name: LibUI
+no_index:
+  directory:
+    - t
+    - xt
+    - inc
+    - share
+    - eg
+    - examples
+    - author
+    - builder
+provides:
+  LibUI:
+    file: lib/LibUI.pm
+    version: v1.0.1
+  LibUI::Matrix:
+    file: lib/LibUI.pm
+requires:
+  Affix: v1.1.0
+  Alien::libui: '0'
+  Time::Local: '1.30'
+  Time::Piece: '0'
+  perl: v5.40.0
+resources:
+  bugtracker: https://github.com/sanko/LibUI.pm/issues
+  homepage: https://github.com/sanko/LibUI.pm
+  license: http://www.perlfoundation.org/artistic_license_2_0
+  repository: https://github.com/sanko/LibUI.pm.git
+version: v1.0.1
+x_authority: cpan:SANKO
+x_ignore:
+  - .tidyallrc
+  - .gitignore
+  - .clang-format
+  - .github/**
+x_serialization_backend: 'CPAN::Meta::YAML version 0.020'
+x_static_install: 1

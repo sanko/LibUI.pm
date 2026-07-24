@@ -1,89 +1,209 @@
-package LibUI 1.00 {
-    use strict;
-    use warnings;
+package LibUI v1.0.1 {
+    use v5.40;
     use Affix;
     use Alien::libui;
     my $lib = Alien::libui->dynamic_libs;
-    use Exporter 'import';
+    use Exporter qw[import];
     our %EXPORT_TAGS = (
         default => [
-            'uiInit',      'uiUninit',   'uiFreeInitError', 'uiMain',
-            'uiMainSteps', 'uiMainStep', 'uiQuit',          'uiQueueMain',
-            'uiTimer',     'uiOnShouldQuit'
+            qw[uiInit uiUninit uiFreeInitError uiMain uiMainSteps uiMainStep uiQuit uiQueueMain uiTimer uiOnShouldQuit]
         ],
         control => [
-            'uiControlDestroy',       'uiControlHandle',
-            'uiControlParent',        'uiControlSetParent',
-            'uiControlToplevel',      'uiControlVisible',
-            'uiControlShow',          'uiControlHide',
-            'uiControlEnabled',       'uiControlEnable',
-            'uiControlDisable',       'uiAllocControl',
-            'uiFreeControl',          'uiControlVerifySetParent',
-            'uiControlEnabledToUser', 'uiUserBugCannotSetParentOnToplevel'
+            qw[
+                uiControlDestroy  uiControlHandle          uiControlParent        uiControlSetParent
+                uiControlToplevel uiControlVisible         uiControlShow          uiControlHide
+                uiControlEnabled  uiControlEnable          uiControlDisable       uiAllocControl
+                uiFreeControl     uiControlVerifySetParent uiControlEnabledToUser uiUserBugCannotSetParentOnToplevel]
         ],
         window => [
-            'uiWindowTitle',             'uiWindowSetTitle',
-            'uiWindowPosition',          'uiWindowSetPosition',
-            'uiWindowOnPositionChanged', 'uiWindowContentSize',
-            'uiWindowSetContentSize',    'uiWindowFullscreen',
-            'uiWindowSetFullscreen',     'uiWindowOnContentSizeChanged',
-            'uiWindowOnClosing',         'uiWindowOnFocusChanged',
-            'uiWindowFocused',           'uiWindowBorderless',
-            'uiWindowSetBorderless',     'uiWindowSetChild',
-            'uiWindowMargined',          'uiWindowSetMargined',
-            'uiWindowResizeable',        'uiWindowSetResizeable',
-            'uiNewWindow'
+            qw[
+                uiWindowTitle             uiWindowSetTitle             uiWindowPosition       uiWindowSetPosition
+                uiWindowOnPositionChanged uiWindowContentSize          uiWindowSetContentSize uiWindowFullscreen
+                uiWindowSetFullscreen     uiWindowOnContentSizeChanged uiWindowOnClosing      uiWindowOnFocusChanged
+                uiWindowFocused           uiWindowBorderless           uiWindowSetBorderless  uiWindowSetChild
+                uiWindowMargined          uiWindowSetMargined          uiWindowResizeable     uiWindowSetResizeable
+                uiNewWindow
+            ]
         ],
-        button => [ 'uiButtonText', 'uiButtonSetText', 'uiButtonOnClicked', 'uiNewButton' ],
+        button => [qw[uiButtonText uiButtonSetText  uiButtonOnClicked uiNewButton ]],
         box    => [
-            'uiBoxAppend',    'uiBoxNumChildren',   'uiBoxDelete', 'uiBoxPadded',
-            'uiBoxSetPadded', 'uiNewHorizontalBox', 'uiNewVerticalBox'
+            qw[uiBoxAppend  uiBoxNumChildren uiBoxDelete uiBoxPadded uiBoxSetPadded uiNewHorizontalBox uiNewVerticalBox ]
         ],
         checkbox => [
-            'uiCheckboxText',       'uiCheckboxSetText',
-            'uiCheckboxOnToggled',  'uiCheckboxChecked',
-            'uiCheckboxSetChecked', 'uiNewCheckbox'
+            qw[uiCheckboxText uiCheckboxSetText uiCheckboxOnToggled uiCheckboxChecked uiCheckboxSetChecked uiNewCheckbox ]
         ],
         entry => [
-            'uiEntryText',        'uiEntrySetText', 'uiEntryOnChanged',   'uiEntryReadOnly',
-            'uiEntrySetReadOnly', 'uiNewEntry',     'uiNewPasswordEntry', 'uiNewSearchEntry'
+            qw[
+                uiEntryText        uiEntrySetText uiEntryOnChanged   uiEntryReadOnly
+                uiEntrySetReadOnly uiNewEntry     uiNewPasswordEntry uiNewSearchEntry
+            ]
         ],
-        label => [ 'uiLabelText', 'uiLabelSetText', 'uiNewLabel' ],
+        label => [qw[ uiLabelText    uiLabelSetText    uiNewLabel ]],
         tab   => [
-            'uiTabAppend',   'uiTabInsertAt',    'uiTabDelete', 'uiTabNumPages',
-            'uiTabMargined', 'uiTabSetMargined', 'uiNewTab'
+            qw[ uiTabAppend    uiTabInsertAt     uiTabDelete        uiTabNumPages uiTabMargined uiTabSetMargined uiNewTab ]
         ],
         group => [
-            'uiGroupTitle',       'uiGroupSetTitle', 'uiGroupSetChild', 'uiGroupMargined',
-            'uiGroupSetMargined', 'uiNewGroup'
+            qw[ uiGroupTitle   uiGroupSetTitle   uiGroupSetChild    uiGroupMargined uiGroupSetMargined uiNewGroup ]
         ],
-        spinbox => [ 'uiSpinboxValue', 'uiSpinboxSetValue', 'uiSpinboxOnChanged', 'uiNewSpinbox' ],
+        spinbox => [qw[uiSpinboxValue uiSpinboxSetValue uiSpinboxOnChanged uiNewSpinbox ]],
         slider  => [
-            'uiSliderValue',             'uiSliderSetValue',
-            'uiSliderHasToolTip',        'uiSliderSetHasToolTip',
-            'uiSliderOnChangeduiSlider', 'uiSliderOnReleased',
-            'uiSliderSetRange',          'uiNewSlider'
+            qw[
+                uiSliderValue     uiSliderSetValue   uiSliderHasToolTip uiSliderSetHasToolTip
+                uiSliderOnChanged uiSliderOnReleased uiSliderSetRange   uiNewSlider
+            ]
         ],
-        progressbar => [ 'uiProgressBarValue', 'uiProgressBarSetValue', 'uiNewProgressBar' ],
-        separator   => [ 'uiNewHorizontalSeparator', 'uiNewVerticalSeparator' ],
+        progressbar => [qw[uiProgressBarValue uiProgressBarSetValue uiNewProgressBar ]],
+        separator   => [qw[uiNewHorizontalSeparator uiNewVerticalSeparator ]],
         combobox    => [
-            'uiComboboxAppend',      'uiComboboxInsertAt',
-            'uiComboboxDelete',      'uiComboboxClear',
-            'uiComboboxNumItems',    'uiComboboxSelected',
-            'uiComboboxSetSelected', 'uiComboboxOnSelected',
-            'uiNewCombobox',
+            qw[
+                uiComboboxAppend   uiComboboxInsertAt uiComboboxDelete      uiComboboxClear
+                uiComboboxNumItems uiComboboxSelected uiComboboxSetSelected uiComboboxOnSelected
+                uiNewCombobox
+            ]
         ],
         editablecombobox => [
-            'uiEditableComboboxAppend',  'uiEditableComboboxText',
-            'uiEditableComboboxSetText', 'uiEditableComboboxOnChanged',
-            'uiNewEditableCombobox'
-        ]
+            qw[
+                uiEditableComboboxAppend uiEditableComboboxText uiEditableComboboxSetText uiEditableComboboxOnChanged
+                uiNewEditableCombobox
+            ]
+        ],
+        menu => [
+            qw[
+                uiNewMenu                   uiMenuAppendItem      uiMenuAppendCheckItem uiMenuAppendQuitItem
+                uiMenuAppendPreferencesItem uiMenuAppendAboutItem uiMenuAppendSeparator uiMenuItemEnable
+                uiMenuItemDisable           uiMenuItemOnClicked   uiMenuItemChecked     uiMenuItemSetChecked
+            ]
+        ],
+        multilineentry => [
+            qw[
+                uiNewMultilineEntry    uiNewNonWrappingMultilineEntry uiMultilineEntryText     uiMultilineEntrySetText
+                uiMultilineEntryAppend uiMultilineEntryOnChanged      uiMultilineEntryReadOnly uiMultilineEntrySetReadOnly
+            ]
+        ],
+        radiobuttons => [
+            qw[ uiNewRadioButtons uiRadioButtonsAppend uiRadioButtonsSelected uiRadioButtonsSetSelected uiRadioButtonsOnSelected ]
+        ],
+        grid =>
+            [qw[ uiNewGrid        uiGridAppend       uiGridInsertAt uiGridPadded uiGridSetPadded ]],
+        colorbutton => [
+            qw[ uiNewColorButton uiColorButtonColor uiColorButtonSetColor uiColorButtonOnChanged ]],
+        filedialog => [qw[ uiOpenFile       uiOpenFolder       uiSaveFile ]],
+        msgbox     => [qw[ uiMsgBox         uiMsgBoxError ]],
+        fontbutton => [
+            qw[ uiNewFontButton  uiFontButtonFont uiFreeFontButtonFont uiLoadControlFont uiFontButtonOnChanged ]
+        ],
+        datetimepicker => [
+            qw[
+                uiNewDatePicker      uiNewTimePicker uiNewDateTimePicker uiDateTimePickerOnChanged
+                uiDateTimePickerTime uiDateTimePickerSetTime
+            ]
+        ],
+        tab_extra => [qw[uiTabSelected uiTabSetSelected     uiTabOnSelected ]],
+        form      => [
+            qw[ uiNewForm     uiFormAppend         uiFormNumChildren uiFormDelete uiFormPadded uiFormSetPadded ]
+        ],
+        area_extra => [
+            qw[ uiAreaSetSize uiAreaQueueRedrawAll uiAreaScrollTo    uiAreaBeginUserWindowMove uiAreaBeginUserWindowResize ]
+        ],
+        drawpath => [
+            qw[
+                uiDrawNewPath          uiDrawFreePath  uiDrawPathNewFigure uiDrawPathNewFigureWithArc
+                uiDrawPathLineTo       uiDrawPathArcTo uiDrawPathBezierTo  uiDrawPathCloseFigure
+                uiDrawPathAddRectangle uiDrawPathEnded uiDrawPathEnd
+            ]
+        ],
+        drawstroke => [qw[ uiDrawStroke uiDrawFill ]],
+        drawmatrix => [
+            qw[
+                uiDrawMatrixSetIdentity    uiDrawMatrixTranslate uiDrawMatrixScale      uiDrawMatrixRotate
+                uiDrawMatrixSkew           uiDrawMatrixMultiply  uiDrawMatrixInvertible uiDrawMatrixInvert
+                uiDrawMatrixTransformPoint uiDrawMatrixTransformSize
+            ]
+        ],
+        drawcontext => [qw[ uiDrawTransform uiDrawClip uiDrawSave uiDrawRestore ]],
+        image       => [qw[ uiNewImage uiFreeImage uiImageAppend ]],
+        attr        => [
+            qw[
+                uiFreeAttribute      uiAttributeGetType           uiNewFamilyAttribute     uiAttributeFamily
+                uiNewSizeAttribute   uiAttributeSize              uiNewWeightAttribute     uiAttributeWeight
+                uiNewItalicAttribute uiAttributeItalic            uiNewStretchAttribute    uiAttributeStretch
+                uiNewColorAttribute  uiAttributeColor             uiNewBackgroundAttribute uiNewUnderlineAttribute
+                uiAttributeUnderline uiNewUnderlineColorAttribute uiAttributeUnderlineColor
+            ]
+        ],
+        opentype => [
+            qw[
+                uiNewOpenTypeFeatures    uiFreeOpenTypeFeatures uiOpenTypeFeaturesClone   uiOpenTypeFeaturesAdd
+                uiOpenTypeFeaturesRemove uiOpenTypeFeaturesGet  uiOpenTypeFeaturesForEach uiNewFeaturesAttribute
+                uiAttributeFeatures
+            ]
+        ],
+        attrstr => [
+            qw[
+                uiNewAttributedString                 uiFreeAttributedString
+                uiAttributedStringString              uiAttributedStringLen
+                uiAttributedStringAppendUnattributed  uiAttributedStringInsertAtUnattributed
+                uiAttributedStringDelete              uiAttributedStringSetAttribute
+                uiAttributedStringForEachAttribute    uiAttributedStringNumGraphemes
+                uiAttributedStringByteIndexToGrapheme uiAttributedStringGraphemeToByteIndex
+            ]
+        ],
+        textlayout =>
+            [qw[uiDrawNewTextLayout uiDrawFreeTextLayout uiDrawText uiDrawTextLayoutExtents ]],
+        table => [
+            qw[
+                uiFreeTableValue               uiTableValueGetType
+                uiNewTableValueString          uiTableValueString
+                uiNewTableValueImage           uiTableValueImage
+                uiNewTableValueInt             uiTableValueInt
+                uiNewTableValueColor           uiTableValueColor
+                uiNewTableModel                uiFreeTableModel
+                uiTableModelRowInserted        uiTableModelRowChanged
+                uiTableModelRowDeleted         uiTableAppendTextColumn
+                uiTableAppendImageColumn       uiTableAppendImageTextColumn
+                uiTableAppendCheckboxColumn    uiTableAppendCheckboxTextColumn
+                uiTableAppendProgressBarColumn uiTableAppendButtonColumn
+                uiTableHeaderVisible           uiTableHeaderSetVisible
+                uiNewTable                     uiTableOnRowClicked
+                uiTableOnRowDoubleClicked      uiTableHeaderSetSortIndicator
+                uiTableHeaderSortIndicator     uiTableHeaderOnClicked
+                uiTableColumnWidth             uiTableColumnSetWidth
+                uiTableGetSelectionMode        uiTableSetSelectionMode
+                uiTableOnSelectionChanged      uiTableGetSelection
+                uiTableSetSelection            uiFreeTableSelection]
+        ],
+        misc      => [qw[uiFreeText uiNewArea uiNewScrollingArea]],
+        constants => [
+            qw[
+                UI_FILL_WINDING  UI_FILL_ALTERNATE
+                UI_BRUSH_SOLID
+                UI_BRUSH_LINEAR_GRADIENT UI_BRUSH_RADIAL_GRADIENT
+                UI_LINE_CAP_FLAT         UI_LINE_CAP_ROUND
+                UI_LINE_JOIN_MITER       UI_LINE_JOIN_ROUND       UI_LINE_JOIN_BEVEL
+                UI_TEXT_ALIGN_LEFT UI_TEXT_ALIGN_CENTER UI_TEXT_ALIGN_RIGHT
+                UI_WEIGHT_THIN UI_WEIGHT_EXTRA_LIGHT UI_WEIGHT_LIGHT UI_WEIGHT_BOOK
+                UI_WEIGHT_NORMAL UI_WEIGHT_MEDIUM UI_WEIGHT_SEMI_BOLD UI_WEIGHT_BOLD
+                UI_WEIGHT_EXTRA_BOLD UI_WEIGHT_HEAVY
+                UI_ITALIC_NORMAL UI_ITALIC_OBLIQUE UI_ITALIC_ITALIC
+                UI_STRETCH_ULTRA_CONDENSED UI_STRETCH_EXTRA_CONDENSED UI_STRETCH_CONDENSED
+                UI_STRETCH_SEMI_CONDENSED UI_STRETCH_NORMAL UI_STRETCH_SEMI_EXPANDED
+                UI_STRETCH_EXPANDED UI_STRETCH_EXTRA_EXPANDED UI_STRETCH_ULTRA_EXPANDED
+                UI_UNDERLINE_NONE UI_UNDERLINE_SINGLE UI_UNDERLINE_DOUBLE UI_UNDERLINE_SQUIGGLE
+                UI_TABLE_COLUMN_STRING UI_TABLE_COLUMN_IMAGE UI_TABLE_COLUMN_INT UI_TABLE_COLUMN_COLOR
+                UI_SELECTION_NONE UI_SELECTION_SINGLE UI_SELECTION_MULTIPLE
+                UI_SORT_NONE UI_SORT_ASCENDING UI_SORT_DESCENDING
+                UI_ALIGN_FILL UI_ALIGN_START UI_ALIGN_CENTER UI_ALIGN_END
+            ]
+        ],
+        helpers => [qw[solid_brush draw_stroke format_tm]]
     );
     {
         my %seen;
-        push @{ $EXPORT_TAGS{control} }, grep { !$seen{$_}++ } @{ $EXPORT_TAGS{$_} }
-            for 'window', 'button', 'box', 'checkbox', 'entry', 'label', 'tab', 'group', 'spinbox',
-            'slider', 'progressbar', 'separator', 'combobox', 'editablecombobox';
+        push @{ $EXPORT_TAGS{control} }, grep { !$seen{$_}++ } @{ $EXPORT_TAGS{$_} } for qw[
+            window button box checkbox  entry label tab group spinbox slider progressbar separator combobox
+            editablecombobox menu       multilineentry radiobuttons grid colorbutton filedialog msgbox fontbutton
+            datetimepicker   tab_extra  form area_extra drawpath drawstroke drawmatrix drawcontext image attr opentype
+            attrstr          textlayout table misc constants helpers]
     }
     {
         my %seen;
@@ -95,253 +215,18 @@ package LibUI 1.00 {
     #~ use Data::Dump;
     #~ ddx \@EXPORT_OK;
     #~ ddx \%EXPORT_TAGS;
-
-=pod
-
-=encoding utf-8
-
-=head1 NAME
-
-LibUI - Simple, Portable, Native GUI Library
-
-=head1 SYNOPSIS
-
-    use LibUI;
-
-    sub onClosing ( $window, $data ) {
-        uiQuit();
-        return 1;
-    }
-
-    my $err = uiInit( { Size => 0 } );
-    if ( defined $err ) {
-        printf "Error initializing libui-ng: %s\n", $err;
-        uiFreeInitError($err);
-        return 1;
-    }
-
-    # Create a new window
-    my $w = uiNewWindow( "Hello, World!", 320, 120, 0 );
-    uiWindowOnClosing( $w, \&onClosing, undef );
-    uiWindowSetMargined( $w, 1 );
-
-    #
-    my $l = uiNewLabel("Hello, World!");
-    uiWindowSetChild( $w, $l );
-
-    #
-    uiControlShow($w);
-    uiMain();
-    uiUninit();
-
-=begin html
-
-<h2>Screenshots</h2> <div style="text-align: center"> <h3>Linux</h3><img
-alt="Linux"
-src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/linux.png" />
-<h3>MacOS</h3><img alt="MacOS"
-src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/macos.png" />
-<h3>Windows</h3><img alt="Windows"
-src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/windows.png" />
-</div>
-
-=end html
-
-=head1 DESCRIPTION
-
-LibUI is a simple and portable (but not inflexible) GUI library in C that uses
-the native GUI technologies of each platform it supports.
-
-This distribution is under construction. It works but is incomplete.
-
-=head1 Functions
-
-LibUI, keeping with the ethos of simplicity, is functional.
-
-You may import any of them by name or with their given import tags.
-
-=head2 Default Functions
-
-These are basic functions to get the UI started and may be imported with the
-C<:default> tag.
-
-=head3 C<uiInit( ... )>
-
-    my $err = uiInit({ Size => 0 });
-
-Ask LibUI to do all the platform specific work to get up and running. If LibUI
-fails to initialize itself, this will return a string. Weird upstream choice, I
-know...
-
-You B<must> call this before creating widgets.
-
-=cut
-
     typedef 'LibUI::InitOptions' => Struct [ Size => Size_t ];
-    affix $lib, 'uiInit', [ Pointer [ Type ['LibUI::InitOptions'] ] ] => Str;
-
-=head3 C<uiUninit( )>
-
-    uiUninit( );
-
-Ask LibUI to break everything down before quitting.
-
-=cut
-
-    affix $lib, 'uiUninit', [] => Void;
-
-=begin private
-
-=head3 C<uiFreeInitError( ... )>
-
-    uiFreeInitError( $err );
-
-Frees the string returned when C<uiInit( ... )> fails.
-
-=end private
-
-=cut
-
-    affix $lib, 'uiFreeInitError', [Char] => Void;
-
-=head3 C<uiMain( )>
-
-    uiMain( );
-
-Let LibUI's event loop run until interrupted.
-
-=cut
-
-    affix $lib, 'uiMain', [] => Void;
-
-=head3 C<uiMainSteps( )>
-
-    uiMainSteps( );
-
-You may call this instead of C<uiMain( )> if you want to run the main loop
-yourself.
-
-=cut
-
-    affix $lib, 'uiMainSteps', [] => Void;
-
-=head3 C<uiMainStep( ... )>
-
-    my $ok = uiMainStep( 1 );
-
-Runs one iteration of the main loop.
-
-It takes a single boolean argument indicating whether to wait for an even to
-occur or not.
-
-It returns true if an event was processed (or if no even is available if you
-don't wish to wait) and false if the event loop was told to stop (for instance,
-C<uiQuit()> was called).
-
-=cut
-
-    affix $lib, 'uiMainStep', [Int] => Int;
-
-=head3 C<uiQuit( )>
-
-    uiQuit( );
-
-Signals LibUI that you are ready to quit.
-
-=cut
-
-    affix $lib, 'uiQuit', [] => Void;
-
-=head3 C<uiQueueMain( )>
-
-    uiQueueMain( sub { }, $values );
-
-Trigger a callback on the main thread from any other thread. This is likely
-unstable. It's for sure untested as long as perl threads are garbage.
-
-=cut
-
-    affix $lib, 'uiQueueMain', [ CodeRef [ [ Pointer [SV] ] => Void ], Pointer [SV] ] => Void;
-
-=head3 C<uiTimer( ... )>
-
-    uiTimer( 1000, sub { die 'do not do this here' }, undef);
-
-    uiTime(
-        1000,
-        sub {
-            my $data = shift;
-            return 1 unless ++$data->{ticks} == 5;
-            0;
-        },
-        { ticks => 0 }
-    );
-
-Expected parameters include:
-
-=over
-
-=item C<$time>
-
-Time in milliseconds.
-
-=item C<$func>
-
-CodeRef that will be triggered when C<$time> runs out.
-
-Return a true value from your C<$func> to make your timer repeating.
-
-=item C<$data>
-
-Any userdata you feel like passing. It'll be handed off to your function.
-
-=back
-
-=cut
-
-    affix $lib, 'uiTimer', [ Int, CodeRef [ [ Pointer [SV] ] => Int ], Pointer [SV] ] => Void;
-
-=head3 C<uiOnShouldQuit( ... )>
-
-    uiOnShouldQuit( sub {}, undef );
-
-Callback triggered when the GUI is prepared to quit.
-
-Expected parameters include:
-
-=over
-
-=item C<$func>
-
-CodeRef that will be triggered.
-
-=item C<$user_data>
-
-User data passed to the callback.
-
-=back
-
-=cut
-
-    affix $lib, 'uiOnShouldQuit', [ CodeRef [ [ Pointer [SV] ] => Int ], Pointer [SV] ] => Void;
-
-=head3 C<uiFreeText( ... )>
-
-    uiFreeText( $title );
-
-Free a string with LibUI.
-
-=cut
-
-    affix $lib, 'uiFreeText', [Str] => Void;
-
-=head2 Control Functions
-
-These functions may be used by all subclasses of the base control.
-
-Import them with the C<:control> tag.
-
-=cut
+    affix $lib, 'uiInit',          [ Pointer [ Struct [ Size => Size_t ] ] ] => String;
+    affix $lib, 'uiUninit',        []                                        => Void;
+    affix $lib, 'uiFreeInitError', [Char]                                    => Void;
+    affix $lib, 'uiMain',          []                                        => Void;
+    affix $lib, 'uiMainSteps',     []                                        => Void;
+    affix $lib, 'uiMainStep',      [Int]                                     => Int;
+    affix $lib, 'uiQuit',          []                                        => Void;
+    affix $lib, 'uiQueueMain', [ Callback [ [ Pointer [SV] ] => Void ], Pointer [SV] ]     => Void;
+    affix $lib, 'uiTimer',     [ Int, Callback [ [ Pointer [SV] ] => Int ], Pointer [SV] ] => Void;
+    affix $lib, 'uiOnShouldQuit', [ Callback [ [ Pointer [SV] ] => Int ], Pointer [SV] ]   => Void;
+    affix $lib, 'uiFreeText',     [String]                                                 => Void;
 
     # Base class for GUI controls providing common methods.
     typedef 'LibUI::Control' => Pointer [
@@ -364,1820 +249,989 @@ Import them with the C<:control> tag.
             #~ disable        => Pointer [Void]
             #~ ]
     ];
-
-=head3 C<uiControlDestroy( ... )>
-
-    uiControlDestroy( $button );
-
-Dispose and free all allocated resources related to a control.
-
-=cut
-
-    affix $lib, 'uiControlDestroy', [ Type ['LibUI::Control'] ] => Void;
-
-=head3 C<uiControlHandle( ... )>
-
-    my $ptr = uiControlHandle( $button );
-
-Returns the control's OS-level handle.
-
-=cut
-
-    affix $lib, 'uiControlHandle', [ Type ['LibUI::Control'] ] => Pointer [Void];
-
-=head3 C<uiControlParent( ... )>
-
-    my $window = uiControlParent( $button );
-
-Returns the parent control.
-
-=cut
-
-    affix $lib, 'uiControlParent', [ Type ['LibUI::Control'] ] => Type ['LibUI::Control'];
-
-=head3 C<uiControlSetParent( ... )>
-
-    my $ptr = uiControlSetParent( $button, $window );
-
-Sets the control's parent.
-
-=cut
-
-    affix $lib, 'uiControlSetParent', [ Type ['LibUI::Control'], Type ['LibUI::Control'] ] => Void;
-
-=head3 C<uiControlToplevel( ... )>
-
-    my $top = uiControlToplevel( $window );
-
-Returns whether or not the control is a top level control.
-
-=cut
-
-    affix $lib, 'uiControlToplevel', [ Type ['LibUI::Control'] ] => Bool;
-
-=head3 C<uiControlVisible( ... )>
-
-    my $visible = uiControlVisible( $label );
-
-Returns whether or not the control is visible.
-
-=cut
-
-    affix $lib, 'uiControlVisible', [ Type ['LibUI::Control'] ] => Bool;
-
-=head3 C<uiControlShow( ... )>
-
-    uiControlShow( $window );
-
-Shows the control.
-
-=cut
-
-    affix $lib, 'uiControlShow', [ Type ['LibUI::Control'] ] => Void;
-
-=head3 C<uiControlHide( ... )>
-
-    uiControlHide( $label );
-
-Hides the control.
-
-Hidden controls do not take up space within the layout.
-
-=cut
-
-    affix $lib, 'uiControlHide', [ Type ['LibUI::Control'] ] => Void;
-
-=head3 C<uiControlEnabled( ... )>
-
-    my $enabled = uiControlEnabled( $label );
-
-Returns whether or not the control is enabled.
-
-=cut
-
-    affix $lib, 'uiControlEnabled', [ Type ['LibUI::Control'] ] => Bool;
-
-=head3 C<uiControlEnable( ... )>
-
-    uiControlEnable( $label );
-
-Enables the control.
-
-=cut
-
-    affix $lib, 'uiControlEnable', [ Type ['LibUI::Control'] ] => Void;
-
-=head3 C<uiControlDisable( ... )>
-
-    uiControlDisable( $label );
-
-Disables the control.
-
-=cut
-
-    affix $lib, 'uiControlDisable', [ Type ['LibUI::Control'] ] => Void;
-
-=head3 C<uiAllocControl( ... )>
-
-    uiAllocControl( $label );
-
-Allocates a new custom C<uiControl>.
-
-Expected parameters include:
-
-=over
-
-=item C<$n>
-
-Size of the control (in bytes).
-
-=item C<$OSsig>
-
-=item C<$typesig>
-
-=item C<$typename>
-
-Name of the type as a string.
-
-=back
-
-This function is undocumented upstream.
-
-=cut
-
-    affix $lib, 'uiAllocControl', [ Size_t, UInt, UInt, Str ] => Type ['LibUI::Control'];
-
-=head3 C<uiFreeControl( ... )>
-
-    uiFreeControl( $button );
-
-Frees a control.
-
-=cut
-
-    affix $lib, 'uiFreeControl', [ Type ['LibUI::Control'] ] => Void;
-
-=head3 C<uiControlVerifySetParent( ... )>
-
-    uiControlVerifySetParent( $button, $window );
-
-Makes sure the control's parent can be set to parent.
-
-=cut
-
-    affix $lib, 'uiControlVerifySetParent',
-        [ Type ['LibUI::Control'], Type ['LibUI::Control'] ] => Void;
-
-=head3 C<uiControlEnabledToUser( ... )>
-
-    my $enabled = uiControlEnabledToUser( $label );
-
-Returns whether or not the control can be interacted with by the user.
-
-Checks if the control and all its parents are enabled to make sure it can be
-interacted with by the user.
-
-=cut
-
-    affix $lib, 'uiControlEnabledToUser', [ Type ['LibUI::Control'] ] => Bool;
-
-=begin private
-
-=head3 C<uiControlEnabledToUser( ... )>
-
-    my $enabled = uiControlEnabledToUser( $label );
-
-Returns whether or not the control can be interacted with by the user.
-
-Checks if the control and all its parents are enabled to make sure it can be
-interacted with by the user.
-
-=end private
-
-=cut
-
-    affix $lib, 'uiUserBugCannotSetParentOnToplevel', [Str] => Void;
-
-=head2 Window Functions
-
-A window control that represents a top-level window.
-
-A window contains exactly one child control that occupies the entire window and
-cannot be a child of another control.
-
-These functions may be imported with the C<:window> tag.
-
-=cut
-
+    affix $lib, 'uiControlDestroy',         [ Pointer [Void] ]                 => Void;
+    affix $lib, 'uiControlHandle',          [ Pointer [Void] ]                 => Pointer [Void];
+    affix $lib, 'uiControlParent',          [ Pointer [Void] ]                 => Pointer [Void];
+    affix $lib, 'uiControlSetParent',       [ Pointer [Void], Pointer [Void] ] => Void;
+    affix $lib, 'uiControlToplevel',        [ Pointer [Void] ]                 => Bool;
+    affix $lib, 'uiControlVisible',         [ Pointer [Void] ]                 => Bool;
+    affix $lib, 'uiControlShow',            [ Pointer [Void] ]                 => Void;
+    affix $lib, 'uiControlHide',            [ Pointer [Void] ]                 => Void;
+    affix $lib, 'uiControlEnabled',         [ Pointer [Void] ]                 => Bool;
+    affix $lib, 'uiControlEnable',          [ Pointer [Void] ]                 => Void;
+    affix $lib, 'uiControlDisable',         [ Pointer [Void] ]                 => Void;
+    affix $lib, 'uiAllocControl',           [ Size_t, UInt, UInt, String ]     => Pointer [Void];
+    affix $lib, 'uiFreeControl',            [ Pointer [Void] ]                 => Void;
+    affix $lib, 'uiControlVerifySetParent', [ Pointer [Void], Pointer [Void] ] => Void;
+    affix $lib, 'uiControlEnabledToUser',   [ Pointer [Void] ]                 => Bool;
+    affix $lib, 'uiUserBugCannotSetParentOnToplevel', [String]                 => Void;
     typedef 'LibUI::Window' => Pointer [
         Struct [
             c         => Pointer [Void],
             w         => Pointer [Void],
-            child     => Type ['LibUI::Control'],
+            child     => Pointer [Void],
             onClosing => Pointer [Void]
         ]
     ];
+    affix $lib, 'uiWindowTitle',    [ Pointer [Void] ]         => String;
+    affix $lib, 'uiWindowSetTitle', [ Pointer [Void], String ] => Void;
 
-=head3 C<uiWindowTitle( ... )>
-
-    my $title = uiWindowTitle( $window );
-
-Returns the window title.
-
-=cut
-
-    affix $lib, 'uiWindowTitle', [ Type ['LibUI::Window'] ] => Str;
-
-=head3 C<uiWindowSetTitle( ... )>
-
-    uiWindowSetTitle( $window, 'Petris 1.0' );
-
-Sets the window title.
-
-=cut
-
-    affix $lib, 'uiWindowSetTitle', [ Type ['LibUI::Window'], Str ] => Void;
-
-=head3 C<uiWindowPosition( ... )>
-
-    uiWindowPosition( $window, my $x, my $y );
-
-Gets the window position.
-
-Coordinates are measured from the top left corner of the screen. This method
-may return inaccurate or dummy values on X11.
-
-
-=cut
-
-    affix $lib, 'uiWindowPosition',
-        [ Type ['LibUI::Window'], Pointer [Int], Pointer [Int] ] => Void;
-
-=head3 C<uiWindowSetPosition( ... )>
-
-    uiWindowSetPosition( $window, 300, 50 );
-
-Moves the window to the specified position.
-
-Coordinates are measured from the top left corner of the screen. This method is
-merely a hint and may be ignored on X11.
-
-=cut
-
-    affix $lib, 'uiWindowSetPosition', [ Type ['LibUI::Window'], Int, Int ] => Void;
-
-=head3 C<uiWindowOnPositionChanged( ... )>
-
-    uiWindowOnPositionChanged(
-        $window,
-        sub {
-            my ($w, $data) = @_;
-            uiWindowPosition( $w, my $x, my $y );
-            warn sprintf 'x: %d, y: %d', $x, $y;
-        },
-        undef
-    );
-
-Registers a callback for when the window moved.
-
-Expected parameters include:
-
-=over
-
-=item C<$window>
-
-The window to bind.
-
-=item C<$code_ref>
-
-Code reference that should expect a reference back to the instance that
-triggered the callback and user data registered with the sender instance.
-
-=item C<$user_data>
-
-Whatever you feel like passing along.
-
-=back
-
-The callback is not triggered when calling C<uiWindowSetPosition( ... )>.
-
-=cut
-
+    sub uiWindowPosition ($window) {
+        state $o //= wrap $lib, 'uiWindowPosition',
+            [ Pointer [Void], Pointer [Int], Pointer [Int] ] => Void;
+        my ( $x, $y ) = ( 0, 0 );
+        $o->( $window, \$x, \$y );
+        return ( $x, $y );
+    }
+    affix $lib, 'uiWindowSetPosition', [ Pointer [Void], Int, Int ] => Void;
     affix $lib, 'uiWindowOnPositionChanged',
-        [
-        Type ['LibUI::Window'],
-        CodeRef [ [ Type ['LibUI::Window'], Pointer [SV] ] => Void ],
-        Pointer [SV]
-        ] => Void;
+        [ Pointer [Void], Callback [ [ Pointer [Void], Pointer [SV] ] => Void ], Pointer [SV] ] =>
+        Void;
 
-=head3 C<uiWindowContentSize( ... )>
-
-    uiWindowContentSize( $window, my $w, my $h );
-
-Gets the window content size.
-
-The content size does NOT include window decorations like menus or title bars.
-
-=cut
-
-    affix $lib, 'uiWindowContentSize',
-        [ Type ['LibUI::Window'], Pointer [Int], Pointer [Int] ] => Void;
-
-=head3 C<uiWindowSetContentSize( ... )>
-
-    uiWindowSetContentSize( $window, 500, 100 );
-
-Sets the window content size.
-
-The content size does NOT include window decorations like menus or title bars.
-
-This method is merely a hint and may be ignored by the system.
-
-=cut
-
-    affix $lib, 'uiWindowSetContentSize', [ Type ['LibUI::Window'], Int, Int ] => Void;
-
-=head3 C<uiWindowFullscreen( ... )>
-
-    my $full = uiWindowFullscreen( $window );
-
-Returns whether or not the window is full screen.
-
-=cut
-
-    affix $lib, 'uiWindowFullscreen', [ Type ['LibUI::Window'] ] => Bool;
-
-=head3 C<uiWindowSetFullscreen( ... )>
-
-    uiWindowSetFullscreen( $window, 1 );
-
-Sets whether or not the window is full screen.
-
-This method is merely a hint and may be ignored by the system.
-
-=cut
-
-    affix $lib, 'uiWindowSetFullscreen', [ Type ['LibUI::Window'], Bool ] => Void;
-
-=head3 C<uiWindowOnContentSizeChanged( ... )>
-
-    uiWindowOnContentSizeChanged(
-        $w,
-        sub {
-            uiWindowContentSize( $w, my $w, my $h );
-            say "w: $w, h: $h";
-        },
-        undef
-    );
-
-Registers a callback for when the window content size is changed.
-
-Expected parameters include:
-
-=over
-
-=item C<$window>
-
-The window to bind.
-
-=item C<$code_ref>
-
-Code reference that should expect a reference back to the instance that
-triggered the callback and user data registered with the sender instance.
-
-=item C<$user_data>
-
-Whatever you feel like passing along.
-
-=back
-
-The callback is not triggered when calling C<uiWindowSetContentSize( ... )>.
-
-=cut
-
+    sub uiWindowContentSize($window) {
+        state $o //= wrap $lib, 'uiWindowContentSize',
+            [ Pointer [Void], Pointer [Int], Pointer [Int] ] => Void;
+        my ( $w, $h ) = ( 0, 0 );
+        $o->( $window, \$w, \$h );
+        return ( $w, $h );
+    }
+    affix $lib, 'uiWindowSetContentSize', [ Pointer [Void], Int, Int ] => Void;
+    affix $lib, 'uiWindowFullscreen',     [ Pointer [Void] ]           => Bool;
+    affix $lib, 'uiWindowSetFullscreen',  [ Pointer [Void], Bool ]     => Void;
     affix $lib, 'uiWindowOnContentSizeChanged',
-        [
-        Type ['LibUI::Window'],
-        CodeRef [ [ Type ['LibUI::Window'], Pointer [SV] ] => Void ],
-        Pointer [SV]
-        ] => Void;
-
-=head3 C<uiWindowOnClosing( ... )>
-
-    uiWindowOnClosing(
-        $w,
-        sub {
-            say 'Goodbye...';
-            return 1;
-        },
-        undef
-    );
-
-Registers a callback for when the window is to be closed.
-
-Expected parameters include:
-
-=over
-
-=item C<$window>
-
-The window to bind.
-
-=item C<$code_ref>
-
-Code reference that should expect a reference back to the instance that
-triggered the callback and user data registered with the sender instance.
-
-Return a true value to destroy the window. Return an untrue value to abort
-closing and keep the window alive and visible.
-
-=item C<$user_data>
-
-Whatever you feel like passing along.
-
-=back
-
-The callback is not triggered when calling C<uiWindowSetContentSize( ... )>.
-
-=cut
-
+        [ Pointer [Void], Callback [ [ Pointer [Void], Pointer [SV] ] => Void ], Pointer [SV] ] =>
+        Void;
     affix $lib, 'uiWindowOnClosing',
-        [
-        Type ['LibUI::Window'],
-        CodeRef [ [ Type ['LibUI::Window'], Pointer [SV] ] => Bool ],
-        Pointer [SV]
-        ] => Void;
-
-=head3 C<uiWindowOnFocusChanged( ... )>
-
-    uiWindowOnFocusChanged(
-        $w,
-        sub {
-            say LibUI::uiWindowFocused($w) ? 'in focus' : 'lost focus';
-        },
-        undef
-    );
-
-Registers a callback for when the window focus changes.
-
-Expected parameters include:
-
-=over
-
-=item C<$window>
-
-The window to bind.
-
-=item C<$code_ref>
-
-Code reference that should expect a reference back to the instance that
-triggered the callback and user data registered with the sender instance.
-
-=item C<$user_data>
-
-Whatever you feel like passing along.
-
-=back
-
-=cut
-
+        [ Pointer [Void], Callback [ [ Pointer [Void], Pointer [SV] ] => Bool ], Pointer [SV] ] =>
+        Void;
     affix $lib, 'uiWindowOnFocusChanged',
-        [
-        Type ['LibUI::Window'],
-        CodeRef [ [ Type ['LibUI::Window'], Pointer [SV] ] => Void ],
-        Pointer [SV]
-        ] => Void;
-
-=head3 C<uiWindowFocused( ... )>
-
-    my $in_focus = uiWindowFocused( $w );
-
-Returns whether or not the window is focused.
-
-=cut
-
-    affix $lib, 'uiWindowFocused', [ Type ['LibUI::Window'] ] => Bool;
-
-=head3 C<uiWindowBorderless( ... )>
-
-    my $no_border = uiWindowBorderless( $w );
-
-Returns whether or not the window is borderless.
-
-=cut
-
-    affix $lib, 'uiWindowBorderless', [ Type ['LibUI::Window'] ] => Bool;
-
-=head3 C<uiWindowSetBorderless( ... )>
-
-    uiWindowSetBorderless( $w, 1 );
-
-Sets whether or not the window is borderless.
-
-This method is merely a hint and may be ignored by the system.
-
-=cut
-
-    affix $lib, 'uiWindowSetBorderless', [ Type ['LibUI::Window'], Bool ] => Void;
-
-=head3 C<uiWindowSetChild( ... )>
-
-    uiWindowSetChild( $w, $box );
-
-Sets the window's child.
-
-=cut
-
-    affix $lib, 'uiWindowSetChild', [ Type ['LibUI::Window'], Type ['LibUI::Control'] ] => Void;
-
-=head3 C<uiWindowMargined( ... )>
-
-    my $comfortable = uiWindowMargined( $w );
-
-Returns whether or not the window has a margin.
-
-=cut
-
-    affix $lib, 'uiWindowMargined', [ Type ['LibUI::Window'] ] => Bool;
-
-=head3 C<uiWindowSetMargined( ... )>
-
-    uiWindowSetMargined( $w, 1 );
-
-Sets whether or not the window has a margin.
-
-The margin size is determined by the OS defaults.
-
-=cut
-
-    affix $lib, 'uiWindowSetMargined', [ Type ['LibUI::Window'], Bool ] => Void;
-
-=head3 C<uiWindowResizeable( ... )>
-
-    my $resizable = uiWindowResizeable( $w );
-
-Returns whether or not the window is user resizable.
-
-=cut
-
-    affix $lib, 'uiWindowResizeable', [ Type ['LibUI::Window'] ] => Bool;
-
-=head3 C<uiWindowSetResizeable( ... )>
-
-    uiWindowSetResizeable( $w, 1 );
-
-Sets whether or not the window is user resizable.
-
-The margin size is determined by the OS defaults.
-
-=cut
-
-    affix $lib, 'uiWindowSetResizeable', [ Type ['LibUI::Window'], Bool ] => Void;
-
-=head3 C<uiNewWindow( ... )>
-
-Creates a new uiWindow.
-
-Expected parameters include:
-
-=over
-
-=item C<$title>
-
-Window title.
-
-=item C<$width>
-
-Window width in pixels.
-
-=item C<$height>
-
-Window height in pixels.
-
-=item C<$hasMenubar>
-
-Whether or not the window should display a menu bar.
-
-=back
-
-=cut
-
-    affix $lib, 'uiNewWindow', [ Str, Int, Int, Int ] => InstanceOf ['LibUI::Window'];
-
-=head2 Button Functions
-
-These functions create and wrap a control that visually represents a button to
-be clicked by the user to trigger an action.
-
-Import these functions with the C<:button> tag.
-
-=cut
-
-    typedef 'LibUI::Button' => Type ['LibUI::Control'];
-
-=head3 C<uiButtonText( ... )>
-
-    my $label = uiButtonText( $button );
-
-Returns the button label text.
-
-=cut
-
-    affix $lib, 'uiButtonText', [ Type ['LibUI::Button'] ] => Str;
-
-=head3 C<uiButtonSetText( ... )>
-
-    uiButtonSetText( $button, 'Click again' );
-
-Sets the button label text.
-
-=cut
-
-    affix $lib, 'uiButtonSetText', [ Type ['LibUI::Button'], Str ] => Void;
-
-=head3 C<uiButtonOnClicked( ... )>
-
-    uiButtonOnClicked( $button, sub { my ($btn, data) = @_; }, undef );
-
-Registers a callback for when the button is clicked.
-
-=cut
-
+        [ Pointer [Void], Callback [ [ Pointer [Void], Pointer [SV] ] => Void ], Pointer [SV] ] =>
+        Void;
+    affix $lib, 'uiWindowFocused',       [ Pointer [Void] ]                 => Bool;
+    affix $lib, 'uiWindowBorderless',    [ Pointer [Void] ]                 => Bool;
+    affix $lib, 'uiWindowSetBorderless', [ Pointer [Void], Bool ]           => Void;
+    affix $lib, 'uiWindowSetChild',      [ Pointer [Void], Pointer [Void] ] => Void;
+    affix $lib, 'uiWindowMargined',      [ Pointer [Void] ]                 => Bool;
+    affix $lib, 'uiWindowSetMargined',   [ Pointer [Void], Bool ]           => Void;
+    affix $lib, 'uiWindowResizeable',    [ Pointer [Void] ]                 => Bool;
+    affix $lib, 'uiWindowSetResizeable', [ Pointer [Void], Bool ]           => Void;
+    affix $lib, 'uiNewWindow',           [ String, Int, Int, Int ]          => Pointer [Void];
+    typedef 'LibUI::Button' => Pointer [Void];
+    affix $lib, 'uiButtonText',    [ Pointer [Void] ]         => String;
+    affix $lib, 'uiButtonSetText', [ Pointer [Void], String ] => Void;
     affix $lib, 'uiButtonOnClicked',
-        [
-        Type ['LibUI::Button'],
-        CodeRef [ [ Type ['LibUI::Button'], Pointer [SV] ] => Void ],
-        Pointer [SV]
-        ] => Void;
-
-=head3 C<uiNewButton( ... )>
-
-    my $button = uiNewButton( 'Click me' );
-
-Creates a new button.
-
-Expected parameters include:
-
-=over
-
-=item C<$label>
-
-=back
-
-=cut
-
-    affix $lib, 'uiNewButton', [Str] => Type ['LibUI::Button'];
-
-=head2 Box Functions
-
-These functions wrap a boxlike container that holds a group of controls.
-
-The contained controls are arranged to be displayed either horizontally or
-vertically next to each other.
-
-You may import these functions with the C<:box> tag.
-
-=cut
-
-    typedef 'LibUI::Box' => Type ['LibUI::Control'];
-
-=head3 C<uiBoxAppend( ... )>
-
-    uiBoxAppend( $box, $child, 1 );
-
-Appends a control to the box.
-
-Stretchy items expand to use the remaining space within the box. In the case of
-multiple stretchy items the space is shared equally.
-
-Expected parameters include:
-
-=over
-
-=item C<$box>
-
-=item C<$child>
-
-=item C<$stretchy>
-
-True value to stretch the child, otherwise false.
-
-=back
-
-=cut
-
-    affix $lib, 'uiBoxAppend', [ Type ['LibUI::Box'], Type ['LibUI::Control'], Bool ] => Void;
-
-=head3 C<uiBoxNumChildren( ... )>
-
-    my $kids = uiBoxNumChildren( $box );
-
-Returns the number of controls contained within the box.
-
-=cut
-
-    affix $lib, 'uiBoxNumChildren', [ Type ['LibUI::Box'] ] => Int;
-
-=head3 C<uiBoxDelete( ... )>
-
-    uiBoxDelete( $box, 3 );
-
-Removes the control at a given index from the box.
-
-=cut
-
-    affix $lib, 'uiBoxDelete', [ Type ['LibUI::Box'], Int ] => Void;
-
-=head3 C<uiBoxPadded( ... )>
-
-    my $comfortable = uiBoxPadded( $box );
-
-Returns whether or not controls within the box are padded.
-
-Padding is defined as space between individual controls.
-
-=cut
-
-    affix $lib, 'uiBoxPadded', [ Type ['LibUI::Box'] ] => Bool;
-
-=head3 C<uiBoxSetPadded( ... )>
-
-    uiBoxSetPadded( $box, 1 );
-
-Sets whether or not controls within the box are padded.
-
-Padding is defined as space between individual controls. The padding size is
-determined by the OS defaults.
-
-=cut
-
-    affix $lib, 'uiBoxSetPadded', [ Type ['LibUI::Box'], Int ] => Void;
-
-=head3 C<uiNewHorizontalBox( )>
-
-    uiNewHorizontalBox( );
-
-Creates a new horizontal box.
-
-Controls within the box are placed next to each other horizontally.
-
-=cut
-
-    affix $lib, 'uiNewHorizontalBox', [] => Type ['LibUI::Box'];
-
-=head3 C<uiNewVerticalBox( )>
-
-    my $vbox = uiNewVerticalBox( );
-
-Creates a new vertical box.
-
-Controls within the box are placed next to each other vertically.
-
-=cut
-
-    affix $lib, 'uiNewVerticalBox', [] => Type ['LibUI::Box'];
-
-=head2 Checkbox Functions
-
-The functions wrap a control with a user checkable box accompanied by a text
-label.
-
-You may import them with the C<:checkbox> tag.
-
-=cut
-
-    typedef 'LibUI::Checkbox' => Type ['LibUI::Control'];
-
-=head3 C<uiCheckboxText( ... )>
-
-    my $label = uiCheckboxText( $chk );
-
-Returns the checkbox label text.
-
-=cut
-
-    affix $lib, 'uiCheckboxText', [ Type ['LibUI::Checkbox'] ] => Str;
-
-=head3 C<uiCheckboxSetText( ... )>
-
-    uiCheckboxSetText( $chk, 'Show Small Files' );
-
-Sets the checkbox label text.
-
-=cut
-
-    affix $lib, 'uiCheckboxSetText', [ Type ['LibUI::Checkbox'], Str ] => Void;
-
-=head3 C<uiCheckboxOnToggled( ... )>
-
-    uiCheckboxOnToggled( $chk, sub { my ($check, $data) = @_; }, undef );
-
-Registers a callback for when the checkbox is toggled by the user.
-
-The callback is not triggered when calling C<uiCheckboxSetChecked( ... )>.
-
-=cut
-
+        [ Pointer [Void], Callback [ [ Pointer [Void], Pointer [SV] ] => Void ], Pointer [SV] ] =>
+        Void;
+    affix $lib, 'uiNewButton', [String] => Pointer [Void];
+    typedef 'LibUI::Box' => Pointer [Void];
+    affix $lib, 'uiBoxAppend',        [ Pointer [Void], Pointer [Void], Bool ] => Void;
+    affix $lib, 'uiBoxNumChildren',   [ Pointer [Void] ]                       => Int;
+    affix $lib, 'uiBoxDelete',        [ Pointer [Void], Int ]                  => Void;
+    affix $lib, 'uiBoxPadded',        [ Pointer [Void] ]                       => Bool;
+    affix $lib, 'uiBoxSetPadded',     [ Pointer [Void], Int ]                  => Void;
+    affix $lib, 'uiNewHorizontalBox', []                                       => Pointer [Void];
+    affix $lib, 'uiNewVerticalBox',   []                                       => Pointer [Void];
+    typedef 'LibUI::Checkbox' => Pointer [Void];
+    affix $lib, 'uiCheckboxText',    [ Pointer [Void] ]         => String;
+    affix $lib, 'uiCheckboxSetText', [ Pointer [Void], String ] => Void;
     affix $lib, 'uiCheckboxOnToggled',
-        [
-        Type ['LibUI::Checkbox'],
-        CodeRef [ [ Type ['LibUI::Checkbox'], Pointer [SV] ] => Void ],
-        Pointer [SV]
-        ] => Void;
-
-=head3 C<uiCheckboxChecked( ... )>
-
-    my $on = uiCheckboxChecked( $chk );
-
-Returns whether or the checkbox is checked.
-
-=cut
-
-    affix $lib, 'uiCheckboxChecked', [ Type ['LibUI::Checkbox'] ] => Bool;
-
-=head3 C<uiCheckboxChecked( ... )>
-
-    uiCheckboxSetChecked( $chk, 1 );
-
-Sets whether or not the checkbox is checked.
-
-=cut
-
-    affix $lib, 'uiCheckboxSetChecked', [ Type ['LibUI::Checkbox'], Bool ] => Void;
-
-=head3 C<uiNewCheckbox( ... )>
-
-    my $chk = uiNewCheckbox( 'Save automatically' );
-
-Creates a new checkbox.
-
-=cut
-
-    affix $lib, 'uiNewCheckbox', [Str] => Type ['LibUI::Checkbox'];
-
-=head2 Entry Functions
-
-An entry is a control with a single line text entry field.
-
-You may import these functions with the C<:entry> tag.
-
-=cut
-
-    typedef 'LibUI::Entry'         => Type ['LibUI::Control'];
-    typedef 'LibUI::PasswordEntry' => Type ['LibUI::Entry'];
-    typedef 'LibUI::SearchEntry'   => Type ['LibUI::Entry'];
-
-=head3 C<uiEntryText( ... )>
-
-    my $text = uiEntryText( $field );
-
-Returns the entry's text.
-
-=cut
-
-    affix $lib, 'uiEntryText', [ Type ['LibUI::Entry'] ] => Str;
-
-=head3 C<uiEntrySetText( ... )>
-
-    uiEntrySetText( $field, 'Once upon a time ' );
-
-Sets the entry's text.
-
-=cut
-
-    affix $lib, 'uiEntrySetText', [ Type ['LibUI::Entry'], Str ] => Void;
-
-=head3 C<uiEntryOnChanged( ... )>
-
-    uiEntryOnChanged( $field, sub { my ($txt, $data) = @_; }, undef );
-
-Registers a callback for when the user changes the entry's text.
-
-The callback is not triggered when calling C<uiEntrySetText( ... )>.
-
-=cut
-
+        [ Pointer [Void], Callback [ [ Pointer [Void], Pointer [SV] ] => Void ], Pointer [SV] ] =>
+        Void;
+    affix $lib, 'uiCheckboxChecked',    [ Pointer [Void] ]       => Bool;
+    affix $lib, 'uiCheckboxSetChecked', [ Pointer [Void], Bool ] => Void;
+    affix $lib, 'uiNewCheckbox',        [String]                 => Pointer [Void];
+    typedef 'LibUI::Entry'         => Pointer [Void];
+    typedef 'LibUI::PasswordEntry' => Pointer [Void];
+    typedef 'LibUI::SearchEntry'   => Pointer [Void];
+    affix $lib, 'uiEntryText',    [ Pointer [Void] ]         => String;
+    affix $lib, 'uiEntrySetText', [ Pointer [Void], String ] => Void;
     affix $lib, 'uiEntryOnChanged',
-        [
-        Type ['LibUI::Entry'],
-        CodeRef [ [ Type ['LibUI::Entry'], Pointer [SV] ] => Void ],
-        Pointer [SV]
-        ] => Void;
-
-=head3 C<uiEntryReadOnly( ... )>
-
-    my $ro = uiEntryReadOnly( $field );
-
-Returns whether or not the entry's text can be changed. A true value if
-readonly, otherwise false.
-
-=cut
-
-    affix $lib, 'uiEntryReadOnly', [ Type ['LibUI::Entry'] ] => Bool;
-
-=head3 C<uiEntrySetReadOnly( ... )>
-
-    uiEntrySetReadOnly( $field, 1 );
-
-Sets whether or not the entry's text is read only.
-
-=cut
-
-    affix $lib, 'uiEntrySetReadOnly', [ Type ['LibUI::Entry'], Bool ] => Void;
-
-=head3 C<uiNewEntry( )>
-
-    my $field = uiNewEntry( );
-
-Creates a new entry.
-
-=cut
-
-    affix $lib, 'uiNewEntry', [] => Type ['LibUI::Entry'];
-
-=head3 C<uiNewPasswordEntry( ... )>
-
-    my $pass = uiNewPasswordEntry( );
-
-Creates a new entry suitable for sensitive inputs like passwords.
-
-The entered text is NOT readable by the user but masked as C<*******>.
-
-=cut
-
-    affix $lib, 'uiNewPasswordEntry', [] => Type ['LibUI::PasswordEntry'];
-
-=head3 C<uiNewSearchEntry( ... )>
-
-    my $search = uiNewSearchEntry();
-
-Creates a new entry suitable for search.
-
-Some systems will deliberately delay the C<uiEntryOnChanged( ... )> callback
-for a more natural feel.
-
-=cut
-
-    affix $lib, 'uiNewSearchEntry', [] => Type ['LibUI::SearchEntry'];
-
-=head2 Label Functions
-
-A label is a control that displays non-interactive text.
-
-You may import these functions with the C<:label> tag.
-
-=cut
-
-    typedef 'LibUI::Label' => Type ['LibUI::Control'];
-
-=head3 C<uiLabelText( ... )>
-
-    my $text = uiLabelText( $label );
-
-Returns the label text.
-
-=cut
-
-    affix $lib, 'uiLabelText', [ Type ['LibUI::Label'] ] => Str;
-
-=head3 C<uiLabelSetText( ... )>
-
-    uiLabelSetText( $label, 'Status: Okay' );
-
-Sets the label text.
-
-=cut
-
-    affix $lib, 'uiLabelSetText', [ Type ['LibUI::Label'], Str ] => Void;
-
-=head3 C<uiNewLabel( ... )>
-
-    my $label = uiNewLabel( 'Status: Init' );
-
-Creates a new label.
-
-=cut
-
-    affix $lib, 'uiNewLabel', [Str] => Type ['LibUI::Label'];
-
-=head2 Tab Functions
-
-A tab represents a multi-page control interface that displays one page at a
-time.
-
-Each page/tab has an associated label that can be selected to switch between
-pages/tabs.
-
-=cut
-
-    typedef 'LibUI::Tab' => Type ['LibUI::Control'];
-
-=head3 C<uiTabAppend( ... )>
-
-    uiTabAppend( $container, 'Home', $box_1 );
-
-Appends a control in form of a page/tab with label.
-
-=cut
-
-    affix $lib, 'uiTabAppend', [ Type ['LibUI::Tab'], Str, Type ['LibUI::Control'] ] => Void;
-
-=head3 C<uiTabInsertAt( ... )>
-
-    uiTabInsertAt( $container, 'Advanced', 5, $box_2 );
-
-Inserts a control in as a page/tab with label at C<$index>.
-
-=cut
-
-    affix $lib, 'uiTabInsertAt', [ Type ['LibUI::Tab'], Str, Int, Type ['LibUI::Control'] ] => Void;
-
-=head3 C<uiTabDelete( ... )>
-
-    uiTabDelete( $container, 5 );
-
-Removes the control at C<$index>.
-
-=cut
-
-    affix $lib, 'uiTabDelete', [ Type ['LibUI::Tab'], Int ] => Void;
-
-=head3 C<uiTabNumPages( ... )>
-
-    my $tabs = uiTabNumPages( $container );
-
-Returns the number of pages contained.
-
-=cut
-
-    affix $lib, 'uiTabNumPages', [ Type ['LibUI::Tab'] ] => Int;
-
-=head3 C<uiTabMargined( ... )>
-
-    my $comfortable = uiTabMargined( $container, 3 );
-
-Returns whether or not the page/tab at C<$index> has a margin.
-
-=cut
-
-    affix $lib, 'uiTabMargined', [ Type ['LibUI::Tab'], Int ] => Int;
-
-=head3 C<uiTabSetMargined( ... )>
-
-    uiTabSetMargined( $container, 3, 0 ); # where 3 is the inded and 0 is false
-
-Sets whether or not the page/tab at C<$index> has a margin.
-
-The margin size is determined by the OS defaults.
-
-=cut
-
-    affix $lib, 'uiTabSetMargined', [ Type ['LibUI::Tab'], Int, Int ] => Void;
-
-=head3 C<uiNewTab( )>
-
-    my $container = uiNewTab( );
-
-Creates a new tab container.
-
-=cut
-
-    affix $lib, 'uiNewTab', [] => Type ['LibUI::Tab'];
-
-=head2 Group Functions
-
-A group is a control container that adds a label to the contained child
-control.
-
-This control is a great way of grouping related controls in combination with
-uiBox. A visual box will or will not be drawn around the child control
-dependent on the underlying OS implementation.
-
-You may import these functions with the C<:group> tag.
-
-=cut
-
-    typedef 'LibUI::Group' => Type ['LibUI::Control'];
-
-=head3 C<uiGroupTitle( ... )>
-
-    my $title = uiGroupTitle( $group );
-
-Returns the group title.
-
-=cut
-
-    affix $lib, 'uiGroupTitle', [ Type ['LibUI::Group'] ] => Str;
-
-=head3 C<uiGroupSetTitle( ... )>
-
-    uiGroupSetTitle( $group, 'Subscriptions' );
-
-Sets the group title.
-
-=cut
-
-    affix $lib, 'uiGroupSetTitle', [ Type ['LibUI::Group'], Str ] => Void;
-
-=head3 C<uiGroupSetChild( ... )>
-
-    uiGroupSetChild( $group $box );
-
-Sets the group's child.
-
-=cut
-
-    affix $lib, 'uiGroupSetChild', [ Type ['LibUI::Group'], Type ['LibUI::Control'] ] => Void;
-
-=head3 C<uiGroupMargined( ... )>
-
-    my $comfortable = uiGroupMargined( $group );
-
-Returns whether or not the group has a margin.
-
-=cut
-
-    affix $lib, 'uiGroupMargined', [ Type ['LibUI::Group'] ] => Bool;
-
-=head3 C<uiGroupSetMargined( ... )>
-
-    uiGroupSetMargined( $group, 1 );
-
-Sets whether or not the group has a margin.
-
-The margin size is determined by the OS defaults.
-
-=cut
-
-    affix $lib, 'uiGroupSetMargined', [ Type ['LibUI::Group'], Bool ] => Void;
-
-=head3 C<uiNewGroup( ... )>
-
-    my $group = uiNewGroup( 'Introduction' );
-
-Creates a new group.
-
-=cut
-
-    affix $lib, 'uiNewGroup', [Str] => Type ['LibUI::Group'];
-
-=head2 Spinbox Functions
-
-A spinbox is a control to display and modify integer values via a text field or
-+/- buttons.
-
-This is a convenient control for having the user enter integer values. Values
-are guaranteed to be within the specified range.
-
-The + button increases the held value by 1.
-
-The - button decreased the held value by 1.
-
-Entering a value out of range will clamp to the nearest value in range.
-
-You may import these functions with the C<:spinbox> tag.
-
-=cut
-
-    typedef 'LibUI::Spinbox' => Type ['LibUI::Control'];
-
-=head3 C<uiSpinboxValue( ... )>
-
-    my $value = uiSpinboxValue( $spinner );
-
-Returns the spinbox value.
-
-=cut
-
-    affix $lib, 'uiSpinboxValue', [ Type ['LibUI::Spinbox'] ] => Int;
-
-=head3 C<uiSpinboxSetValue( ... )>
-
-    uiSpinboxSetValue( $spinner, 30 );
-
-Sets the spinbox value.
-
-Setting a value out of range will clamp to the nearest value in range.
-
-=cut
-
-    affix $lib, 'uiSpinboxSetValue', [ Type ['LibUI::Spinbox'], Int ] => Void;
-
-=head3 C<uiSpinboxOnChanged( ... )>
-
-    uiSpinboxOnChanged( $spinner, sub { my ($spin, $user_data) = @_; }, undef );
-
-Registers a callback for when the spinbox value is changed by the user.
-
-The callback is not triggered when calling C<uiSpinboxSetValue( ... )>.
-
-=cut
-
+        [ Pointer [Void], Callback [ [ Pointer [Void], Pointer [SV] ] => Void ], Pointer [SV] ] =>
+        Void;
+    affix $lib, 'uiEntryReadOnly',    [ Pointer [Void] ]       => Bool;
+    affix $lib, 'uiEntrySetReadOnly', [ Pointer [Void], Bool ] => Void;
+    affix $lib, 'uiNewEntry',         []                       => Pointer [Void];
+    affix $lib, 'uiNewPasswordEntry', []                       => Pointer [Void];
+    affix $lib, 'uiNewSearchEntry',   []                       => Pointer [Void];
+    typedef 'LibUI::Label' => Pointer [Void];
+    affix $lib, 'uiLabelText',    [ Pointer [Void] ]         => String;
+    affix $lib, 'uiLabelSetText', [ Pointer [Void], String ] => Void;
+    affix $lib, 'uiNewLabel',     [String]                   => Pointer [Void];
+    typedef 'LibUI::Tab' => Pointer [Void];
+    affix $lib, 'uiTabAppend',      [ Pointer [Void], String, Pointer [Void] ]      => Void;
+    affix $lib, 'uiTabInsertAt',    [ Pointer [Void], String, Int, Pointer [Void] ] => Void;
+    affix $lib, 'uiTabDelete',      [ Pointer [Void], Int ]                         => Void;
+    affix $lib, 'uiTabNumPages',    [ Pointer [Void] ]                              => Int;
+    affix $lib, 'uiTabMargined',    [ Pointer [Void], Int ]                         => Int;
+    affix $lib, 'uiTabSetMargined', [ Pointer [Void], Int, Int ]                    => Void;
+    affix $lib, 'uiNewTab',         [] => Pointer [Void];
+    typedef 'LibUI::Group' => Pointer [Void];
+    affix $lib, 'uiGroupTitle',       [ Pointer [Void] ]                 => String;
+    affix $lib, 'uiGroupSetTitle',    [ Pointer [Void], String ]         => Void;
+    affix $lib, 'uiGroupSetChild',    [ Pointer [Void], Pointer [Void] ] => Void;
+    affix $lib, 'uiGroupMargined',    [ Pointer [Void] ]                 => Bool;
+    affix $lib, 'uiGroupSetMargined', [ Pointer [Void], Bool ]           => Void;
+    affix $lib, 'uiNewGroup',         [String]                           => Pointer [Void];
+    typedef 'LibUI::Spinbox' => Pointer [Void];
+    affix $lib, 'uiSpinboxValue',    [ Pointer [Void] ]      => Int;
+    affix $lib, 'uiSpinboxSetValue', [ Pointer [Void], Int ] => Void;
     affix $lib, 'uiSpinboxOnChanged',
-        [
-        Type ['LibUI::Spinbox'],
-        CodeRef [ [ Type ['LibUI::Spinbox'], Pointer [SV] ] => Void ],
-        Pointer [SV]
-        ] => Void;
-
-=head3 C<uiNewSpinbox( ... )>
-
-    my $spinner = uiNewSpinbox( 1, 100 );
-
-Creates a new spinbox.
-
-The initial spinbox value equals the minimum value.
-
-In the current implementation upstream, C<$min> and C<$max> are swapped if
-C<$min> is greater than C<$max>. This may change in the future though.
-
-=cut
-
-    affix $lib, 'uiNewSpinbox', [ Int, Int ] => Type ['LibUI::Spinbox'];
-
-=head2 Slider Functions
-
-A slider is a control to display and modify integer values via a user draggable
-slider.
-
-Values are guaranteed to be within the specified range.
-
-Sliders by default display a tool tip showing the current value when being
-dragged.
-
-Sliders are horizontal only.
-
-You may import these functions with the C<:slider> tag.
-
-=cut
-
-    typedef 'LibUI::Slider' => Type ['LibUI::Control'];
-
-=head3 C<uiSliderValue( ... )>
-
-    my $value = uiSliderValue( $slider );
-
-Returns the slider value.
-
-=cut
-
-    affix $lib, 'uiSliderValue', [ Type ['LibUI::Slider'] ] => Int;
-
-=head3 C<uiSliderSetValue( ... )>
-
-    uiSliderSetValue( $slider, 59 );
-
-Sets the slider value.
-
-=cut
-
-    affix $lib, 'uiSliderSetValue', [ Type ['LibUI::Slider'], Int ] => Void;
-
-=head3 C<uiSliderHasToolTip( ... )>
-
-    my $enabled = uiSliderHasToolTip( $slider );
-
-Returns whether or not the slider has a tool tip.
-
-=cut
-
-    affix $lib, 'uiSliderHasToolTip', [ Type ['LibUI::Slider'] ] => Bool;
-
-=head3 C<uiSliderSetHasToolTip( ... )>
-
-    uiSliderSetHasToolTip( $slider, 1 );
-
-Sets whether or not the slider has a tool tip.
-
-=cut
-
-    affix $lib, 'uiSliderSetHasToolTip', [ Type ['LibUI::Slider'], Bool ] => Void;
-
-=head3 C<uiSliderOnChanged( ... )>
-
-    uiSliderOnChanged( $slider, sub { my ($sl, $user_data) = @_; }, undef );
-
-Registers a callback for when the slider value is changed by the user.
-
-The callback is not triggered when calling C<uiSliderSetValue( ... )>.
-
-=cut
-
+        [ Pointer [Void], Callback [ [ Pointer [Void], Pointer [SV] ] => Void ], Pointer [SV] ] =>
+        Void;
+    affix $lib, 'uiNewSpinbox', [ Int, Int ] => Pointer [Void];
+    typedef 'LibUI::Slider' => Pointer [Void];
+    affix $lib, 'uiSliderValue',         [ Pointer [Void] ]       => Int;
+    affix $lib, 'uiSliderSetValue',      [ Pointer [Void], Int ]  => Void;
+    affix $lib, 'uiSliderHasToolTip',    [ Pointer [Void] ]       => Bool;
+    affix $lib, 'uiSliderSetHasToolTip', [ Pointer [Void], Bool ] => Void;
     affix $lib, 'uiSliderOnChanged',
-        [
-        Type ['LibUI::Slider'],
-        CodeRef [ [ Type ['LibUI::Slider'], Pointer [SV] ] => Void ],
-        Pointer [SV]
-        ] => Void;
-
-=head3 C<uiSliderOnReleased( ... )>
-
-    uiSliderOnReleased( $slider, sub { my ($sl, $user_data) = @_; }, undef );
-
-Registers a callback for when the slider is released from dragging.
-
-=cut
-
+        [ Pointer [Void], Callback [ [ Pointer [Void], Pointer [SV] ] => Void ], Pointer [SV] ] =>
+        Void;
     affix $lib, 'uiSliderOnReleased',
-        [
-        Type ['LibUI::Slider'],
-        CodeRef [ [ Type ['LibUI::Slider'], Pointer [SV] ] => Void ],
-        Pointer [SV]
-        ] => Void;
-
-=head3 C<uiSliderSetRange( ... )>
-
-    uiSliderSetRange( $slider, 1, 500 );
-
-Sets the slider range.
-
-Make sure to clamp the slider value to the nearest value in range - should it
-be out of range. Manually call C<uiSliderOnChanged( ... )>'s callback in such a
-case.
-
-=cut
-
-    affix $lib, 'uiSliderSetRange', [ Type ['LibUI::Slider'], Int, Int ] => Void;
-
-=head3 C<uiNewSlider( ... )>
-
-    my $slider = uiNewSlider( 1, 100 );
-
-Creates a new slider.
-
-The initial slider value equals the minimum value.
-
-In the current implementation upstream, C<$min> and C<$max> are swapped if
-C<$min> is greater than C<$max>. This may change in the future though.
-
-=cut
-
-    affix $lib, 'uiNewSlider', [ Int, Int ] => Type ['LibUI::Slider'];
-
-=head2 ProgressBar Functions
-
-A ProgressBar is a control that visualizes the progress of a task via the fill
-level of a horizontal bar.
-
-Indeterminate values are supported via an animated bar.
-
-=cut
-
-    typedef 'LibUI::ProgressBar' => Type ['LibUI::Control'];
-
-=head3 C<uiProgressBarValue( ... )>
-
-    my $value = uiProgressBarValue( $bar );
-
-Returns the progress bar value.
-
-=cut
-
-    affix $lib, 'uiProgressBarValue', [ Type ['LibUI::ProgressBar'] ] => Int;
-
-=head3 C<uiProgressBarSetValue( ... )>
-
-    uiProgressBarSetValue( $bar, 100 );
-
-Sets the progress bar value.
-
-Valid values are C<[0 .. 100]> for displaying a solid bar imitating a percent
-value.
-
-Use a value of C<-1> to render an animated bar to convey an indeterminate
-value.
-
-=cut
-
-    affix $lib, 'uiProgressBarSetValue', [ Type ['LibUI::ProgressBar'], Int ] => Void;
-
-=head3 C<uiNewProgressBar( )>
-
-Creates a new progress bar.
-
-=cut
-
-    affix $lib, 'uiNewProgressBar', [] => Type ['LibUI::ProgressBar'];
-
-=head2 Separator Functions
-
-A separator is a control to visually separate controls, horizontally or
-vertically.
-
-Import these functions with the C<:separator> tag.
-
-=cut
-
-    typedef 'LibUI::HSeparator' => Type ['LibUI::Control'];
-    typedef 'LibUI::VSeparator' => Type ['LibUI::Control'];
-
-=head3 C<uiNewHorizontalSeparator( )>
-
-    my $hsplit = uiNewHorizontalSeparator( );
-
-Creates a new horizontal separator.
-
-=cut
-
-    affix $lib, 'uiNewHorizontalSeparator', [] => Type ['LibUI::HSeparator'];
-
-=head3 C<uiNewVerticalSeparator( )>
-
-    my $hsplit = uiNewVerticalSeparator( );
-
-Creates a new vertical separator.
-
-=cut
-
-    affix $lib, 'uiNewVerticalSeparator', [] => Type ['LibUI::VSeparator'];
-
-=head2 Combobox Functions
-
-A combobox is a control to select one item from a predefined list of items via
-a drop down menu.
-
-You may import these functions with the C<:combobox> tag.
-
-=cut
-
-    typedef 'LibUI::Combobox' => Type ['LibUI::Control'];
-
-=head3 C<uiComboboxAppend( ... )>
-
-    uiComboboxAppend( $combo, 'Candy' );
-
-Appends an item to the combo box.
-
-=cut
-
-    affix $lib, 'uiComboboxAppend', [ Type ['LibUI::Combobox'], Str ] => Void;
-
-=head3 C<uiComboboxInsertAt( ... )>
-
-    uiComboboxInsertAt( $combo, 4, 'Salty snacks' );
-
-Inserts an item at C<$index> to the combo box.
-
-=cut
-
-    affix $lib, 'uiComboboxInsertAt', [ Type ['LibUI::Combobox'], Int, Str ] => Void;
-
-=head3 C<uiComboboxDelete( ... )>
-
-    uiComboboxDelete( $combo, 4 );
-
-Deletes an item at C<$index> from the combo box.
-
-Deleting the index of the item currently selected will move the selection to
-the next item in the combo box or C<-1> if no such item exists.
-
-=cut
-
-    affix $lib, 'uiComboboxDelete', [ Type ['LibUI::Combobox'], Int ] => Void;
-
-=head3 C<uiComboboxClear( ... )>
-
-    uiComboboxClear( $combo );
-
-Deletes all items from the combo box.
-
-=cut
-
-    affix $lib, 'uiComboboxClear', [ Type ['LibUI::Combobox'] ] => Void;
-
-=head3 C<uiComboboxNumItems( ... )>
-
-    my $options = uiComboboxNumItems( $combo );
-
-Returns the number of items contained within the combo box.
-
-=cut
-
-    affix $lib, 'uiComboboxNumItems', [ Type ['LibUI::Combobox'] ] => Int;
-
-=head3 C<uiComboboxSelected( ... )>
-
-    my $current = uiComboboxSelected( $combo );
-
-Returns the index of the item selected or C<-1> on empty selection.
-
-=cut
-
-    affix $lib, 'uiComboboxSelected', [ Type ['LibUI::Combobox'] ] => Int;
-
-=head3 C<uiComboboxSetSelected( ... )>
-
-    uiComboboxSetSelected( $combo, 2 );
-
-Sets the item selected. C<-1> to clear selection.
-
-=cut
-
-    affix $lib, 'uiComboboxSetSelected', [ Type ['LibUI::Combobox'], Int ] => Void;
-
-=head3 C<uiComboboxOnSelected( ... )>
-
-    uiComboboxOnSelected( $combo, sub { my ($c, $user_data) = @_; }, undef );
-
-Registers a callback for when a combo box item is selected.
-
-The callback is not triggered when calling C<uiComboboxSetSelected( ... )>,
-C<uiComboboxInsertAt( ... )>, C<uiComboboxDelete( ... )>, or C<uiComboboxClear(
-... )>.
-
-=cut
-
+        [ Pointer [Void], Callback [ [ Pointer [Void], Pointer [SV] ] => Void ], Pointer [SV] ] =>
+        Void;
+    affix $lib, 'uiSliderSetRange', [ Pointer [Void], Int, Int ] => Void;
+    affix $lib, 'uiNewSlider', [ Int, Int ] => Pointer [Void];
+    typedef 'LibUI::ProgressBar' => Pointer [Void];
+    affix $lib, 'uiProgressBarValue',    [ Pointer [Void] ]      => Int;
+    affix $lib, 'uiProgressBarSetValue', [ Pointer [Void], Int ] => Void;
+    affix $lib, 'uiNewProgressBar',      []                      => Pointer [Void];
+    typedef 'LibUI::HSeparator' => Pointer [Void];
+    typedef 'LibUI::VSeparator' => Pointer [Void];
+    affix $lib, 'uiNewHorizontalSeparator', [] => Pointer [Void];
+    affix $lib, 'uiNewVerticalSeparator',   [] => Pointer [Void];
+    typedef 'LibUI::Combobox' => Pointer [Void];
+    affix $lib, 'uiComboboxAppend',      [ Pointer [Void], String ]      => Void;
+    affix $lib, 'uiComboboxInsertAt',    [ Pointer [Void], Int, String ] => Void;
+    affix $lib, 'uiComboboxDelete',      [ Pointer [Void], Int ]         => Void;
+    affix $lib, 'uiComboboxClear',       [ Pointer [Void] ]              => Void;
+    affix $lib, 'uiComboboxNumItems',    [ Pointer [Void] ]              => Int;
+    affix $lib, 'uiComboboxSelected',    [ Pointer [Void] ]              => Int;
+    affix $lib, 'uiComboboxSetSelected', [ Pointer [Void], Int ]         => Void;
     affix $lib, 'uiComboboxOnSelected',
-        [
-        Type ['LibUI::Combobox'],
-        CodeRef [ [ Type ['LibUI::Combobox'], Pointer [SV] ] => Void ],
-        Pointer [SV]
-        ] => Void;
-
-=head3 C<uiNewCombobox( )>
-
-    my $combo = uiNewCombobox( );
-
-Creates a new combo box.
-
-=cut
-
-    affix $lib, 'uiNewCombobox', [] => Type ['LibUI::Combobox'];
-
-=head2 Editable Combobox Functions
-
-An editable combobox is a control to select one item from a predefined list of
-items or enter ones own.
-
-Predefined items can be selected from a drop down menu.
-
-A customary item can be entered by the user via an editable text field.
-
-You may import these functions with the C<:editablecombobox> tag.
-
-=cut
-
-    typedef 'LibUI::EditableCombobox' => Type ['LibUI::Control'];
-
-=head3 C<uiEditableComboboxAppend( ... )>
-
-    uiEditableComboboxAppend( $combo, 'Fire' );
-
-Appends an item to the editable combo box.
-
-=cut
-
-    affix $lib, 'uiEditableComboboxAppend', [ Type ['LibUI::EditableCombobox'], Str ] => Void;
-
-=head3 C<uiEditableComboboxText( ... )>
-
-    my $text = uiEditableComboboxText( $combo );
-
-Returns the text of the editable combo box.
-
-This text is either the text of one of the predefined list items or the text
-manually entered by the user.
-
-=cut
-
-    affix $lib, 'uiEditableComboboxText', [ Type ['LibUI::EditableCombobox'] ] => Str;
-
-=head3 C<uiEditableComboboxSetText( ... )>
-
-    uiEditableComboboxSetText( $combo, "Floating" );
-
-Sets the editable combo box text.
-
-=cut
-
-    affix $lib, 'uiEditableComboboxSetText', [ Type ['LibUI::EditableCombobox'], Str ] => Void;
-
-=head3 C<uiEditableComboboxOnChanged( )>
-
-    uiEditableComboboxOnChanged( $combo, sub { my ($cb, user_data) = @_; }, undef );
-
-Registers a callback for when an editable combo box item is selected or user
-text changed.
-
-The callback is not triggered when calling C<uiEditableComboboxSetText( ... )>.
-
-=cut
-
+        [ Pointer [Void], Callback [ [ Pointer [Void], Pointer [SV] ] => Void ], Pointer [SV] ] =>
+        Void;
+    affix $lib, 'uiNewCombobox', [] => Pointer [Void];
+    typedef 'LibUI::EditableCombobox' => Pointer [Void];
+    affix $lib, 'uiEditableComboboxAppend',  [ Pointer [Void], String ] => Void;
+    affix $lib, 'uiEditableComboboxText',    [ Pointer [Void] ]         => String;
+    affix $lib, 'uiEditableComboboxSetText', [ Pointer [Void], String ] => Void;
     affix $lib, 'uiEditableComboboxOnChanged',
+        [ Pointer [Void], Callback [ [ Pointer [Void], Pointer [SV] ] => Void ], Pointer [SV] ] =>
+        Void;
+    affix $lib, 'uiNewEditableCombobox', [] => Pointer [Void];
+    #
+    typedef 'LibUI::Menu'           => Pointer [Void];
+    typedef 'LibUI::MenuItem'       => Pointer [Void];
+    typedef 'LibUI::Separator'      => Pointer [Void];
+    typedef 'LibUI::DatePicker'     => Pointer [Void];
+    typedef 'LibUI::TimePicker'     => Pointer [Void];
+    typedef 'LibUI::DateTimePicker' => Pointer [Void];
+    typedef 'LibUI::FontButton'     => Pointer [Void];
+    typedef 'LibUI::ColorButton'    => Pointer [Void];
+    typedef 'LibUI::RadioButtons'   => Pointer [Void];
+    typedef 'LibUI::Area'           => Pointer [Void];
+    typedef 'LibUI::DrawPath'       => Pointer [Void];
+    typedef 'LibUI::TextFont'       => Pointer [Void];
+    typedef 'LibUI::TextLayout'     => Pointer [Void];
+    #
+    typedef AreaDrawParams => Struct [
+        Context    => Pointer [Void],
+        AreaWidth  => Double,
+        AreaHeight => Double,
+        ClipX      => Double,
+        ClipY      => Double,
+        ClipWidth  => Double,
+        ClipHeight => Double
+    ];
+    #
+    typedef AreaHandler => Struct [
+        Draw         => Callback [ [ Pointer [Void], Pointer [Void], Pointer [Void] ] => Void ],
+        MouseEvent   => Callback [ [ Pointer [Void], Pointer [Void], Pointer [Void] ] => Void ],
+        MouseCrossed => Callback [ [ Pointer [Void], Pointer [Void], Int ]            => Void ],
+        DragBroken   => Callback [ [ Pointer [Void], Pointer [Void] ]                 => Void ],
+        KeyEvent     => Callback [ [ Pointer [Void], Pointer [Void], Pointer [Void] ] => Int ]
+    ];
+    typedef AreaMouseEvent => Struct [
+        X          => Double,
+        Y          => Double,
+        AreaWidth  => Double,
+        AreaHeight => Double,
+        Down       => Int,
+        Up         => Int,
+        Count      => Int,
+        Modifiers  => UInt,
+        Held1To64  => Int64
+    ];
+    typedef AreaKeyEvent =>
+        Struct [ Key => Char, ExtKey => Int, Modifier => UInt, Modifiers => UInt, Up => Int ];
+
+    # Menu
+    affix $lib, 'uiNewMenu',                   [String]                   => Pointer [Void];
+    affix $lib, 'uiMenuAppendItem',            [ Pointer [Void], String ] => Pointer [Void];
+    affix $lib, 'uiMenuAppendCheckItem',       [ Pointer [Void], String ] => Pointer [Void];
+    affix $lib, 'uiMenuAppendQuitItem',        [ Pointer [Void] ]         => Pointer [Void];
+    affix $lib, 'uiMenuAppendPreferencesItem', [ Pointer [Void] ]         => Pointer [Void];
+    affix $lib, 'uiMenuAppendAboutItem',       [ Pointer [Void] ]         => Pointer [Void];
+    affix $lib, 'uiMenuAppendSeparator',       [ Pointer [Void] ]         => Void;
+
+    # MenuItem
+    affix $lib, 'uiMenuItemEnable',  [ Pointer [Void] ] => Void;
+    affix $lib, 'uiMenuItemDisable', [ Pointer [Void] ] => Void;
+    affix $lib, 'uiMenuItemOnClicked',
         [
-        Type ['LibUI::EditableCombobox'],
-        CodeRef [ [ Type ['LibUI::EditableCombobox'], Pointer [SV] ] => Void ],
+        Pointer [Void],
+        Callback [ [ Pointer [Void], Pointer [Void], Pointer [SV] ] => Void ],
         Pointer [SV]
         ] => Void;
+    affix $lib, 'uiMenuItemChecked',    [ Pointer [Void] ]      => Int;
+    affix $lib, 'uiMenuItemSetChecked', [ Pointer [Void], Int ] => Void;
 
-=head3 C<uiNewEditableCombobox( )>
+    # DateTimePicker (complete)
+    affix $lib, 'uiNewDatePicker',     [] => Pointer [Void];
+    affix $lib, 'uiNewTimePicker',     [] => Pointer [Void];
+    affix $lib, 'uiNewDateTimePicker', [] => Pointer [Void];
+    affix $lib, 'uiDateTimePickerOnChanged',
+        [ Pointer [Void], Callback [ [ Pointer [Void], Pointer [SV] ] => Void ], Pointer [SV] ] =>
+        Void;
 
-    my $combo = uiNewEditableCombobox( );
+    # FontButton
+    affix $lib, 'uiNewFontButton', [] => Pointer [Void];
 
-Creates a new editable combo box.
+    # ColorButton
+    affix $lib, 'uiNewColorButton', [] => Pointer [Void];
 
-=cut
+    sub uiColorButtonColor ($btn) {
+        state $o //= wrap $lib, 'uiColorButtonColor',
+            [
+            Pointer [Void],
+            Pointer [Double],
+            Pointer [Double],
+            Pointer [Double],
+            Pointer [Double]
+            ] => Void;
+        my ( $r, $g, $b, $a ) = ( 0, 0, 0, 0 );
+        $o->( $btn, \$r, \$g, \$b, \$a );
+        return ( $r, $g, $b, $a );
+    }
+    affix $lib, 'uiColorButtonSetColor', [ Pointer [Void], Double, Double, Double, Double ] => Void;
+    affix $lib, 'uiColorButtonOnChanged',
+        [ Pointer [Void], Callback [ [ Pointer [Void], Pointer [SV] ] => Void ], Pointer [SV] ] =>
+        Void;
 
-    affix $lib, 'uiNewEditableCombobox', [] => Type ['LibUI::EditableCombobox'];
+    # MultilineEntry
+    typedef 'LibUI::MultilineEntry' => Pointer [Void];
+    affix $lib, 'uiNewMultilineEntry',            []                         => Pointer [Void];
+    affix $lib, 'uiNewNonWrappingMultilineEntry', []                         => Pointer [Void];
+    affix $lib, 'uiMultilineEntryText',           [ Pointer [Void] ]         => String;
+    affix $lib, 'uiMultilineEntrySetText',        [ Pointer [Void], String ] => Void;
+    affix $lib, 'uiMultilineEntryAppend',         [ Pointer [Void], String ] => Void;
+    affix $lib, 'uiMultilineEntryOnChanged',
+        [ Pointer [Void], Callback [ [ Pointer [Void], Pointer [SV] ] => Void ], Pointer [SV] ] =>
+        Void;
+    affix $lib, 'uiMultilineEntryReadOnly',    [ Pointer [Void] ]      => Int;
+    affix $lib, 'uiMultilineEntrySetReadOnly', [ Pointer [Void], Int ] => Void;
 
-    #
-    typedef 'LibUI::Menu'           => Type ['LibUI::Control'];
-    typedef 'LibUI::MenuItem'       => Type ['LibUI::Control'];
-    typedef 'LibUI::Separator'      => Type ['LibUI::Control'];
-    typedef 'LibUI::DatePicker'     => Type ['LibUI::Control'];
-    typedef 'LibUI::TimePicker'     => Type ['LibUI::Control'];
-    typedef 'LibUI::DateTimePicker' => Type ['LibUI::Control'];
-    typedef 'LibUI::FontButton'     => Type ['LibUI::Control'];
-    typedef 'LibUI::ColorButton'    => Type ['LibUI::Control'];
-    typedef 'LibUI::Combobox'       => Type ['LibUI::Control'];
-    typedef 'LibUI::Radiobuttons'   => Type ['LibUI::Control'];
-    typedef 'LibUI::Area'           => Type ['LibUI::Control'];
-    typedef 'LibUI::DrawPath'       => Type ['LibUI::Control'];
-    typedef 'LibUI::TextFont'       => Type ['LibUI::Control'];
-    typedef 'LibUI::TextLayout'     => Type ['LibUI::Control'];
-    #
-    typedef 'LibUI::AreaDrawParams' => Struct [
-        draw_context => Pointer [Void],
-        width        => Double,
-        height       => Double,
-        clip_x       => Double,
-        clip_y       => Double,
-        clip_width   => Double,
-        clip_height  => Double
+    # RadioButtons
+    affix $lib, 'uiNewRadioButtons',         []                         => Pointer [Void];
+    affix $lib, 'uiRadioButtonsAppend',      [ Pointer [Void], String ] => Void;
+    affix $lib, 'uiRadioButtonsSelected',    [ Pointer [Void] ]         => Int;
+    affix $lib, 'uiRadioButtonsSetSelected', [ Pointer [Void], Int ]    => Void;
+    affix $lib, 'uiRadioButtonsOnSelected',
+        [ Pointer [Void], Callback [ [ Pointer [Void], Pointer [SV] ] => Void ], Pointer [SV] ] =>
+        Void;
+
+    # Tab enhancements
+    affix $lib, 'uiTabSelected',    [ Pointer [Void] ]      => Int;
+    affix $lib, 'uiTabSetSelected', [ Pointer [Void], Int ] => Void;
+    affix $lib, 'uiTabOnSelected',
+        [ Pointer [Void], Callback [ [ Pointer [Void], Pointer [SV] ] => Void ], Pointer [SV] ] =>
+        Void;
+
+    # Grid
+    affix $lib, 'uiNewGrid', [] => Pointer [Void];
+    affix $lib, 'uiGridAppend',
+        [ Pointer [Void], Pointer [Void], Int, Int, Int, Int, Int, Int, Int, Int ] => Void;
+    affix $lib, 'uiGridInsertAt',
+        [ Pointer [Void], Pointer [Void], Pointer [Void], Int, Int, Int, Int, Int, Int, Int,
+        Int ] => Void;
+    affix $lib, 'uiGridPadded',    [ Pointer [Void] ]      => Int;
+    affix $lib, 'uiGridSetPadded', [ Pointer [Void], Int ] => Void;
+
+    # File Chooser Dialogs
+    affix $lib, 'uiOpenFile',   [ Pointer [Void] ] => String;
+    affix $lib, 'uiOpenFolder', [ Pointer [Void] ] => String;
+    affix $lib, 'uiSaveFile',   [ Pointer [Void] ] => String;
+
+    # MsgBox
+    affix $lib, 'uiMsgBox',      [ Pointer [Void], String, String ] => Void;
+    affix $lib, 'uiMsgBoxError', [ Pointer [Void], String, String ] => Void;
+
+    # Area
+    sub _wrap_area_handler($handler) {
+        {   Draw => (
+                defined $handler->{on_draw} ?
+                    sub ( $a_h, $a, $e ) {
+                    $handler->{on_draw}
+                        ->( $a_h, $a, ${ Affix::cast( $e, Pointer [ AreaDrawParams() ] ) } );
+                    } :
+                    sub { }
+            ),
+            MouseEvent => (
+                defined $handler->{on_mouse} ?
+                    sub ( $a_h, $a, $e ) {
+                    $handler->{on_mouse}
+                        ->( $a_h, $a, ${ Affix::cast( $e, Pointer [ AreaMouseEvent() ] ) } );
+                    } :
+                    sub { }
+            ),
+            MouseCrossed => (
+                defined $handler->{on_crossed} ?
+                    sub ( $a_h, $a, $left ) {
+                    $handler->{on_crossed}->( $a_h, $a, $left );
+                    } :
+                    sub { }
+            ),
+            DragBroken => (
+                defined $handler->{on_drag_broken} ?
+                    sub ( $a_h, $a ) {
+                    $handler->{on_drag_broken}->( $a_h, $a );
+                    } :
+                    sub { }
+            ),
+            KeyEvent => (
+                defined $handler->{on_key} ?
+                    sub ( $a_h, $a, $e ) {
+                    return $handler->{on_key}
+                        ->( $a_h, $a, ${ Affix::cast( $e, Pointer [ AreaKeyEvent() ] ) } );
+                    } :
+                    sub { }
+            )
+        }
+    }
+
+    sub uiNewArea {
+        state $raw //= Affix::wrap(
+            Alien::libui->dynamic_libs,    'uiNewArea',
+            [ Pointer [ AreaHandler() ] ], Pointer [Void]
+        );
+        $raw->( _wrap_area_handler( $_[0] ) );
+    }
+
+    sub uiNewScrollingArea {
+        state $raw //= Affix::wrap(
+            Alien::libui->dynamic_libs,              'uiNewScrollingArea',
+            [ Pointer [ AreaHandler() ], Int, Int ], Pointer [Void]
+        );
+        $raw->( _wrap_area_handler( $_[0] ), $_[1], $_[2] );
+    }
+
+    # Form
+    affix $lib, 'uiNewForm',    []                                              => Pointer [Void];
+    affix $lib, 'uiFormAppend', [ Pointer [Void], String, Pointer [Void], Int ] => Void;
+    affix $lib, 'uiFormNumChildren', [ Pointer [Void] ]                         => Int;
+    affix $lib, 'uiFormDelete',      [ Pointer [Void], Int ]                    => Void;
+    affix $lib, 'uiFormPadded',      [ Pointer [Void] ]                         => Int;
+    affix $lib, 'uiFormSetPadded',   [ Pointer [Void], Int ]                    => Void;
+
+    # Area operations
+    affix $lib, 'uiAreaSetSize',        [ Pointer [Void], Int, Int ]                       => Void;
+    affix $lib, 'uiAreaQueueRedrawAll', [ Pointer [Void] ]                                 => Void;
+    affix $lib, 'uiAreaScrollTo',       [ Pointer [Void], Double, Double, Double, Double ] => Void;
+    affix $lib, 'uiAreaBeginUserWindowMove',   [ Pointer [Void] ]                          => Void;
+    affix $lib, 'uiAreaBeginUserWindowResize', [ Pointer [Void], Int ]                     => Void;
+
+    # DateTimePicker get/set time
+    typedef 'LibUI::TM' => Struct [
+        tm_sec   => Int,
+        tm_min   => Int,
+        tm_hour  => Int,
+        tm_mday  => Int,
+        tm_mon   => Int,
+        tm_year  => Int,
+        tm_wday  => Int,
+        tm_yday  => Int,
+        tm_isdst => Int
     ];
-    #
-    typedef 'LibUI::AreaHandler' => Struct [
-        draw_event    => CodeRef [ [ Pointer [Void], Pointer [Void], Pointer [Void] ] => Void ],
-        mouse_event   => CodeRef [ [ Pointer [Void], Pointer [Void], Pointer [Void] ] => Void ],
-        mouse_crossed => CodeRef [ [ Pointer [Void], Pointer [Void], Int ]            => Void ],
-        drag_broken   => CodeRef [ [ Pointer [Void], Pointer [Void] ]                 => Void ],
-        key_event     => CodeRef [ [ Pointer [Void], Pointer [Void], Pointer [Void] ] => Int ]
+
+    sub uiDateTimePickerTime($picker) {
+        state $o //= wrap $lib, 'uiDateTimePickerTime', [ Pointer [Void], Pointer [Void] ] => Void;
+        my $buf = "\0" x 36;
+        $o->( $picker, $buf );
+        my @t = unpack( 'i9', $buf );
+        {   tm_sec   => $t[0],
+            tm_min   => $t[1],
+            tm_hour  => $t[2],
+            tm_mday  => $t[3],
+            tm_mon   => $t[4],
+            tm_year  => $t[5],
+            tm_wday  => $t[6],
+            tm_yday  => $t[7],
+            tm_isdst => $t[8]
+        };
+    }
+
+    sub uiDateTimePickerSetTime( $picker, @args ) {
+        state $o //= wrap $lib, 'uiDateTimePickerSetTime',
+            [ Pointer [Void], Pointer [Void] ] => Void;
+        my %tm;
+        if ( @args == 1 && ref $args[0] eq 'HASH' ) {
+            %tm = %{ $args[0] };
+        }
+        elsif ( @args == 1 && !ref $args[0] ) {
+            my @lt = localtime( $args[0] );
+            %tm = (
+                tm_sec   => $lt[0],
+                tm_min   => $lt[1],
+                tm_hour  => $lt[2],
+                tm_mday  => $lt[3],
+                tm_mon   => $lt[4],
+                tm_year  => $lt[5],
+                tm_wday  => $lt[6],
+                tm_yday  => $lt[7],
+                tm_isdst => -1
+            );
+        }
+        elsif ( @args >= 6 ) {
+            %tm = (
+                tm_sec   => $args[0],
+                tm_min   => $args[1],
+                tm_hour  => $args[2],
+                tm_mday  => $args[3],
+                tm_mon   => $args[4],
+                tm_year  => $args[5],
+                tm_wday  => $args[6] // 0,
+                tm_yday  => $args[7] // 0,
+                tm_isdst => $args[8] // -1
+            );
+        }
+        else {
+            die
+                "uiDateTimePickerSetTime: expected hashref, epoch, or (sec,min,hour,mday,mon,year,...)";
+        }
+        $o->(
+            $picker,
+            pack 'i9',
+            $tm{tm_sec}   // 0,
+            $tm{tm_min}   // 0,
+            $tm{tm_hour}  // 0,
+            $tm{tm_mday}  // 1,
+            $tm{tm_mon}   // 0,
+            $tm{tm_year}  // 0,
+            $tm{tm_wday}  // 0,
+            $tm{tm_yday}  // 0,
+            $tm{tm_isdst} // -1
+        );
+    }
+
+    # FontDescriptor struct
+    typedef FontDescriptor => Struct [
+        Family  => Pointer [Char],
+        Size    => Double,
+        Weight  => UInt,
+        Italic  => UInt,
+        Stretch => UInt
     ];
 
-=begin todo
+    # FontButton
+    sub uiFontButtonFont ($btn) {
+        state $o //= wrap $lib, 'uiFontButtonFont',
+            [ Pointer [Void], Pointer [ FontDescriptor() ] ] => Void;
+        my $desc = Affix::calloc( 1, Affix::sizeof( LibUI::FontDescriptor() ) );
+        $o->( $btn, $desc );
+        my $d      = Affix::cast( $desc, LibUI::FontDescriptor() );
+        my %result = (
+            Family  => $d->{Family} // '',
+            Size    => $d->{Size},
+            Weight  => $d->{Weight},
+            Italic  => $d->{Italic},
+            Stretch => $d->{Stretch},
+        );
+        uiFreeFontButtonFont($desc);
+        return \%result;
+    }
 
-    KEY_MODIFIERS = enum(:ctrl, 1 << 0, :alt, 1 << 1, :shift, 1 << 2, :super, 1 << 3)
-    LINE_CAPS  = enum(:flat, :round, :square)
-    LINE_JOINS = enum(:miter, :round, :bevel)
-    TEXT_WEIGHTS = enum(:thin,
-      :ultra_light,
-      :light, :book,
-      :normal,
-      :medium,
-      :semi_bold,
-      :bold,
-      :ultra_bold,
-      :heavy,
-      :ultra_heavy
-    )
+    sub uiLoadControlFont () {
+        state $o //= wrap $lib, 'uiLoadControlFont', [ Pointer [ FontDescriptor() ] ] => Void;
+        my $desc = Affix::calloc( 1, Affix::sizeof( LibUI::FontDescriptor() ) );
+        $o->($desc);
+        my $d      = Affix::cast( $desc, LibUI::FontDescriptor() );
+        my %result = (
+            Family  => $d->{Family} // '',
+            Size    => $d->{Size},
+            Weight  => $d->{Weight},
+            Italic  => $d->{Italic},
+            Stretch => $d->{Stretch},
+        );
+        Affix::free($desc);
+        return \%result;
+    }
+    affix $lib, 'uiFreeFontButtonFont', [ Pointer [ FontDescriptor() ] ] => Void;
+    affix $lib, 'uiFreeFontDescriptor', [ Pointer [Void] ]               => Void;
+    affix $lib, 'uiFontButtonOnChanged',
+        [ Pointer [Void], Callback [ [ Pointer [Void], Pointer [SV] ] => Void ], Pointer [SV] ] =>
+        Void;
 
-    TEXT_ITALIC = enum(:normal, :oblique, :italic)
-    TEXT_STRETCH = enum(:ultra_condensed,
-      :extra_condensed,
-      :condensed,
-      :semi_condensed,
-      :normal,
-      :semi_expanded,
-      :expanded,
-      :extra_expanded,
-      :ultra_expanded
-    )
+    # DrawPath
+    affix $lib, 'uiDrawNewPath',       [Int]                              => Pointer [Void];
+    affix $lib, 'uiDrawFreePath',      [ Pointer [Void] ]                 => Void;
+    affix $lib, 'uiDrawPathNewFigure', [ Pointer [Void], Double, Double ] => Void;
+    affix $lib, 'uiDrawPathNewFigureWithArc',
+        [ Pointer [Void], Double, Double, Double, Double, Double, Int ] => Void;
+    affix $lib, 'uiDrawPathLineTo', [ Pointer [Void], Double, Double ] => Void;
+    affix $lib, 'uiDrawPathArcTo',
+        [ Pointer [Void], Double, Double, Double, Double, Double, Int ] => Void;
+    affix $lib, 'uiDrawPathBezierTo',
+        [ Pointer [Void], Double, Double, Double, Double, Double, Double ] => Void;
+    affix $lib, 'uiDrawPathCloseFigure', [ Pointer [Void] ] => Void;
+    affix $lib, 'uiDrawPathAddRectangle',
+        [ Pointer [Void], Double, Double, Double, Double ] => Void;
+    affix $lib, 'uiDrawPathEnded', [ Pointer [Void] ] => Int;
+    affix $lib, 'uiDrawPathEnd',   [ Pointer [Void] ] => Void;
 
-    class AreaMouseEvent < FFI::Struct
-      layout :x,      :double,
-        :y,           :double,
-        :area_width,  :double,
-        :area_height, :double,
-        :down,        :uintmax_t,
-        :up,          :uintmax_t,
-        :count,       :uintmax_t,
-        :modifiers,   KEY_MODIFIERS,
-        :held1to64,   :uint64_t
-    end
+    # DrawStroke / DrawFill
+    typedef DrawBrush => Struct [
+        Type        => UInt,
+        R           => Double,
+        G           => Double,
+        B           => Double,
+        A           => Double,
+        X0          => Double,
+        Y0          => Double,
+        X1          => Double,
+        Y1          => Double,
+        OuterRadius => Double,
+        Stops       => Pointer [Void],
+        NumStops    => Size_t
+    ];
+    typedef DrawStrokeParams => Struct [
+        Cap        => UInt,
+        Join       => UInt,
+        Thickness  => Double,
+        MiterLimit => Double,
+        Dashes     => Pointer [Double],
+        NumDashes  => Size_t,
+        DashPhase  => Double
+    ];
+    typedef 'LibUI::DrawBrushGradientStop' =>
+        Struct [ Pos => Double, R => Double, G => Double, B => Double, A => Double ];
+    affix $lib, 'uiDrawStroke',
+        [ Pointer [Void], Pointer [Void], Pointer [ DrawBrush() ],
+        Pointer [ DrawStrokeParams() ] ] => Void;
+    affix $lib, 'uiDrawFill', [ Pointer [Void], Pointer [Void], Pointer [ DrawBrush() ] ] => Void;
 
-    class FontFamilies < FFI::Struct
-      layout :ff, :pointer
-    end
+    # Transform Matrices
+    # uiDrawMatrix: 6 doubles (M11,M12,M21,M22,M31,M32) = 48 bytes
+    typedef DrawMatrix => Struct [
+        M11 => Double,
+        M12 => Double,
+        M21 => Double,
+        M22 => Double,
+        M31 => Double,
+        M32 => Double
+    ];
+    affix $lib, 'uiDrawMatrixSetIdentity', [ Pointer [ DrawMatrix() ] ]                 => Void;
+    affix $lib, 'uiDrawMatrixTranslate',   [ Pointer [ DrawMatrix() ], Double, Double ] => Void;
+    affix $lib, 'uiDrawMatrixScale',
+        [ Pointer [ DrawMatrix() ], Double, Double, Double, Double ] => Void;
+    affix $lib, 'uiDrawMatrixRotate', [ Pointer [ DrawMatrix() ], Double, Double, Double ] => Void;
+    affix $lib, 'uiDrawMatrixSkew',
+        [ Pointer [ DrawMatrix() ], Double, Double, Double, Double ] => Void;
+    affix $lib, 'uiDrawMatrixMultiply',
+        [ Pointer [ DrawMatrix() ], Pointer [ DrawMatrix() ] ] => Void;
+    affix $lib, 'uiDrawMatrixInvertible', [ Pointer [ DrawMatrix() ] ] => Int;
+    affix $lib, 'uiDrawMatrixInvert',     [ Pointer [ DrawMatrix() ] ] => Int;
 
-    class FontDescriptor < FFI::Struct
-      layout :family, :string,
-        :size, :double,
-        :weight, TEXT_WEIGHTS,
-        :italic, TEXT_ITALIC,
-        :stretch, TEXT_STRETCH
-    end
+    sub uiDrawMatrixTransformPoint( $matrix, $x, $y ) {
+        state $o //= wrap $lib, 'uiDrawMatrixTransformPoint',
+            [ Pointer [ DrawMatrix() ], Pointer [Double], Pointer [Double] ] => Void;
+        my ( $rx, $ry ) = ( $x, $y );
+        $o->( $matrix, \$rx, \$ry );
+        return ( $rx, $ry );
+    }
 
-    class FontMetrics < FFI::Struct
-      layout :ascent, :double,
-        :descent, :double,
-        :leading, :double,
-        :underline_pos, :double,
-        :underline_thickness, :double
-    end
+    sub uiDrawMatrixTransformSize ( $matrix, $w, $h ) {
+        state $o //= wrap $lib, 'uiDrawMatrixTransformSize',
+            [ Pointer [ DrawMatrix() ], Pointer [Double], Pointer [Double] ] => Void;
+        my ( $rw, $rh ) = ( $w, $h );
+        $o->( $matrix, \$rw, \$rh );
+        return ( $rw, $rh );
+    }
 
-    class DrawStrokeParams < FFI::Struct
-      layout :cap, LINE_CAPS,
-        :join, LINE_JOINS,
-        :thickness, :double,
-        :miter_limit, :double,
-        :dashes, :pointer, #double?
-        :num_dashes, :size_t,
-        :dash_phase, :double
-    end
+    # Drawing Context Operations
+    affix $lib, 'uiDrawTransform', [ Pointer [Void], Pointer [ DrawMatrix() ] ] => Void;
+    affix $lib, 'uiDrawClip',      [ Pointer [Void], Pointer [Void] ]           => Void;
+    affix $lib, 'uiDrawSave',      [ Pointer [Void] ]                           => Void;
+    affix $lib, 'uiDrawRestore',   [ Pointer [Void] ]                           => Void;
 
-    BRUSH_TYPES = enum(:solid, :linear_gradient, :radial_gradient, :image)
-    FILL_MODES  = enum(:winding, :alternate)
+    # Image
+    affix $lib, 'uiNewImage',    [ Double, Double ] => Pointer [Void];
+    affix $lib, 'uiFreeImage',   [ Pointer [Void] ] => Void;
+    affix $lib, 'uiImageAppend', [ Pointer [Void], Pointer [Void], Int, Int, Int ] => Void;
 
-    class DrawBrush < FFI::Struct
-      layout :type,  BRUSH_TYPES,
-             :red,   :double,
-             :green, :double,
-             :blue,  :double,
-             :alpha, :double,
+    # Text Attributes
+    affix $lib, 'uiFreeAttribute',       [ Pointer [Void] ]                 => Void;
+    affix $lib, 'uiAttributeGetType',    [ Pointer [Void] ]                 => Int;
+    affix $lib, 'uiNewFamilyAttribute',  [String]                           => Pointer [Void];
+    affix $lib, 'uiAttributeFamily',     [ Pointer [Void] ]                 => String;
+    affix $lib, 'uiNewSizeAttribute',    [Double]                           => Pointer [Void];
+    affix $lib, 'uiAttributeSize',       [ Pointer [Void] ]                 => Double;
+    affix $lib, 'uiNewWeightAttribute',  [Int]                              => Pointer [Void];
+    affix $lib, 'uiAttributeWeight',     [ Pointer [Void] ]                 => Int;
+    affix $lib, 'uiNewItalicAttribute',  [Int]                              => Pointer [Void];
+    affix $lib, 'uiAttributeItalic',     [ Pointer [Void] ]                 => Int;
+    affix $lib, 'uiNewStretchAttribute', [Int]                              => Pointer [Void];
+    affix $lib, 'uiAttributeStretch',    [ Pointer [Void] ]                 => Int;
+    affix $lib, 'uiNewColorAttribute',   [ Double, Double, Double, Double ] => Pointer [Void];
 
-             :x0, :double, # linear: start X, radial: start X
-             :y0, :double, # linear: start Y, radial: start Y
-             :x1, :double, # linear: end X, radial: outer circle center X
-             :y1, :double, # linear: end Y, radial: outer circle center Y
-             :outer_radius, :double, # radial gradients only
-             :stops, :pointer, # pointer to uiDrawBrushGradientStop
-             :num_stops, :size_t
-    end
+    sub uiAttributeColor ($attr) {
+        state $o //= wrap $lib, 'uiAttributeColor',
+            [
+            Pointer [Void],
+            Pointer [Double],
+            Pointer [Double],
+            Pointer [Double],
+            Pointer [Double]
+            ] => Void;
+        my ( $r, $g, $b, $a ) = ( 0, 0, 0, 0 );
+        $o->( $attr, \$r, \$g, \$b, \$a );
+        return ( $r, $g, $b, $a );
+    }
+    affix $lib, 'uiNewBackgroundAttribute', [ Double, Double, Double, Double ] => Pointer [Void];
+    affix $lib, 'uiNewUnderlineAttribute',  [Int]                              => Pointer [Void];
+    affix $lib, 'uiAttributeUnderline',     [ Pointer [Void] ]                 => Int;
+    affix $lib, 'uiNewUnderlineColorAttribute',
+        [ Int, Double, Double, Double, Double ] => Pointer [Void];
 
-    class DrawMatrix < FFI::Struct
-      layout :m11, :double,
-        :m12, :double,
-        :m21, :double,
-        :m22, :double,
-        :m31, :double,
-        :m32, :double
-    end
+    sub uiAttributeUnderlineColor ($attr) {
+        state $o //= wrap $lib, 'uiAttributeUnderlineColor',
+            [
+            Pointer [Void],
+            Pointer [Int],
+            Pointer [Double],
+            Pointer [Double],
+            Pointer [Double],
+            Pointer [Double]
+            ] => Void;
+        my ( $ul, $r, $g, $b, $a ) = ( 0, 0, 0, 0, 0 );
+        $o->( $attr, \$ul, \$r, \$g, \$b, \$a );
+        return ( $ul, $r, $g, $b, $a );
+    }
 
-=end todo
+    # OpenType Features
+    affix $lib, 'uiNewOpenTypeFeatures',   []                 => Pointer [Void];
+    affix $lib, 'uiFreeOpenTypeFeatures',  [ Pointer [Void] ] => Void;
+    affix $lib, 'uiOpenTypeFeaturesClone', [ Pointer [Void] ] => Pointer [Void];
+    affix $lib, 'uiOpenTypeFeaturesAdd', [ Pointer [Void], Char, Char, Char, Char, UInt32 ] => Void;
+    affix $lib, 'uiOpenTypeFeaturesRemove', [ Pointer [Void], Char, Char, Char, Char ]      => Void;
+    affix $lib, 'uiOpenTypeFeaturesGet',
+        [ Pointer [Void], Char, Char, Char, Char, Pointer [UInt32] ] => Int;
+    affix $lib, 'uiOpenTypeFeaturesForEach',
+        [ Pointer [Void], Pointer [Void], Pointer [Void] ] => Void;
+    affix $lib, 'uiNewFeaturesAttribute', [ Pointer [Void] ] => Pointer [Void];
+    affix $lib, 'uiAttributeFeatures',    [ Pointer [Void] ] => Pointer [Void];
 
-=cut
+    # Attributed Strings
+    affix $lib, 'uiNewAttributedString',                [String]           => Pointer [Void];
+    affix $lib, 'uiFreeAttributedString',               [ Pointer [Void] ] => Void;
+    affix $lib, 'uiAttributedStringString',             [ Pointer [Void] ] => String;
+    affix $lib, 'uiAttributedStringLen',                [ Pointer [Void] ] => Size_t;
+    affix $lib, 'uiAttributedStringAppendUnattributed', [ Pointer [Void], String ] => Void;
+    affix $lib, 'uiAttributedStringInsertAtUnattributed',
+        [ Pointer [Void], String, Size_t ] => Void;
+    affix $lib, 'uiAttributedStringDelete', [ Pointer [Void], Size_t, Size_t ] => Void;
+    affix $lib, 'uiAttributedStringSetAttribute',
+        [ Pointer [Void], Pointer [Void], Size_t, Size_t ] => Void;
+    affix $lib, 'uiAttributedStringForEachAttribute',
+        [ Pointer [Void], Pointer [Void], Pointer [Void] ] => Void;
+    affix $lib, 'uiAttributedStringNumGraphemes',        [ Pointer [Void] ] => Size_t;
+    affix $lib, 'uiAttributedStringByteIndexToGrapheme', [ Pointer [Void], Size_t ] => Size_t;
+    affix $lib, 'uiAttributedStringGraphemeToByteIndex', [ Pointer [Void], Size_t ] => Size_t;
 
-    #
+    # Text Layout Drawing
+    typedef DrawTextLayoutParams => Struct [
+        String      => Pointer [Void],
+        DefaultFont => Pointer [Void],
+        Width       => Double,
+        Align       => Int
+    ];
+    affix $lib, 'uiDrawNewTextLayout',  [ Pointer [Void] ] => Pointer [Void];
+    affix $lib, 'uiDrawFreeTextLayout', [ Pointer [Void] ] => Void;
+    affix $lib, 'uiDrawText',           [ Pointer [Void], Pointer [Void], Double, Double ] => Void;
 
-    #
-    #
-    #
-    #~ callback :menu_item_clicked, [:pointer], :int
-    #~ attach_function :uiNewMenu,                   [:string],       Menu
-    #~ attach_function :uiMenuAppendItem,            [Menu, :string], MenuItem
-    #~ attach_function :uiMenuAppendPreferencesItem, [Menu],          MenuItem
-    #~ attach_function :uiMenuAppendAboutItem,       [Menu],          MenuItem
-    #~ attach_function :uiMenuItemDisable,           [MenuItem],      :void
-    #~ attach_function :uiMenuAppendQuitItem,        [Menu],          :void
-    #~ attach_function :uiMenuAppendCheckItem,       [Menu, :string], :void
-    #~ attach_function :uiMenuAppendSeparator,       [Menu],          :void
-    #~ attach_function :uiMenuItemOnClicked,
-    #~ [Menu,
-    #~ :menu_item_clicked,
-    #~ :pointer],
-    #~ :void
-    #
-    affix $lib, 'uiNewDatePicker',     []    => InstanceOf ['LibUI::DatePicker'];
-    affix $lib, 'uiNewTimePicker',     [Str] => InstanceOf ['LibUI::TimePicker'];
-    affix $lib, 'uiNewDateTimePicker', []    => InstanceOf ['LibUI::DateTimePicker'];
-    affix $lib, 'uiNewFontButton',     []    => InstanceOf ['LibUI::FontButton'];
-    #
-    affix $lib, 'uiMsgBox',      [ InstanceOf ['LibUI::Window'], Str, Str ] => Void;
-    affix $lib, 'uiMsgBoxError', [ InstanceOf ['LibUI::Window'], Str, Str ] => Void;
-    #
-    affix $lib, 'uiNewArea',
-        [ Pointer [ Type ['LibUI::AreaHandler'] ] ] => InstanceOf ['LibUI::Area'];
-    #
+    sub uiDrawTextLayoutExtents($layout) {
+        state $o //= wrap $lib, 'uiDrawTextLayoutExtents',
+            [ Pointer [Void], Pointer [Double], Pointer [Double] ] => Void;
+        my ( $w, $h ) = ( 0, 0 );
+        $o->( $layout, \$w, \$h );
+        return ( $w, $h );
+    }
 
-=head1 Requirements
+    # Table System
+    typedef 'LibUI::TableSelection' => Struct [ NumRows => Int, Rows => Pointer [Int] ];
+    typedef 'LibUI::TableTextColumnOptionalParams' => Struct [ ColorModelColumn => Int ];
 
-L<Affix> and L<Alien::libui>
+    # TableValue functions
+    affix $lib, 'uiFreeTableValue',      [ Pointer [Void] ]                 => Void;
+    affix $lib, 'uiTableValueGetType',   [ Pointer [Void] ]                 => Int;
+    affix $lib, 'uiNewTableValueString', [String]                           => Pointer [Void];
+    affix $lib, 'uiTableValueString',    [ Pointer [Void] ]                 => String;
+    affix $lib, 'uiNewTableValueImage',  [ Pointer [Void] ]                 => Pointer [Void];
+    affix $lib, 'uiTableValueImage',     [ Pointer [Void] ]                 => Pointer [Void];
+    affix $lib, 'uiNewTableValueInt',    [Int]                              => Pointer [Void];
+    affix $lib, 'uiTableValueInt',       [ Pointer [Void] ]                 => Int;
+    affix $lib, 'uiNewTableValueColor',  [ Double, Double, Double, Double ] => Pointer [Void];
+    affix $lib, 'uiTableValueColor',
+        [ Pointer [Void], Pointer [Double], Pointer [Double], Pointer [Double],
+        Pointer [Double] ] => Void;
 
-=head1 See Also
+    # Table struct typedefs
+    typedef TableModelHandler => Struct [
+        NumColumns   => Callback [ [ Pointer [Void], Pointer [Void] ]           => Int ],
+        ColumnType   => Callback [ [ Pointer [Void], Pointer [Void], Int ]      => Int ],
+        NumRows      => Callback [ [ Pointer [Void], Pointer [Void] ]           => Int ],
+        CellValue    => Callback [ [ Pointer [Void], Pointer [Void], Int, Int ] => Pointer [Void] ],
+        SetCellValue =>
+            Callback [ [ Pointer [Void], Pointer [Void], Int, Int, Pointer [Void] ] => Void ],
+    ];
+    typedef TableParams =>
+        Struct [ Model => Pointer [Void], RowBackgroundColorModelColumn => Int, ];
 
-F<eg/demo.pl> - Very basic example
+    # TableModel functions
+    affix $lib, 'uiNewTableModel',         [ Pointer [ TableModelHandler() ] ] => Pointer [Void];
+    affix $lib, 'uiFreeTableModel',        [ Pointer [Void] ]                  => Void;
+    affix $lib, 'uiTableModelRowInserted', [ Pointer [Void], Int ]             => Void;
+    affix $lib, 'uiTableModelRowChanged',  [ Pointer [Void], Int ]             => Void;
+    affix $lib, 'uiTableModelRowDeleted',  [ Pointer [Void], Int ]             => Void;
 
-F<eg/widgets.pl> - Demo of basic controls
+    # Table column functions
+    affix $lib, 'uiTableAppendTextColumn',
+        [ Pointer [Void], String, Int, Int, Pointer [Void] ] => Void;
+    affix $lib, 'uiTableAppendImageColumn', [ Pointer [Void], String, Int ] => Void;
+    affix $lib, 'uiTableAppendImageTextColumn',
+        [ Pointer [Void], String, Int, Int, Int, Pointer [Void] ] => Void;
+    affix $lib, 'uiTableAppendCheckboxColumn', [ Pointer [Void], String, Int, Int ] => Void;
+    affix $lib, 'uiTableAppendCheckboxTextColumn',
+        [ Pointer [Void], String, Int, Int, Int, Int, Pointer [Void] ] => Void;
+    affix $lib, 'uiTableAppendProgressBarColumn', [ Pointer [Void], String, Int ] => Void;
+    affix $lib, 'uiTableAppendButtonColumn', [ Pointer [Void], String, Int, Int ] => Void;
 
-=head1 LICENSE
+    # Table view functions
+    sub uiNewTable ($params) {
+        state $o //= wrap $lib, 'uiNewTable', [ Pointer [ TableParams() ] ] => Pointer [Void];
+        if ( ref $params eq 'HASH' ) {
+            $params->{RowBackgroundColorModelColumn} //= -1;
+            return $o->($params);
+        }
+        $o->( { Model => $params, RowBackgroundColorModelColumn => -1 } );
+    }
+    affix $lib, 'uiTableHeaderVisible',    [ Pointer [Void] ]      => Int;
+    affix $lib, 'uiTableHeaderSetVisible', [ Pointer [Void], Int ] => Void;
+    affix $lib, 'uiTableOnRowClicked',
+        [
+        Pointer [Void],
+        Callback [ [ Pointer [Void], Int, Pointer [Void] ] => Void ],
+        Pointer [Void]
+        ] => Void;
+    affix $lib, 'uiTableOnRowDoubleClicked',
+        [
+        Pointer [Void],
+        Callback [ [ Pointer [Void], Int, Pointer [Void] ] => Void ],
+        Pointer [Void]
+        ] => Void;
+    affix $lib, 'uiTableHeaderSetSortIndicator', [ Pointer [Void], Int, Int ] => Void;
+    affix $lib, 'uiTableHeaderSortIndicator', [ Pointer [Void], Int ] => Int;
+    affix $lib, 'uiTableHeaderOnClicked',
+        [
+        Pointer [Void],
+        Callback [ [ Pointer [Void], Int, Pointer [Void] ] => Void ],
+        Pointer [Void]
+        ] => Void;
+    affix $lib, 'uiTableColumnWidth',      [ Pointer [Void], Int ]      => Int;
+    affix $lib, 'uiTableColumnSetWidth',   [ Pointer [Void], Int, Int ] => Void;
+    affix $lib, 'uiTableGetSelectionMode', [ Pointer [Void] ]           => Int;
+    affix $lib, 'uiTableSetSelectionMode', [ Pointer [Void], Int ]      => Void;
+    affix $lib, 'uiTableOnSelectionChanged',
+        [ Pointer [Void], Callback [ [ Pointer [Void], Pointer [Void] ] => Void ],
+        Pointer [Void] ] => Void;
+    affix $lib, 'uiTableGetSelection',  [ Pointer [Void] ]                 => Pointer [Void];
+    affix $lib, 'uiTableSetSelection',  [ Pointer [Void], Pointer [Void] ] => Void;
+    affix $lib, 'uiFreeTableSelection', [ Pointer [Void] ]                 => Void;
 
-Copyright (C) Sanko Robinson.
+    # Named Constants
+    use constant { UI_FILL_WINDING => 0, UI_FILL_ALTERNATE => 1 };
+    use constant {
+        UI_BRUSH_SOLID           => 0,
+        UI_BRUSH_LINEAR_GRADIENT => 1,
+        UI_BRUSH_RADIAL_GRADIENT => 2
+    };
+    use constant { UI_LINE_CAP_FLAT   => 0, UI_LINE_CAP_ROUND    => 1 };
+    use constant { UI_LINE_JOIN_MITER => 0, UI_LINE_JOIN_ROUND   => 1, UI_LINE_JOIN_BEVEL  => 2 };
+    use constant { UI_TEXT_ALIGN_LEFT => 0, UI_TEXT_ALIGN_CENTER => 1, UI_TEXT_ALIGN_RIGHT => 2 };
+    use constant {
+        UI_WEIGHT_THIN        => 100,
+        UI_WEIGHT_EXTRA_LIGHT => 200,
+        UI_WEIGHT_LIGHT       => 300,
+        UI_WEIGHT_BOOK        => 350,
+        UI_WEIGHT_NORMAL      => 400,
+        UI_WEIGHT_MEDIUM      => 500,
+        UI_WEIGHT_SEMI_BOLD   => 600,
+        UI_WEIGHT_BOLD        => 700,
+        UI_WEIGHT_EXTRA_BOLD  => 800,
+        UI_WEIGHT_HEAVY       => 900
+    };
+    use constant { UI_ITALIC_NORMAL => 0, UI_ITALIC_OBLIQUE => 1, UI_ITALIC_ITALIC => 2 };
+    use constant {
+        UI_STRETCH_ULTRA_CONDENSED => 0,
+        UI_STRETCH_EXTRA_CONDENSED => 1,
+        UI_STRETCH_CONDENSED       => 2,
+        UI_STRETCH_SEMI_CONDENSED  => 3,
+        UI_STRETCH_NORMAL          => 4,
+        UI_STRETCH_SEMI_EXPANDED   => 5,
+        UI_STRETCH_EXPANDED        => 6,
+        UI_STRETCH_EXTRA_EXPANDED  => 7,
+        UI_STRETCH_ULTRA_EXPANDED  => 8
+    };
+    use constant {
+        UI_UNDERLINE_NONE     => 0,
+        UI_UNDERLINE_SINGLE   => 1,
+        UI_UNDERLINE_DOUBLE   => 2,
+        UI_UNDERLINE_SQUIGGLE => 3
+    };
+    use constant {
+        UI_TABLE_COLUMN_STRING => 0,
+        UI_TABLE_COLUMN_IMAGE  => 1,
+        UI_TABLE_COLUMN_INT    => 2,
+        UI_TABLE_COLUMN_COLOR  => 3
+    };
+    use constant { UI_SELECTION_NONE => 0, UI_SELECTION_SINGLE => 1, UI_SELECTION_MULTIPLE => 2 };
+    use constant { UI_SORT_NONE      => 0, UI_SORT_ASCENDING   => 1, UI_SORT_DESCENDING    => 2 };
+    use constant {
+        UI_ALIGN_FILL   => 0,
+        UI_ALIGN_START  => 1,
+        UI_ALIGN_CENTER => 2,
+        UI_ALIGN_END    => 3
+    };
 
-This library is free software; you can redistribute it and/or modify it under
-the same terms as Perl itself.
+    # DrawBrush helpers
+    sub solid_brush ( $r, $g, $b, $a //= 1.0 ) {
+        {   Type        => UI_BRUSH_SOLID,
+            R           => $r,
+            G           => $g,
+            B           => $b,
+            A           => $a,
+            X0          => 0,
+            Y0          => 0,
+            X1          => 0,
+            Y1          => 0,
+            OuterRadius => 0,
+            Stops       => undef,
+            NumStops    => 0
+        };
+    }
 
-=head1 AUTHOR
+    # DrawStroke helper
+    sub draw_stroke (%p) {
+        {   Cap        => $p{cap}         // UI_LINE_CAP_FLAT,
+            Join       => $p{join}        // UI_LINE_JOIN_MITER,
+            Thickness  => $p{thickness}   // 1.0,
+            MiterLimit => $p{miter_limit} // 10.0,
+            Dashes     => $p{dashes}      // undef,
+            NumDashes  => $p{num_dashes}  // 0,
+            DashPhase  => $p{dash_phase}  // 0.0
+        };
+    }
 
-Sanko Robinson E<lt>sanko@cpan.orgE<gt>
+    # DrawMatrix OO wrapper
+    package LibUI::Matrix {
 
-=begin stopwords
+        sub new {
+            my ( $class, %opts ) = @_;
+            return bless {
+                M11 => $opts{m11} // 1,
+                M12 => $opts{m12} // 0,
+                M21 => $opts{m21} // 0,
+                M22 => $opts{m22} // 1,
+                M31 => $opts{m31} // 0,
+                M32 => $opts{m32} // 0
+            }, $class;
+        }
 
-draggable gotta userdata borderless uiWindow uiBox resizable checkbox readonly
-spinbox combobox
+        sub identity ($class) {
+            return $class->new();
+        }
 
-=end stopwords
+        sub set_identity ($self) {
+            $self->{M11} = 1;
+            $self->{M12} = 0;
+            $self->{M21} = 0;
+            $self->{M22} = 1;
+            $self->{M31} = 0;
+            $self->{M32} = 0;
+            return $self;
+        }
 
-=cut
+        sub translate ( $self, $x, $y ) {
+            LibUI::uiDrawMatrixTranslate( $self, $x, $y );
+            return $self;
+        }
 
+        sub scale ( $self, $x, $y, $w, $h ) {
+            LibUI::uiDrawMatrixScale( $self, $x, $y, $w, $h );
+            return $self;
+        }
+
+        sub rotate ( $self, $x, $y, $angle ) {
+            LibUI::uiDrawMatrixRotate( $self, $x, $y, $angle );
+            return $self;
+        }
+
+        sub skew ( $self, $x, $y, $xamount, $yamount ) {
+            LibUI::uiDrawMatrixSkew( $self, $x, $y, $xamount, $yamount );
+            return $self;
+        }
+
+        sub multiply ( $self, $other ) {
+            LibUI::uiDrawMatrixMultiply( $self, $other );
+            return $self;
+        }
+
+        sub invertible ($self) {
+            return LibUI::uiDrawMatrixInvertible($self);
+        }
+
+        sub invert ($self) {
+            return LibUI::uiDrawMatrixInvert($self);
+        }
+
+        sub transform_point ( $self, $x, $y ) {
+            my ( $rx, $ry ) = LibUI::uiDrawMatrixTransformPoint( $self, $x, $y );
+            return ( $rx, $ry );
+        }
+
+        sub transform_size ( $self, $w, $h ) {
+            my ( $rw, $rh ) = LibUI::uiDrawMatrixTransformSize( $self, $w, $h );
+            return ( $rw, $rh );
+        }
+
+        sub apply( $self, $dc ) {
+            LibUI::uiDrawTransform( $dc, $self );
+            return $self;
+        }
+    }
+
+    # Utility to format struct tm as string
+    sub format_tm
+    { # Time::tm requires Class::Struct... Never let it be said that perl has enough object systems...
+        my ($tm) = @_;
+        my @mon  = qw[Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec];
+        my @wday = qw[Sun Mon Tue Wed Thu Fri Sat];
+        return sprintf(
+            '%s %s %2d %02d:%02d:%02d %d',
+            $wday[ $tm->{tm_wday} ],
+            $mon[ $tm->{tm_mon} ],
+            $tm->{tm_mday}, $tm->{tm_hour}, $tm->{tm_min}, $tm->{tm_sec}, $tm->{tm_year} + 1900
+        );
+    }
 }
 1;

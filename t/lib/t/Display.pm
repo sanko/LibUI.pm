@@ -16,7 +16,8 @@ package    #
             next unless -e $xvfb_run;
             next unless -x $xvfb_run;
             diag 'Restarting with xvfb-run...';
-            exec( $xvfb_run, $^X,
+            exec(
+                $xvfb_run, $^X,
                 ( $INC{'blib.pm'} ? '-Mblib' : () ),
                 ( $INC{'perl5db.pl'} ? '-d' : () ), $0,
             );

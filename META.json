@@ -1,15 +1,17 @@
 {
    "abstract" : "Simple, Portable, Native GUI Library",
    "author" : [
-      "Sanko Robinson <sanko@cpan.org>"
+      "Sanko Robinson"
    ],
+   "description" : " ",
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v3.1.22, CPAN::Meta::Converter version 2.150010",
+   "generated_by" : "App::mii v1.0.0",
+   "keywords" : [],
    "license" : [
       "artistic_2"
    ],
    "meta-spec" : {
-      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "url" : "https://metacpan.org/pod/CPAN::Meta::Spec",
       "version" : 2
    },
    "name" : "LibUI",
@@ -50,11 +52,11 @@
       },
       "runtime" : {
          "requires" : {
-            "Affix" : "0.12",
+            "Affix" : "v1.1.0",
             "Alien::libui" : "0",
             "Time::Local" : "1.30",
             "Time::Piece" : "0",
-            "perl" : "5.014000"
+            "perl" : "v5.40.0"
          }
       },
       "test" : {
@@ -63,20 +65,38 @@
          }
       }
    },
-   "release_status" : "unstable",
+   "provides" : {
+      "LibUI" : {
+         "file" : "lib/LibUI.pm",
+         "version" : "v1.0.1"
+      },
+      "LibUI::Matrix" : {
+         "file" : "lib/LibUI.pm"
+      }
+   },
+   "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
          "web" : "https://github.com/sanko/LibUI.pm/issues"
       },
       "homepage" : "https://github.com/sanko/LibUI.pm",
+      "license" : [
+         "http://www.perlfoundation.org/artistic_license_2_0"
+      ],
       "repository" : {
          "type" : "git",
          "url" : "https://github.com/sanko/LibUI.pm.git",
          "web" : "https://github.com/sanko/LibUI.pm"
       }
    },
-   "version" : "1.00",
+   "version" : "v1.0.1",
    "x_authority" : "cpan:SANKO",
+   "x_ignore" : [
+      ".tidyallrc",
+      ".gitignore",
+      ".clang-format",
+      ".github/**"
+   ],
    "x_serialization_backend" : "JSON::PP version 4.16",
    "x_static_install" : 1
 }
