@@ -15,6 +15,7 @@ This is the first version with all of libui-ng's full widget set.
   - `timer.pl` - demonstrates `uiTimer` by printing timestamps every second
   - `hello_world.pl` - minimal "Hello, World!" window
   - `calculator.pl` - basic calculator with grid layout, menus, and a settings dialog
+  - `datetime.pl` - demonstrates `uiDateTimePicker` with date, time, and combined pickers
 
 ### Changed
 
