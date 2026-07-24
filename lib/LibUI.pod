@@ -36,23 +36,17 @@ LibUI - Simple, Portable, Native GUI Library
 
 =begin html
 
-<h2>Screenshots</h2> <div style="text-align: center"> <h3>Linux</h3><img
-alt="Linux"
-src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/linux.png" />
-<h3>MacOS</h3><img alt="MacOS"
-src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/macos.png" />
-<h3>Windows</h3><img alt="Windows"
-src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/windows.png" />
-</div>
+<h2>Screenshots</h2> <div style="text-align: center"> <h3>Linux</h3><img alt="Linux"
+src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/linux.png" /> <h3>MacOS</h3><img alt="MacOS"
+src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/macos.png" /> <h3>Windows</h3><img alt="Windows"
+src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/windows.png" /> </div>
 
 =end html
 
 =head1 DESCRIPTION
 
-LibUI is a simple and portable (but not inflexible) GUI library in C that uses
-the native GUI technologies of each platform it supports.
-
-This distribution is under construction. It works but is incomplete.
+LibUI is a simple and portable (but not inflexible) GUI library in C that uses the native GUI technologies of each
+platform it supports.
 
 =head1 Functions
 
@@ -62,16 +56,14 @@ You may import any of them by name or with their given import tags.
 
 =head2 Default Functions
 
-These are basic functions to get the UI started and may be imported with the
-C<:default> tag.
+These are basic functions to get the UI started and may be imported with the C<:default> tag.
 
 =head3 C<uiInit( ... )>
 
     my $err = uiInit({ Size => 0 });
 
-Ask LibUI to do all the platform specific work to get up and running. If LibUI
-fails to initialize itself, this will return a string. Weird upstream choice, I
-know...
+Ask LibUI to do all the platform specific work to get up and running. If LibUI fails to initialize itself, this will
+return a string.
 
 You B<must> call this before creating widgets.
 
@@ -101,8 +93,7 @@ Let LibUI's event loop run until interrupted.
 
     uiMainSteps( );
 
-You may call this instead of C<uiMain( )> if you want to run the main loop
-yourself.
+You may call this instead of C<uiMain( )> if you want to run the main loop yourself.
 
 =head3 C<uiMainStep( ... )>
 
@@ -110,12 +101,10 @@ yourself.
 
 Runs one iteration of the main loop.
 
-It takes a single boolean argument indicating whether to wait for an even to
-occur or not.
+It takes a single boolean argument indicating whether to wait for an even to occur or not.
 
-It returns true if an event was processed (or if no even is available if you
-don't wish to wait) and false if the event loop was told to stop (for instance,
-C<uiQuit()> was called).
+It returns true if an event was processed (or if no even is available if you don't wish to wait) and false if the event
+loop was told to stop (for instance, C<uiQuit()> was called).
 
 =head3 C<uiQuit( )>
 
@@ -127,8 +116,8 @@ Signals LibUI that you are ready to quit.
 
     uiQueueMain( sub { }, $values );
 
-Trigger a callback on the main thread from any other thread. This is likely
-unstable. It's for sure untested as long as perl threads are garbage.
+Trigger a callback on the main thread from any other thread. This is likely unstable. It's for sure untested as long as
+perl threads are garbage.
 
 =head3 C<uiTimer( ... )>
 
@@ -308,8 +297,7 @@ Makes sure the control's parent can be set to parent.
 
 Returns whether or not the control can be interacted with by the user.
 
-Checks if the control and all its parents are enabled to make sure it can be
-interacted with by the user.
+Checks if the control and all its parents are enabled to make sure it can be interacted with by the user.
 
 =begin private
 
@@ -319,8 +307,7 @@ interacted with by the user.
 
 Returns whether or not the control can be interacted with by the user.
 
-Checks if the control and all its parents are enabled to make sure it can be
-interacted with by the user.
+Checks if the control and all its parents are enabled to make sure it can be interacted with by the user.
 
 =end private
 
@@ -328,8 +315,7 @@ interacted with by the user.
 
 A window control that represents a top-level window.
 
-A window contains exactly one child control that occupies the entire window and
-cannot be a child of another control.
+A window contains exactly one child control that occupies the entire window and cannot be a child of another control.
 
 These functions may be imported with the C<:window> tag.
 
@@ -351,8 +337,8 @@ Sets the window title.
 
 Gets the window position.
 
-Coordinates are measured from the top left corner of the screen. This method
-may return inaccurate or dummy values on X11.
+Coordinates are measured from the top left corner of the screen. This method may return inaccurate or dummy values on
+X11.
 
 
 =head3 C<uiWindowSetPosition( ... )>
@@ -361,8 +347,8 @@ may return inaccurate or dummy values on X11.
 
 Moves the window to the specified position.
 
-Coordinates are measured from the top left corner of the screen. This method is
-merely a hint and may be ignored on X11.
+Coordinates are measured from the top left corner of the screen. This method is merely a hint and may be ignored on
+X11.
 
 =head3 C<uiWindowOnPositionChanged( ... )>
 
@@ -388,8 +374,8 @@ The window to bind.
 
 =item C<$code_ref>
 
-Code reference that should expect a reference back to the instance that
-triggered the callback and user data registered with the sender instance.
+Code reference that should expect a reference back to the instance that triggered the callback and user data registered
+with the sender instance.
 
 =item C<$user_data>
 
@@ -454,8 +440,8 @@ The window to bind.
 
 =item C<$code_ref>
 
-Code reference that should expect a reference back to the instance that
-triggered the callback and user data registered with the sender instance.
+Code reference that should expect a reference back to the instance that triggered the callback and user data registered
+with the sender instance.
 
 =item C<$user_data>
 
@@ -488,11 +474,11 @@ The window to bind.
 
 =item C<$code_ref>
 
-Code reference that should expect a reference back to the instance that
-triggered the callback and user data registered with the sender instance.
+Code reference that should expect a reference back to the instance that triggered the callback and user data registered
+with the sender instance.
 
-Return a true value to destroy the window. Return an untrue value to abort
-closing and keep the window alive and visible.
+Return a true value to destroy the window. Return an untrue value to abort closing and keep the window alive and
+visible.
 
 =item C<$user_data>
 
@@ -524,8 +510,8 @@ The window to bind.
 
 =item C<$code_ref>
 
-Code reference that should expect a reference back to the instance that
-triggered the callback and user data registered with the sender instance.
+Code reference that should expect a reference back to the instance that triggered the callback and user data registered
+with the sender instance.
 
 =item C<$user_data>
 
@@ -615,8 +601,8 @@ Whether or not the window should display a menu bar.
 
 =head2 Button Functions
 
-These functions create and wrap a control that visually represents a button to
-be clicked by the user to trigger an action.
+These functions create and wrap a control that visually represents a button to be clicked by the user to trigger an
+action.
 
 Import these functions with the C<:button> tag.
 
@@ -656,8 +642,7 @@ Expected parameters include:
 
 These functions wrap a boxlike container that holds a group of controls.
 
-The contained controls are arranged to be displayed either horizontally or
-vertically next to each other.
+The contained controls are arranged to be displayed either horizontally or vertically next to each other.
 
 You may import these functions with the C<:box> tag.
 
@@ -667,8 +652,8 @@ You may import these functions with the C<:box> tag.
 
 Appends a control to the box.
 
-Stretchy items expand to use the remaining space within the box. In the case of
-multiple stretchy items the space is shared equally.
+Stretchy items expand to use the remaining space within the box. In the case of multiple stretchy items the space is
+shared equally.
 
 Expected parameters include:
 
@@ -710,8 +695,7 @@ Padding is defined as space between individual controls.
 
 Sets whether or not controls within the box are padded.
 
-Padding is defined as space between individual controls. The padding size is
-determined by the OS defaults.
+Padding is defined as space between individual controls. The padding size is determined by the OS defaults.
 
 =head3 C<uiNewHorizontalBox( )>
 
@@ -731,8 +715,7 @@ Controls within the box are placed next to each other vertically.
 
 =head2 Checkbox Functions
 
-The functions wrap a control with a user checkable box accompanied by a text
-label.
+The functions wrap a control with a user checkable box accompanied by a text label.
 
 You may import them with the C<:checkbox> tag.
 
@@ -804,8 +787,7 @@ The callback is not triggered when calling C<uiEntrySetText( ... )>.
 
     my $ro = uiEntryReadOnly( $field );
 
-Returns whether or not the entry's text can be changed. A true value if
-readonly, otherwise false.
+Returns whether or not the entry's text can be changed. A true value if readonly, otherwise false.
 
 =head3 C<uiEntrySetReadOnly( ... )>
 
@@ -833,8 +815,7 @@ The entered text is NOT readable by the user but masked as C<*******>.
 
 Creates a new entry suitable for search.
 
-Some systems will deliberately delay the C<uiEntryOnChanged( ... )> callback
-for a more natural feel.
+Some systems will deliberately delay the C<uiEntryOnChanged( ... )> callback for a more natural feel.
 
 =head2 Label Functions
 
@@ -862,11 +843,9 @@ Creates a new label.
 
 =head2 Tab Functions
 
-A tab represents a multi-page control interface that displays one page at a
-time.
+A tab represents a multi-page control interface that displays one page at a time.
 
-Each page/tab has an associated label that can be selected to switch between
-pages/tabs.
+Each page/tab has an associated label that can be selected to switch between pages/tabs.
 
 =head3 C<uiTabAppend( ... )>
 
@@ -914,12 +893,10 @@ Creates a new tab container.
 
 =head2 Group Functions
 
-A group is a control container that adds a label to the contained child
-control.
+A group is a control container that adds a label to the contained child control.
 
-This control is a great way of grouping related controls in combination with
-uiBox. A visual box will or will not be drawn around the child control
-dependent on the underlying OS implementation.
+This control is a great way of grouping related controls in combination with uiBox. A visual box will or will not be
+drawn around the child control dependent on the underlying OS implementation.
 
 You may import these functions with the C<:group> tag.
 
@@ -963,15 +940,14 @@ Creates a new group.
 
 =head2 Spinbox Functions
 
-A spinbox is a control to display and modify integer values via a text field or
-+/- buttons.
+A spinbox is a control to display and modify integer values via a text field or C<+/-> buttons.
 
-This is a convenient control for having the user enter integer values. Values
-are guaranteed to be within the specified range.
+This is a convenient control for having the user enter integer values. Values are guaranteed to be within the specified
+range.
 
-The + button increases the held value by 1.
+The C<+> button increases the held value by 1.
 
-The - button decreased the held value by 1.
+The C<-> button decreased the held value by 1.
 
 Entering a value out of range will clamp to the nearest value in range.
 
@@ -1007,18 +983,16 @@ Creates a new spinbox.
 
 The initial spinbox value equals the minimum value.
 
-In the current implementation upstream, C<$min> and C<$max> are swapped if
-C<$min> is greater than C<$max>. This may change in the future though.
+In the current implementation upstream, C<$min> and C<$max> are swapped if C<$min> is greater than C<$max>. This may
+change in the future though.
 
 =head2 Slider Functions
 
-A slider is a control to display and modify integer values via a user draggable
-slider.
+A slider is a control to display and modify integer values via a user draggable slider.
 
 Values are guaranteed to be within the specified range.
 
-Sliders by default display a tool tip showing the current value when being
-dragged.
+Sliders by default display a tool tip showing the current value when being dragged.
 
 Sliders are horizontal only.
 
@@ -1068,9 +1042,8 @@ Registers a callback for when the slider is released from dragging.
 
 Sets the slider range.
 
-Make sure to clamp the slider value to the nearest value in range - should it
-be out of range. Manually call C<uiSliderOnChanged( ... )>'s callback in such a
-case.
+Make sure to clamp the slider value to the nearest value in range - should it be out of range. Manually call
+C<uiSliderOnChanged( ... )>'s callback in such a case.
 
 =head3 C<uiNewSlider( ... )>
 
@@ -1080,13 +1053,12 @@ Creates a new slider.
 
 The initial slider value equals the minimum value.
 
-In the current implementation upstream, C<$min> and C<$max> are swapped if
-C<$min> is greater than C<$max>. This may change in the future though.
+In the current implementation upstream, C<$min> and C<$max> are swapped if C<$min> is greater than C<$max>. This may
+change in the future though.
 
 =head2 ProgressBar Functions
 
-A ProgressBar is a control that visualizes the progress of a task via the fill
-level of a horizontal bar.
+A ProgressBar is a control that visualizes the progress of a task via the fill level of a horizontal bar.
 
 Indeterminate values are supported via an animated bar.
 
@@ -1102,11 +1074,9 @@ Returns the progress bar value.
 
 Sets the progress bar value.
 
-Valid values are C<[0 .. 100]> for displaying a solid bar imitating a percent
-value.
+Valid values are C<[0 .. 100]> for displaying a solid bar imitating a percent value.
 
-Use a value of C<-1> to render an animated bar to convey an indeterminate
-value.
+Use a value of C<-1> to render an animated bar to convey an indeterminate value.
 
 =head3 C<uiNewProgressBar( )>
 
@@ -1114,8 +1084,7 @@ Creates a new progress bar.
 
 =head2 Separator Functions
 
-A separator is a control to visually separate controls, horizontally or
-vertically.
+A separator is a control to visually separate controls, horizontally or vertically.
 
 Import these functions with the C<:separator> tag.
 
@@ -1133,8 +1102,7 @@ Creates a new vertical separator.
 
 =head2 Combobox Functions
 
-A combobox is a control to select one item from a predefined list of items via
-a drop down menu.
+A combobox is a control to select one item from a predefined list of items via a drop down menu.
 
 You may import these functions with the C<:combobox> tag.
 
@@ -1156,8 +1124,8 @@ Inserts an item at C<$index> to the combo box.
 
 Deletes an item at C<$index> from the combo box.
 
-Deleting the index of the item currently selected will move the selection to
-the next item in the combo box or C<-1> if no such item exists.
+Deleting the index of the item currently selected will move the selection to the next item in the combo box or C<-1> if
+no such item exists.
 
 =head3 C<uiComboboxClear( ... )>
 
@@ -1189,9 +1157,8 @@ Sets the item selected. C<-1> to clear selection.
 
 Registers a callback for when a combo box item is selected.
 
-The callback is not triggered when calling C<uiComboboxSetSelected( ... )>,
-C<uiComboboxInsertAt( ... )>, C<uiComboboxDelete( ... )>, or C<uiComboboxClear(
-... )>.
+The callback is not triggered when calling C<uiComboboxSetSelected( ... )>, C<uiComboboxInsertAt( ... )>,
+C<uiComboboxDelete( ... )>, or C<uiComboboxClear( ... )>.
 
 =head3 C<uiNewCombobox( )>
 
@@ -1201,8 +1168,7 @@ Creates a new combo box.
 
 =head2 Editable Combobox Functions
 
-An editable combobox is a control to select one item from a predefined list of
-items or enter ones own.
+An editable combobox is a control to select one item from a predefined list of items or enter ones own.
 
 Predefined items can be selected from a drop down menu.
 
@@ -1222,8 +1188,7 @@ Appends an item to the editable combo box.
 
 Returns the text of the editable combo box.
 
-This text is either the text of one of the predefined list items or the text
-manually entered by the user.
+This text is either the text of one of the predefined list items or the text manually entered by the user.
 
 =head3 C<uiEditableComboboxSetText( ... )>
 
@@ -1235,8 +1200,7 @@ Sets the editable combo box text.
 
     uiEditableComboboxOnChanged( $combo, sub { my ($cb, user_data) = @_; }, undef );
 
-Registers a callback for when an editable combo box item is selected or user
-text changed.
+Registers a callback for when an editable combo box item is selected or user text changed.
 
 The callback is not triggered when calling C<uiEditableComboboxSetText( ... )>.
 
@@ -1248,11 +1212,9 @@ Creates a new editable combo box.
 
 =head2 Menu Functions
 
-Menus provide the standard menu functionality found at the top of application
-windows.
+Menus provide the standard menu functionality found at the top of application windows.
 
-Each menu has a name and can contain items, check items, quit, preferences,
-about, and separators.
+Each menu has a name and can contain items, check items, quit, preferences, about, and separators.
 
 You may import these functions with the C<:menu> tag.
 
@@ -1280,8 +1242,7 @@ Appends a new item with a checkbox to the menu with the given name.
 
 Appends a quit item to the menu.
 
-On platforms where there is a standard quit item, this is it. On other
-platforms, this is just a normal item.
+On platforms where there is a standard quit item, this is it. On other platforms, this is just a normal item.
 
 =head3 C<uiMenuAppendPreferencesItem( ... )>
 
@@ -1289,8 +1250,7 @@ platforms, this is just a normal item.
 
 Appends a preferences item to the menu.
 
-On platforms where there is a standard preferences item, this is it. On other
-platforms, this is just a normal item.
+On platforms where there is a standard preferences item, this is it. On other platforms, this is just a normal item.
 
 =head3 C<uiMenuAppendAboutItem( ... )>
 
@@ -1298,8 +1258,7 @@ platforms, this is just a normal item.
 
 Appends an about item to the menu.
 
-On platforms where there is a standard about item, this is it. On other
-platforms, this is just a normal item.
+On platforms where there is a standard about item, this is it. On other platforms, this is just a normal item.
 
 =head3 C<uiMenuAppendSeparator( ... )>
 
@@ -1346,9 +1305,8 @@ The window this menu item is associated with.
 
 =item C<$code_ref>
 
-Code reference that should expect a reference back to the menu item that
-triggered the callback, the window associated with the menu item, and user
-data registered with the sender instance.
+Code reference that should expect a reference back to the menu item that triggered the callback, the window associated
+with the menu item, and user data registered with the sender instance.
 
 =item C<$user_data>
 
@@ -1414,8 +1372,8 @@ The date time picker to bind.
 
 =item C<$code_ref>
 
-Code reference that should expect a reference back to the instance that
-triggered the callback and user data registered with the sender instance.
+Code reference that should expect a reference back to the instance that triggered the callback and user data registered
+with the sender instance.
 
 =item C<$user_data>
 
@@ -1561,8 +1519,8 @@ The color button to bind.
 
 =item C<$code_ref>
 
-Code reference that should expect a reference back to the instance that
-triggered the callback and user data registered with the sender instance.
+Code reference that should expect a reference back to the instance that triggered the callback and user data registered
+with the sender instance.
 
 =item C<$user_data>
 
@@ -1636,8 +1594,8 @@ The font button to bind.
 
 =item C<$code_ref>
 
-Code reference that should expect a reference back to the instance that
-triggered the callback and user data registered with the sender instance.
+Code reference that should expect a reference back to the instance that triggered the callback and user data registered
+with the sender instance.
 
 =item C<$user_data>
 
@@ -1647,8 +1605,7 @@ Whatever you feel like passing along.
 
 =head2 Multiline Entry Functions
 
-A multiline entry is a control to display and allow editing of a multi-line
-text field.
+A multiline entry is a control to display and allow editing of a multi-line text field.
 
 You may import these functions with the C<:multilineentry> tag.
 
@@ -1694,8 +1651,7 @@ Appends text to the multiline entry.
 
 Registers a callback for when the multiline entry text is changed by the user.
 
-The callback is not triggered when calling C<uiMultilineEntrySetText( ... )> or
-C<uiMultilineEntryAppend( ... )>.
+The callback is not triggered when calling C<uiMultilineEntrySetText( ... )> or C<uiMultilineEntryAppend( ... )>.
 
 =head3 C<uiMultilineEntryReadOnly( ... )>
 
@@ -1763,8 +1719,8 @@ The radio buttons control to bind.
 
 =item C<$code_ref>
 
-Code reference that should expect a reference back to the instance that
-triggered the callback and user data registered with the sender instance.
+Code reference that should expect a reference back to the instance that triggered the callback and user data registered
+with the sender instance.
 
 =item C<$user_data>
 
@@ -1812,8 +1768,8 @@ The tab control to bind.
 
 =item C<$code_ref>
 
-Code reference that should expect a reference back to the instance that
-triggered the callback and user data registered with the sender instance.
+Code reference that should expect a reference back to the instance that triggered the callback and user data registered
+with the sender instance.
 
 =item C<$user_data>
 
@@ -1877,13 +1833,11 @@ Vertical alignment.
 
 =item C<$hstretch>
 
-Whether or not the control will be stretched horizontally to fill available
-space.
+Whether or not the control will be stretched horizontally to fill available space.
 
 =item C<$vstretch>
 
-Whether or not the control will be stretched vertically to fill available
-space.
+Whether or not the control will be stretched vertically to fill available space.
 
 =back
 
@@ -1939,13 +1893,11 @@ Vertical alignment.
 
 =item C<$hstretch>
 
-Whether or not the control will be stretched horizontally to fill available
-space.
+Whether or not the control will be stretched horizontally to fill available space.
 
 =item C<$vstretch>
 
-Whether or not the control will be stretched vertically to fill available
-space.
+Whether or not the control will be stretched vertically to fill available space.
 
 =back
 
@@ -1963,13 +1915,11 @@ Padding is defined as space between individual controls.
 
 Sets whether or not controls within the grid are padded.
 
-Padding is defined as space between individual controls. The padding size is
-determined by the OS defaults.
+Padding is defined as space between individual controls. The padding size is determined by the OS defaults.
 
 =head2 Form Functions
 
-A form is a container control that arranges its children in a form layout with
-labels.
+A form is a container control that arranges its children in a form layout with labels.
 
 You may import these functions with the C<:form> tag.
 
@@ -2033,8 +1983,7 @@ Padding is defined as space between individual controls.
 
 Sets whether or not controls within the form are padded.
 
-Padding is defined as space between individual controls. The padding size is
-determined by the OS defaults.
+Padding is defined as space between individual controls. The padding size is determined by the OS defaults.
 
 =head2 File Dialog Functions
 
@@ -2380,8 +2329,7 @@ End point Y.
 
     uiDrawPathCloseFigure( $path );
 
-Closes the current figure by drawing a line from the current point to the
-starting point of the figure.
+Closes the current figure by drawing a line from the current point to the starting point of the figure.
 
 =head3 C<uiDrawPathAddRectangle( ... )>
 
@@ -2459,15 +2407,13 @@ A C<LibUI::DrawBrush> describing the fill appearance.
 
 =item C<$matrix>
 
-A C<LibUI::DrawMatrix> transform applied to the brush, or C<undef> for no
-transform.
+A C<LibUI::DrawMatrix> transform applied to the brush, or C<undef> for no transform.
 
 =back
 
 =head2 Draw Matrix Functions
 
-Draw matrices are used to transform coordinates and sizes during drawing
-operations.
+Draw matrices are used to transform coordinates and sizes during drawing operations.
 
 You may import these functions with the C<:drawmatrix> tag.
 
@@ -2535,8 +2481,7 @@ Transforms a size using the matrix.
 
 =head2 Draw Context Functions
 
-These functions perform operations on the draw context beyond basic path
-drawing.
+These functions perform operations on the draw context beyond basic path drawing.
 
 You may import these functions with the C<:drawcontext> tag.
 
@@ -2806,8 +2751,7 @@ Returns the OpenType features map from a features attribute.
 
 =head2 Attributed String Functions
 
-An attributed string is a string with associated text attributes that modify
-its appearance.
+An attributed string is a string with associated text attributes that modify its appearance.
 
 You may import these functions with the C<:attrstr> tag.
 
@@ -2923,8 +2867,7 @@ You may import these functions with the C<:textlayout> tag.
 
 Creates a new text layout with the given parameters.
 
-The params struct contains the attributed string, default font, width, and
-alignment.
+The params struct contains the attributed string, default font, width, and alignment.
 
 =head3 C<uiDrawFreeTextLayout( ... )>
 
@@ -2946,8 +2889,8 @@ Returns the extents (width and height) of the text layout.
 
 =head2 Table Functions
 
-Tables display data in rows and columns with support for various column types
-including text, images, checkboxes, progress bars, and buttons.
+Tables display data in rows and columns with support for various column types including text, images, checkboxes,
+progress bars, and buttons.
 
 You may import these functions with the C<:table> tag.
 
@@ -3113,9 +3056,9 @@ Appends a button column to the table.
 
     my $table = uiNewTable( { Model => $model, RowBackgroundColorModelColumn => -1 } );
 
-Creates a new table with the given parameters. The C<Model> field is a L<uiTableModel>,
-and C<RowBackgroundColorModelColumn> specifies a column index whose color value will be
-used as the row background color (use C<-1> for none).
+Creates a new table with the given parameters. The C<Model> field is a L<uiTableModel>, and
+C<RowBackgroundColorModelColumn> specifies a column index whose color value will be used as the row background color
+(use C<-1> for none).
 
 =head3 C<uiTableHeaderVisible( ... )>
 
@@ -3233,8 +3176,8 @@ Frees a table selection.
 
 =head1 CONSTANTS
 
-Named constants replace magic numbers throughout the API. Import them with the
-C<:constants> tag or all at once with C<:all>.
+Named constants replace magic numbers throughout the API. Import them with the C<:constants> tag or all at once with
+C<:all>.
 
 =head2 Fill Mode
 
@@ -3428,15 +3371,13 @@ Used with C<uiGridAppend>.
 
 =head1 HELPERS
 
-Convenience functions that reduce boilerplate. Import with the C<:helpers> tag
-or C<:all>.
+Convenience functions that reduce boilerplate. Import with the C<:helpers> tag or C<:all>.
 
 =head2 C<solid_brush( ... )>
 
     my $brush = solid_brush( $r, $g, $b, $a );
 
-Returns a C<DrawBrush> hashref configured as a solid-color brush. C<$a> (alpha)
-defaults to C<1.0>.
+Returns a C<DrawBrush> hashref configured as a solid-color brush. C<$a> (alpha) defaults to C<1.0>.
 
 This replaces the verbose 11-field hashref:
 
@@ -3476,13 +3417,12 @@ Returns a C<DrawStrokeParams> hashref. All parameters are named and optional:
 
     my $str = format_tm( $tm_hashref );
 
-Formats a C<struct tm> hashref (as returned by C<uiDateTimePickerTime>) into a
-human-readable string like C<"Sun Jul  6 14:30:05 2026">.
+Formats a C<struct tm> hashref (as returned by C<uiDateTimePickerTime>) into a human-readable string like C<"Sun Jul  6
+14:30:05 2026">.
 
 =head1 LibUI::Matrix
 
-Object-oriented wrapper around C<uiDrawMatrix>. Encapsulates the 6-field
-matrix struct and provides chainable methods.
+Object-oriented wrapper around C<uiDrawMatrix>. Encapsulates the 6-field matrix struct and provides chainable methods.
 
     use LibUI qw[:all];
 
@@ -3526,8 +3466,7 @@ Applies a scale around point C<($x, $y)>. Returns C<$self> for chaining.
 
     $m->rotate(200, 150, 3.14);
 
-Applies a rotation (in radians) around point C<($x, $y)>. Returns C<$self> for
-chaining.
+Applies a rotation (in radians) around point C<($x, $y)>. Returns C<$self> for chaining.
 
 =head3 C<$m-E<gt>skew( $x, $y, $xamount, $yamount )>
 
@@ -3569,14 +3508,12 @@ Transforms a size through the matrix. Returns C<($rw, $rh)>.
 
     $m->apply($draw_context);
 
-Applies the matrix to a draw context via C<uiDrawTransform>. Returns C<$self>
-for chaining.
+Applies the matrix to a draw context via C<uiDrawTransform>. Returns C<$self> for chaining.
 
 =head1 DATETIME PICKER WRAPPERS
 
-The C<uiDateTimePickerTime> and C<uiDateTimePickerSetTime> functions are
-wrapped to work with Perl-friendly data structures instead of raw C<struct tm>
-buffers.
+The C<uiDateTimePickerTime> and C<uiDateTimePickerSetTime> functions are wrapped to work with Perl-friendly data
+structures instead of raw C<struct tm> buffers.
 
 =head2 C<uiDateTimePickerTime( ... )>
 
@@ -3593,7 +3530,7 @@ Returns a hashref representing C<struct tm>:
         tm_year  => 126,     # years since 1900
         tm_wday  => 0,       # day of week (0-6, Sunday = 0)
         tm_yday  => 186,     # day of year (0-365)
-        tm_isdst => 0,       # daylight saving time flag
+        tm_isdst => 0        # daylight saving time flag
     }
 
 =head2 C<uiDateTimePickerSetTime( ... )>
@@ -3602,8 +3539,8 @@ Accepts three calling styles:
 
     # Hashref (full control)
     uiDateTimePickerSetTime( $picker, {
-        tm_sec => 0, tm_min => 0, tm_hour => 0,
-        tm_mday => 1, tm_mon => 0, tm_year => 70,
+        tm_sec  => 0, tm_min => 0, tm_hour => 0,
+        tm_mday => 1, tm_mon => 0, tm_year => 70
     });
 
     # Epoch timestamp (convenience)
@@ -3612,8 +3549,7 @@ Accepts three calling styles:
     # Positional list (sec, min, hour, mday, mon, year, ...)
     uiDateTimePickerSetTime( $picker, 0, 30, 14, 6, 6, 126 );
 
-When using the epoch form, C<localtime()> is used internally and C<tm_isdst>
-is set to C<-1> (let the system decide).
+When using the epoch form, C<localtime()> is used internally and C<tm_isdst> is set to C<-1> (let the system decide).
 
 =head1 FONT BUTTON WRAPPERS
 
@@ -3621,9 +3557,8 @@ is set to C<-1> (let the system decide).
 
     my $desc = uiFontButtonFont( $button );
 
-Returns a hashref describing the selected font. Automatically handles memory
-allocation and cleanup (no need for C<calloc>, C<sizeof>, C<cast>, or
-C<uiFreeFontButtonFont>).
+Returns a hashref describing the selected font. Automatically handles memory allocation and cleanup (no need for
+C<calloc>, C<sizeof>, C<cast>, or C<uiFreeFontButtonFont>).
 
     my $desc = uiFontButtonFont($btn);
     printf "Family: %s, Size: %.1f\n", $desc->{Family}, $desc->{Size};
@@ -3633,13 +3568,11 @@ C<uiFreeFontButtonFont>).
 
     my $desc = uiLoadControlFont();
 
-Loads the system default control font and returns a font descriptor hashref.
-Same structure as C<uiFontButtonFont>.
+Loads the system default control font and returns a font descriptor hashref. Same structure as C<uiFontButtonFont>.
 
 =head1 OUT-PARAMETER WRAPPERS
 
-Functions that previously required passing scalar references for output values
-now return Perl lists directly.
+Functions that previously required passing scalar references for output values now return Perl lists directly.
 
 =head2 C<uiColorButtonColor( ... )>
 
@@ -3683,53 +3616,46 @@ now return Perl lists directly.
     # Or pass a full hashref if you need control
     my $table = uiNewTable({ Model => $model, RowBackgroundColorModelColumn => 2 });
 
-When passed a model pointer directly, C<RowBackgroundColorModelColumn> defaults
-to C<-1> (disabled).
+When passed a model pointer directly, C<RowBackgroundColorModelColumn> defaults to C<-1> (disabled).
 
 =head1 AREA HANDLER ALIASES
 
-C<uiNewArea> and C<uiNewScrollingArea> accept callback aliases with C<on_>
-prefixes. Missing callbacks default to no-ops.
+C<uiNewArea> and C<uiNewScrollingArea> accept callbacks that trigger your coderef. Missing callbacks default to no-ops.
 
     my $area = uiNewArea({
-        on_draw   => sub { ... },
-        on_mouse  => sub { ... },
-        # on_crossed, on_drag, on_key default to no-ops
+        Draw        => sub { ... },
+        MouseEvent  => sub { ... }
     });
 
 =over
 
-=item C<on_draw> or C<Draw>
+=item C<Draw>
 
-=item C<on_mouse> or C<on_mouse_move> or C<MouseEvent>
+=item C<MouseEvent>
 
-=item C<on_crossed> or C<on_mouse_crossed> or C<MouseCrossed>
+=item C<MouseCrossed>
 
-=item C<on_drag> or C<on_drag_broken> or C<DragBroken>
+=item C<DragBroken>
 
-=item C<on_key> or C<on_key_event> or C<KeyEvent>
+=item C<KeyEvent>
 
 =back
 
-The C<Draw>, C<MouseEvent>, and C<KeyEvent> callbacks receive typed hashrefs
-instead of raw pointers. See L</"AREA CALLBACK STRUCTS">.
+The C<Draw>, C<MouseEvent>, and C<KeyEvent> callbacks receive typed hashrefs instead of raw pointers.
 
 =head1 Requirements
 
-L<Affix> and L<Alien::libui>
+L<Affix> and L<Alien::libui>. LibUI builds and works on Linux, Windows, macOS, etc.
 
 =head1 See Also
 
-F<eg/demo.pl> - Very basic example
-
-F<eg/widgets.pl> - Demo of basic controls
+From simple 'Hello, World!' scripts to a full blown threaded L<Net::BitTorrent> wrapper may be found in F<eg/>.
 
 =head1 LICENSE
 
 Copyright (C) Sanko Robinson.
 
-This library is free software; you can redistribute it and/or modify it under
-the same terms as Perl itself.
+This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
 
 =head1 AUTHOR
 
@@ -3737,7 +3663,8 @@ Sanko Robinson L<https://github.com/sanko>
 
 =begin stopwords
 
-draggable gotta userdata borderless uiWindow uiBox resizable checkbox readonly
-spinbox combobox
+draggable gotta userdata borderless uiWindow uiBox resizable checkbox readonly spinbox combobox
 
 =end stopwords
+
+=cut

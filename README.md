@@ -35,22 +35,16 @@ uiUninit();
 ```
 
 <div>
-    <h2>Screenshots</h2> <div style="text-align: center"> <h3>Linux</h3><img
-    alt="Linux"
-    src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/linux.png" />
-    <h3>MacOS</h3><img alt="MacOS"
-    src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/macos.png" />
-    <h3>Windows</h3><img alt="Windows"
-    src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/windows.png" />
-    </div>
+    <h2>Screenshots</h2> <div style="text-align: center"> <h3>Linux</h3><img alt="Linux"
+    src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/linux.png" /> <h3>MacOS</h3><img alt="MacOS"
+    src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/macos.png" /> <h3>Windows</h3><img alt="Windows"
+    src="https://sankorobinson.com/LibUI.pm/screenshots/synopsis/windows.png" /> </div>
 </div>
 
 # DESCRIPTION
 
-LibUI is a simple and portable (but not inflexible) GUI library in C that uses
-the native GUI technologies of each platform it supports.
-
-This distribution is under construction. It works but is incomplete.
+LibUI is a simple and portable (but not inflexible) GUI library in C that uses the native GUI technologies of each
+platform it supports.
 
 # Functions
 
@@ -60,8 +54,7 @@ You may import any of them by name or with their given import tags.
 
 ## Default Functions
 
-These are basic functions to get the UI started and may be imported with the
-`:default` tag.
+These are basic functions to get the UI started and may be imported with the `:default` tag.
 
 ### `uiInit( ... )`
 
@@ -69,9 +62,8 @@ These are basic functions to get the UI started and may be imported with the
 my $err = uiInit({ Size => 0 });
 ```
 
-Ask LibUI to do all the platform specific work to get up and running. If LibUI
-fails to initialize itself, this will return a string. Weird upstream choice, I
-know...
+Ask LibUI to do all the platform specific work to get up and running. If LibUI fails to initialize itself, this will
+return a string.
 
 You **must** call this before creating widgets.
 
@@ -97,8 +89,7 @@ Let LibUI's event loop run until interrupted.
 uiMainSteps( );
 ```
 
-You may call this instead of `uiMain( )` if you want to run the main loop
-yourself.
+You may call this instead of `uiMain( )` if you want to run the main loop yourself.
 
 ### `uiMainStep( ... )`
 
@@ -108,12 +99,10 @@ my $ok = uiMainStep( 1 );
 
 Runs one iteration of the main loop.
 
-It takes a single boolean argument indicating whether to wait for an even to
-occur or not.
+It takes a single boolean argument indicating whether to wait for an even to occur or not.
 
-It returns true if an event was processed (or if no even is available if you
-don't wish to wait) and false if the event loop was told to stop (for instance,
-`uiQuit()` was called).
+It returns true if an event was processed (or if no even is available if you don't wish to wait) and false if the event
+loop was told to stop (for instance, `uiQuit()` was called).
 
 ### `uiQuit( )`
 
@@ -129,8 +118,8 @@ Signals LibUI that you are ready to quit.
 uiQueueMain( sub { }, $values );
 ```
 
-Trigger a callback on the main thread from any other thread. This is likely
-unstable. It's for sure untested as long as perl threads are garbage.
+Trigger a callback on the main thread from any other thread. This is likely unstable. It's for sure untested as long as
+perl threads are garbage.
 
 ### `uiTimer( ... )`
 
@@ -332,15 +321,13 @@ my $enabled = uiControlEnabledToUser( $label );
 
 Returns whether or not the control can be interacted with by the user.
 
-Checks if the control and all its parents are enabled to make sure it can be
-interacted with by the user.
+Checks if the control and all its parents are enabled to make sure it can be interacted with by the user.
 
 ## Window Functions
 
 A window control that represents a top-level window.
 
-A window contains exactly one child control that occupies the entire window and
-cannot be a child of another control.
+A window contains exactly one child control that occupies the entire window and cannot be a child of another control.
 
 These functions may be imported with the `:window` tag.
 
@@ -368,8 +355,8 @@ uiWindowPosition( $window, my $x, my $y );
 
 Gets the window position.
 
-Coordinates are measured from the top left corner of the screen. This method
-may return inaccurate or dummy values on X11.
+Coordinates are measured from the top left corner of the screen. This method may return inaccurate or dummy values on
+X11.
 
 ### `uiWindowSetPosition( ... )`
 
@@ -379,8 +366,8 @@ uiWindowSetPosition( $window, 300, 50 );
 
 Moves the window to the specified position.
 
-Coordinates are measured from the top left corner of the screen. This method is
-merely a hint and may be ignored on X11.
+Coordinates are measured from the top left corner of the screen. This method is merely a hint and may be ignored on
+X11.
 
 ### `uiWindowOnPositionChanged( ... )`
 
@@ -406,8 +393,8 @@ Expected parameters include:
 
 - `$code_ref`
 
-    Code reference that should expect a reference back to the instance that
-    triggered the callback and user data registered with the sender instance.
+    Code reference that should expect a reference back to the instance that triggered the callback and user data registered
+    with the sender instance.
 
 - `$user_data`
 
@@ -478,8 +465,8 @@ Expected parameters include:
 
 - `$code_ref`
 
-    Code reference that should expect a reference back to the instance that
-    triggered the callback and user data registered with the sender instance.
+    Code reference that should expect a reference back to the instance that triggered the callback and user data registered
+    with the sender instance.
 
 - `$user_data`
 
@@ -510,11 +497,11 @@ Expected parameters include:
 
 - `$code_ref`
 
-    Code reference that should expect a reference back to the instance that
-    triggered the callback and user data registered with the sender instance.
+    Code reference that should expect a reference back to the instance that triggered the callback and user data registered
+    with the sender instance.
 
-    Return a true value to destroy the window. Return an untrue value to abort
-    closing and keep the window alive and visible.
+    Return a true value to destroy the window. Return an untrue value to abort closing and keep the window alive and
+    visible.
 
 - `$user_data`
 
@@ -544,8 +531,8 @@ Expected parameters include:
 
 - `$code_ref`
 
-    Code reference that should expect a reference back to the instance that
-    triggered the callback and user data registered with the sender instance.
+    Code reference that should expect a reference back to the instance that triggered the callback and user data registered
+    with the sender instance.
 
 - `$user_data`
 
@@ -645,8 +632,8 @@ Expected parameters include:
 
 ## Button Functions
 
-These functions create and wrap a control that visually represents a button to
-be clicked by the user to trigger an action.
+These functions create and wrap a control that visually represents a button to be clicked by the user to trigger an
+action.
 
 Import these functions with the `:button` tag.
 
@@ -690,8 +677,7 @@ Expected parameters include:
 
 These functions wrap a boxlike container that holds a group of controls.
 
-The contained controls are arranged to be displayed either horizontally or
-vertically next to each other.
+The contained controls are arranged to be displayed either horizontally or vertically next to each other.
 
 You may import these functions with the `:box` tag.
 
@@ -703,8 +689,8 @@ uiBoxAppend( $box, $child, 1 );
 
 Appends a control to the box.
 
-Stretchy items expand to use the remaining space within the box. In the case of
-multiple stretchy items the space is shared equally.
+Stretchy items expand to use the remaining space within the box. In the case of multiple stretchy items the space is
+shared equally.
 
 Expected parameters include:
 
@@ -748,8 +734,7 @@ uiBoxSetPadded( $box, 1 );
 
 Sets whether or not controls within the box are padded.
 
-Padding is defined as space between individual controls. The padding size is
-determined by the OS defaults.
+Padding is defined as space between individual controls. The padding size is determined by the OS defaults.
 
 ### `uiNewHorizontalBox( )`
 
@@ -773,8 +758,7 @@ Controls within the box are placed next to each other vertically.
 
 ## Checkbox Functions
 
-The functions wrap a control with a user checkable box accompanied by a text
-label.
+The functions wrap a control with a user checkable box accompanied by a text label.
 
 You may import them with the `:checkbox` tag.
 
@@ -866,8 +850,7 @@ The callback is not triggered when calling `uiEntrySetText( ... )`.
 my $ro = uiEntryReadOnly( $field );
 ```
 
-Returns whether or not the entry's text can be changed. A true value if
-readonly, otherwise false.
+Returns whether or not the entry's text can be changed. A true value if readonly, otherwise false.
 
 ### `uiEntrySetReadOnly( ... )`
 
@@ -903,8 +886,7 @@ my $search = uiNewSearchEntry();
 
 Creates a new entry suitable for search.
 
-Some systems will deliberately delay the `uiEntryOnChanged( ... )` callback
-for a more natural feel.
+Some systems will deliberately delay the `uiEntryOnChanged( ... )` callback for a more natural feel.
 
 ## Label Functions
 
@@ -938,11 +920,9 @@ Creates a new label.
 
 ## Tab Functions
 
-A tab represents a multi-page control interface that displays one page at a
-time.
+A tab represents a multi-page control interface that displays one page at a time.
 
-Each page/tab has an associated label that can be selected to switch between
-pages/tabs.
+Each page/tab has an associated label that can be selected to switch between pages/tabs.
 
 ### `uiTabAppend( ... )`
 
@@ -1004,12 +984,10 @@ Creates a new tab container.
 
 ## Group Functions
 
-A group is a control container that adds a label to the contained child
-control.
+A group is a control container that adds a label to the contained child control.
 
-This control is a great way of grouping related controls in combination with
-uiBox. A visual box will or will not be drawn around the child control
-dependent on the underlying OS implementation.
+This control is a great way of grouping related controls in combination with uiBox. A visual box will or will not be
+drawn around the child control dependent on the underlying OS implementation.
 
 You may import these functions with the `:group` tag.
 
@@ -1065,15 +1043,14 @@ Creates a new group.
 
 ## Spinbox Functions
 
-A spinbox is a control to display and modify integer values via a text field or
-\+/- buttons.
+A spinbox is a control to display and modify integer values via a text field or `+/-` buttons.
 
-This is a convenient control for having the user enter integer values. Values
-are guaranteed to be within the specified range.
+This is a convenient control for having the user enter integer values. Values are guaranteed to be within the specified
+range.
 
-The + button increases the held value by 1.
+The `+` button increases the held value by 1.
 
-The - button decreased the held value by 1.
+The `-` button decreased the held value by 1.
 
 Entering a value out of range will clamp to the nearest value in range.
 
@@ -1117,18 +1094,16 @@ Creates a new spinbox.
 
 The initial spinbox value equals the minimum value.
 
-In the current implementation upstream, `$min` and `$max` are swapped if
-`$min` is greater than `$max`. This may change in the future though.
+In the current implementation upstream, `$min` and `$max` are swapped if `$min` is greater than `$max`. This may
+change in the future though.
 
 ## Slider Functions
 
-A slider is a control to display and modify integer values via a user draggable
-slider.
+A slider is a control to display and modify integer values via a user draggable slider.
 
 Values are guaranteed to be within the specified range.
 
-Sliders by default display a tool tip showing the current value when being
-dragged.
+Sliders by default display a tool tip showing the current value when being dragged.
 
 Sliders are horizontal only.
 
@@ -1192,9 +1167,8 @@ uiSliderSetRange( $slider, 1, 500 );
 
 Sets the slider range.
 
-Make sure to clamp the slider value to the nearest value in range - should it
-be out of range. Manually call `uiSliderOnChanged( ... )`'s callback in such a
-case.
+Make sure to clamp the slider value to the nearest value in range - should it be out of range. Manually call
+`uiSliderOnChanged( ... )`'s callback in such a case.
 
 ### `uiNewSlider( ... )`
 
@@ -1206,13 +1180,12 @@ Creates a new slider.
 
 The initial slider value equals the minimum value.
 
-In the current implementation upstream, `$min` and `$max` are swapped if
-`$min` is greater than `$max`. This may change in the future though.
+In the current implementation upstream, `$min` and `$max` are swapped if `$min` is greater than `$max`. This may
+change in the future though.
 
 ## ProgressBar Functions
 
-A ProgressBar is a control that visualizes the progress of a task via the fill
-level of a horizontal bar.
+A ProgressBar is a control that visualizes the progress of a task via the fill level of a horizontal bar.
 
 Indeterminate values are supported via an animated bar.
 
@@ -1232,11 +1205,9 @@ uiProgressBarSetValue( $bar, 100 );
 
 Sets the progress bar value.
 
-Valid values are `[0 .. 100]` for displaying a solid bar imitating a percent
-value.
+Valid values are `[0 .. 100]` for displaying a solid bar imitating a percent value.
 
-Use a value of `-1` to render an animated bar to convey an indeterminate
-value.
+Use a value of `-1` to render an animated bar to convey an indeterminate value.
 
 ### `uiNewProgressBar( )`
 
@@ -1244,8 +1215,7 @@ Creates a new progress bar.
 
 ## Separator Functions
 
-A separator is a control to visually separate controls, horizontally or
-vertically.
+A separator is a control to visually separate controls, horizontally or vertically.
 
 Import these functions with the `:separator` tag.
 
@@ -1267,8 +1237,7 @@ Creates a new vertical separator.
 
 ## Combobox Functions
 
-A combobox is a control to select one item from a predefined list of items via
-a drop down menu.
+A combobox is a control to select one item from a predefined list of items via a drop down menu.
 
 You may import these functions with the `:combobox` tag.
 
@@ -1296,8 +1265,8 @@ uiComboboxDelete( $combo, 4 );
 
 Deletes an item at `$index` from the combo box.
 
-Deleting the index of the item currently selected will move the selection to
-the next item in the combo box or `-1` if no such item exists.
+Deleting the index of the item currently selected will move the selection to the next item in the combo box or `-1` if
+no such item exists.
 
 ### `uiComboboxClear( ... )`
 
@@ -1339,9 +1308,8 @@ uiComboboxOnSelected( $combo, sub { my ($c, $user_data) = @_; }, undef );
 
 Registers a callback for when a combo box item is selected.
 
-The callback is not triggered when calling `uiComboboxSetSelected( ... )`,
-`uiComboboxInsertAt( ... )`, `uiComboboxDelete( ... )`, or `uiComboboxClear(
-... )`.
+The callback is not triggered when calling `uiComboboxSetSelected( ... )`, `uiComboboxInsertAt( ... )`,
+`uiComboboxDelete( ... )`, or `uiComboboxClear( ... )`.
 
 ### `uiNewCombobox( )`
 
@@ -1353,8 +1321,7 @@ Creates a new combo box.
 
 ## Editable Combobox Functions
 
-An editable combobox is a control to select one item from a predefined list of
-items or enter ones own.
+An editable combobox is a control to select one item from a predefined list of items or enter ones own.
 
 Predefined items can be selected from a drop down menu.
 
@@ -1378,8 +1345,7 @@ my $text = uiEditableComboboxText( $combo );
 
 Returns the text of the editable combo box.
 
-This text is either the text of one of the predefined list items or the text
-manually entered by the user.
+This text is either the text of one of the predefined list items or the text manually entered by the user.
 
 ### `uiEditableComboboxSetText( ... )`
 
@@ -1395,8 +1361,7 @@ Sets the editable combo box text.
 uiEditableComboboxOnChanged( $combo, sub { my ($cb, user_data) = @_; }, undef );
 ```
 
-Registers a callback for when an editable combo box item is selected or user
-text changed.
+Registers a callback for when an editable combo box item is selected or user text changed.
 
 The callback is not triggered when calling `uiEditableComboboxSetText( ... )`.
 
@@ -1410,11 +1375,9 @@ Creates a new editable combo box.
 
 ## Menu Functions
 
-Menus provide the standard menu functionality found at the top of application
-windows.
+Menus provide the standard menu functionality found at the top of application windows.
 
-Each menu has a name and can contain items, check items, quit, preferences,
-about, and separators.
+Each menu has a name and can contain items, check items, quit, preferences, about, and separators.
 
 You may import these functions with the `:menu` tag.
 
@@ -1450,8 +1413,7 @@ my $item = uiMenuAppendQuitItem( $menu );
 
 Appends a quit item to the menu.
 
-On platforms where there is a standard quit item, this is it. On other
-platforms, this is just a normal item.
+On platforms where there is a standard quit item, this is it. On other platforms, this is just a normal item.
 
 ### `uiMenuAppendPreferencesItem( ... )`
 
@@ -1461,8 +1423,7 @@ my $item = uiMenuAppendPreferencesItem( $menu );
 
 Appends a preferences item to the menu.
 
-On platforms where there is a standard preferences item, this is it. On other
-platforms, this is just a normal item.
+On platforms where there is a standard preferences item, this is it. On other platforms, this is just a normal item.
 
 ### `uiMenuAppendAboutItem( ... )`
 
@@ -1472,8 +1433,7 @@ my $item = uiMenuAppendAboutItem( $menu );
 
 Appends an about item to the menu.
 
-On platforms where there is a standard about item, this is it. On other
-platforms, this is just a normal item.
+On platforms where there is a standard about item, this is it. On other platforms, this is just a normal item.
 
 ### `uiMenuAppendSeparator( ... )`
 
@@ -1526,9 +1486,8 @@ Expected parameters include:
 
 - `$code_ref`
 
-    Code reference that should expect a reference back to the menu item that
-    triggered the callback, the window associated with the menu item, and user
-    data registered with the sender instance.
+    Code reference that should expect a reference back to the menu item that triggered the callback, the window associated
+    with the menu item, and user data registered with the sender instance.
 
 - `$user_data`
 
@@ -1602,8 +1561,8 @@ Expected parameters include:
 
 - `$code_ref`
 
-    Code reference that should expect a reference back to the instance that
-    triggered the callback and user data registered with the sender instance.
+    Code reference that should expect a reference back to the instance that triggered the callback and user data registered
+    with the sender instance.
 
 - `$user_data`
 
@@ -1741,8 +1700,8 @@ Expected parameters include:
 
 - `$code_ref`
 
-    Code reference that should expect a reference back to the instance that
-    triggered the callback and user data registered with the sender instance.
+    Code reference that should expect a reference back to the instance that triggered the callback and user data registered
+    with the sender instance.
 
 - `$user_data`
 
@@ -1818,8 +1777,8 @@ Expected parameters include:
 
 - `$code_ref`
 
-    Code reference that should expect a reference back to the instance that
-    triggered the callback and user data registered with the sender instance.
+    Code reference that should expect a reference back to the instance that triggered the callback and user data registered
+    with the sender instance.
 
 - `$user_data`
 
@@ -1827,8 +1786,7 @@ Expected parameters include:
 
 ## Multiline Entry Functions
 
-A multiline entry is a control to display and allow editing of a multi-line
-text field.
+A multiline entry is a control to display and allow editing of a multi-line text field.
 
 You may import these functions with the `:multilineentry` tag.
 
@@ -1886,8 +1844,7 @@ uiMultilineEntryOnChanged(
 
 Registers a callback for when the multiline entry text is changed by the user.
 
-The callback is not triggered when calling `uiMultilineEntrySetText( ... )` or
-`uiMultilineEntryAppend( ... )`.
+The callback is not triggered when calling `uiMultilineEntrySetText( ... )` or `uiMultilineEntryAppend( ... )`.
 
 ### `uiMultilineEntryReadOnly( ... )`
 
@@ -1967,8 +1924,8 @@ Expected parameters include:
 
 - `$code_ref`
 
-    Code reference that should expect a reference back to the instance that
-    triggered the callback and user data registered with the sender instance.
+    Code reference that should expect a reference back to the instance that triggered the callback and user data registered
+    with the sender instance.
 
 - `$user_data`
 
@@ -2018,8 +1975,8 @@ Expected parameters include:
 
 - `$code_ref`
 
-    Code reference that should expect a reference back to the instance that
-    triggered the callback and user data registered with the sender instance.
+    Code reference that should expect a reference back to the instance that triggered the callback and user data registered
+    with the sender instance.
 
 - `$user_data`
 
@@ -2083,13 +2040,11 @@ Expected parameters include:
 
 - `$hstretch`
 
-    Whether or not the control will be stretched horizontally to fill available
-    space.
+    Whether or not the control will be stretched horizontally to fill available space.
 
 - `$vstretch`
 
-    Whether or not the control will be stretched vertically to fill available
-    space.
+    Whether or not the control will be stretched vertically to fill available space.
 
 ### `uiGridInsertAt( ... )`
 
@@ -2143,13 +2098,11 @@ Expected parameters include:
 
 - `$hstretch`
 
-    Whether or not the control will be stretched horizontally to fill available
-    space.
+    Whether or not the control will be stretched horizontally to fill available space.
 
 - `$vstretch`
 
-    Whether or not the control will be stretched vertically to fill available
-    space.
+    Whether or not the control will be stretched vertically to fill available space.
 
 ### `uiGridPadded( ... )`
 
@@ -2169,13 +2122,11 @@ uiGridSetPadded( $grid, 1 );
 
 Sets whether or not controls within the grid are padded.
 
-Padding is defined as space between individual controls. The padding size is
-determined by the OS defaults.
+Padding is defined as space between individual controls. The padding size is determined by the OS defaults.
 
 ## Form Functions
 
-A form is a container control that arranges its children in a form layout with
-labels.
+A form is a container control that arranges its children in a form layout with labels.
 
 You may import these functions with the `:form` tag.
 
@@ -2247,8 +2198,7 @@ uiFormSetPadded( $form, 1 );
 
 Sets whether or not controls within the form are padded.
 
-Padding is defined as space between individual controls. The padding size is
-determined by the OS defaults.
+Padding is defined as space between individual controls. The padding size is determined by the OS defaults.
 
 ## File Dialog Functions
 
@@ -2602,8 +2552,7 @@ Expected parameters include:
 uiDrawPathCloseFigure( $path );
 ```
 
-Closes the current figure by drawing a line from the current point to the
-starting point of the figure.
+Closes the current figure by drawing a line from the current point to the starting point of the figure.
 
 ### `uiDrawPathAddRectangle( ... )`
 
@@ -2685,13 +2634,11 @@ Expected parameters include:
 
 - `$matrix`
 
-    A `LibUI::DrawMatrix` transform applied to the brush, or `undef` for no
-    transform.
+    A `LibUI::DrawMatrix` transform applied to the brush, or `undef` for no transform.
 
 ## Draw Matrix Functions
 
-Draw matrices are used to transform coordinates and sizes during drawing
-operations.
+Draw matrices are used to transform coordinates and sizes during drawing operations.
 
 You may import these functions with the `:drawmatrix` tag.
 
@@ -2779,8 +2726,7 @@ Transforms a size using the matrix.
 
 ## Draw Context Functions
 
-These functions perform operations on the draw context beyond basic path
-drawing.
+These functions perform operations on the draw context beyond basic path drawing.
 
 You may import these functions with the `:drawcontext` tag.
 
@@ -3116,8 +3062,7 @@ Returns the OpenType features map from a features attribute.
 
 ## Attributed String Functions
 
-An attributed string is a string with associated text attributes that modify
-its appearance.
+An attributed string is a string with associated text attributes that modify its appearance.
 
 You may import these functions with the `:attrstr` tag.
 
@@ -3255,8 +3200,7 @@ my $layout = uiDrawNewTextLayout( $params );
 
 Creates a new text layout with the given parameters.
 
-The params struct contains the attributed string, default font, width, and
-alignment.
+The params struct contains the attributed string, default font, width, and alignment.
 
 ### `uiDrawFreeTextLayout( ... )`
 
@@ -3284,8 +3228,8 @@ Returns the extents (width and height) of the text layout.
 
 ## Table Functions
 
-Tables display data in rows and columns with support for various column types
-including text, images, checkboxes, progress bars, and buttons.
+Tables display data in rows and columns with support for various column types including text, images, checkboxes,
+progress bars, and buttons.
 
 You may import these functions with the `:table` tag.
 
@@ -3493,9 +3437,9 @@ Appends a button column to the table.
 my $table = uiNewTable( { Model => $model, RowBackgroundColorModelColumn => -1 } );
 ```
 
-Creates a new table with the given parameters. The `Model` field is a [uiTableModel](https://metacpan.org/pod/uiTableModel),
-and `RowBackgroundColorModelColumn` specifies a column index whose color value will be
-used as the row background color (use `-1` for none).
+Creates a new table with the given parameters. The `Model` field is a [uiTableModel](https://metacpan.org/pod/uiTableModel), and
+`RowBackgroundColorModelColumn` specifies a column index whose color value will be used as the row background color
+(use `-1` for none).
 
 ### `uiTableHeaderVisible( ... )`
 
@@ -3643,8 +3587,8 @@ Frees a table selection.
 
 # CONSTANTS
 
-Named constants replace magic numbers throughout the API. Import them with the
-`:constants` tag or all at once with `:all`.
+Named constants replace magic numbers throughout the API. Import them with the `:constants` tag or all at once with
+`:all`.
 
 ## Fill Mode
 
@@ -3755,8 +3699,7 @@ Used with `uiGridAppend`.
 
 # HELPERS
 
-Convenience functions that reduce boilerplate. Import with the `:helpers` tag
-or `:all`.
+Convenience functions that reduce boilerplate. Import with the `:helpers` tag or `:all`.
 
 ## `solid_brush( ... )`
 
@@ -3764,8 +3707,7 @@ or `:all`.
 my $brush = solid_brush( $r, $g, $b, $a );
 ```
 
-Returns a `DrawBrush` hashref configured as a solid-color brush. `$a` (alpha)
-defaults to `1.0`.
+Returns a `DrawBrush` hashref configured as a solid-color brush. `$a` (alpha) defaults to `1.0`.
 
 This replaces the verbose 11-field hashref:
 
@@ -3801,13 +3743,12 @@ Returns a `DrawStrokeParams` hashref. All parameters are named and optional:
 my $str = format_tm( $tm_hashref );
 ```
 
-Formats a `struct tm` hashref (as returned by `uiDateTimePickerTime`) into a
-human-readable string like `"Sun Jul  6 14:30:05 2026"`.
+Formats a `struct tm` hashref (as returned by `uiDateTimePickerTime`) into a human-readable string like `"Sun Jul  6
+14:30:05 2026"`.
 
 # LibUI::Matrix
 
-Object-oriented wrapper around `uiDrawMatrix`. Encapsulates the 6-field
-matrix struct and provides chainable methods.
+Object-oriented wrapper around `uiDrawMatrix`. Encapsulates the 6-field matrix struct and provides chainable methods.
 
 ```perl
 use LibUI qw[:all];
@@ -3863,8 +3804,7 @@ Applies a scale around point `($x, $y)`. Returns `$self` for chaining.
 $m->rotate(200, 150, 3.14);
 ```
 
-Applies a rotation (in radians) around point `($x, $y)`. Returns `$self` for
-chaining.
+Applies a rotation (in radians) around point `($x, $y)`. Returns `$self` for chaining.
 
 ### `$m->skew( $x, $y, $xamount, $yamount )`
 
@@ -3920,14 +3860,12 @@ Transforms a size through the matrix. Returns `($rw, $rh)`.
 $m->apply($draw_context);
 ```
 
-Applies the matrix to a draw context via `uiDrawTransform`. Returns `$self`
-for chaining.
+Applies the matrix to a draw context via `uiDrawTransform`. Returns `$self` for chaining.
 
 # DATETIME PICKER WRAPPERS
 
-The `uiDateTimePickerTime` and `uiDateTimePickerSetTime` functions are
-wrapped to work with Perl-friendly data structures instead of raw `struct tm`
-buffers.
+The `uiDateTimePickerTime` and `uiDateTimePickerSetTime` functions are wrapped to work with Perl-friendly data
+structures instead of raw `struct tm` buffers.
 
 ## `uiDateTimePickerTime( ... )`
 
@@ -3947,7 +3885,7 @@ Returns a hashref representing `struct tm`:
     tm_year  => 126,     # years since 1900
     tm_wday  => 0,       # day of week (0-6, Sunday = 0)
     tm_yday  => 186,     # day of year (0-365)
-    tm_isdst => 0,       # daylight saving time flag
+    tm_isdst => 0        # daylight saving time flag
 }
 ```
 
@@ -3958,8 +3896,8 @@ Accepts three calling styles:
 ```perl
 # Hashref (full control)
 uiDateTimePickerSetTime( $picker, {
-    tm_sec => 0, tm_min => 0, tm_hour => 0,
-    tm_mday => 1, tm_mon => 0, tm_year => 70,
+    tm_sec  => 0, tm_min => 0, tm_hour => 0,
+    tm_mday => 1, tm_mon => 0, tm_year => 70
 });
 
 # Epoch timestamp (convenience)
@@ -3969,8 +3907,7 @@ uiDateTimePickerSetTime( $picker, time() );
 uiDateTimePickerSetTime( $picker, 0, 30, 14, 6, 6, 126 );
 ```
 
-When using the epoch form, `localtime()` is used internally and `tm_isdst`
-is set to `-1` (let the system decide).
+When using the epoch form, `localtime()` is used internally and `tm_isdst` is set to `-1` (let the system decide).
 
 # FONT BUTTON WRAPPERS
 
@@ -3980,9 +3917,8 @@ is set to `-1` (let the system decide).
 my $desc = uiFontButtonFont( $button );
 ```
 
-Returns a hashref describing the selected font. Automatically handles memory
-allocation and cleanup (no need for `calloc`, `sizeof`, `cast`, or
-`uiFreeFontButtonFont`).
+Returns a hashref describing the selected font. Automatically handles memory allocation and cleanup (no need for
+`calloc`, `sizeof`, `cast`, or `uiFreeFontButtonFont`).
 
 ```perl
 my $desc = uiFontButtonFont($btn);
@@ -3996,13 +3932,11 @@ printf "Family: %s, Size: %.1f\n", $desc->{Family}, $desc->{Size};
 my $desc = uiLoadControlFont();
 ```
 
-Loads the system default control font and returns a font descriptor hashref.
-Same structure as `uiFontButtonFont`.
+Loads the system default control font and returns a font descriptor hashref. Same structure as `uiFontButtonFont`.
 
 # OUT-PARAMETER WRAPPERS
 
-Functions that previously required passing scalar references for output values
-now return Perl lists directly.
+Functions that previously required passing scalar references for output values now return Perl lists directly.
 
 ## `uiColorButtonColor( ... )`
 
@@ -4064,47 +3998,40 @@ my $table = uiNewTable( $model );
 my $table = uiNewTable({ Model => $model, RowBackgroundColorModelColumn => 2 });
 ```
 
-When passed a model pointer directly, `RowBackgroundColorModelColumn` defaults
-to `-1` (disabled).
+When passed a model pointer directly, `RowBackgroundColorModelColumn` defaults to `-1` (disabled).
 
 # AREA HANDLER ALIASES
 
-`uiNewArea` and `uiNewScrollingArea` accept callback aliases with `on_`
-prefixes. Missing callbacks default to no-ops.
+`uiNewArea` and `uiNewScrollingArea` accept callbacks that trigger your coderef. Missing callbacks default to no-ops.
 
 ```perl
 my $area = uiNewArea({
-    on_draw   => sub { ... },
-    on_mouse  => sub { ... },
-    # on_crossed, on_drag, on_key default to no-ops
+    Draw        => sub { ... },
+    MouseEvent  => sub { ... }
 });
 ```
 
-- `on_draw` or `Draw`
-- `on_mouse` or `on_mouse_move` or `MouseEvent`
-- `on_crossed` or `on_mouse_crossed` or `MouseCrossed`
-- `on_drag` or `on_drag_broken` or `DragBroken`
-- `on_key` or `on_key_event` or `KeyEvent`
+- `Draw`
+- `MouseEvent`
+- `MouseCrossed`
+- `DragBroken`
+- `KeyEvent`
 
-The `Draw`, `MouseEvent`, and `KeyEvent` callbacks receive typed hashrefs
-instead of raw pointers. See ["AREA CALLBACK STRUCTS"](#area-callback-structs).
+The `Draw`, `MouseEvent`, and `KeyEvent` callbacks receive typed hashrefs instead of raw pointers.
 
 # Requirements
 
-[Affix](https://metacpan.org/pod/Affix) and [Alien::libui](https://metacpan.org/pod/Alien%3A%3Alibui)
+[Affix](https://metacpan.org/pod/Affix) and [Alien::libui](https://metacpan.org/pod/Alien%3A%3Alibui). LibUI builds and works on Linux, Windows, macOS, etc.
 
 # See Also
 
-`eg/demo.pl` - Very basic example
-
-`eg/widgets.pl` - Demo of basic controls
+From simple 'Hello, World!' scripts to a full blown threaded [Net::BitTorrent](https://metacpan.org/pod/Net%3A%3ABitTorrent) wrapper may be found in `eg/`.
 
 # LICENSE
 
 Copyright (C) Sanko Robinson.
 
-This library is free software; you can redistribute it and/or modify it under
-the same terms as Perl itself.
+This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
 
 # AUTHOR
 
