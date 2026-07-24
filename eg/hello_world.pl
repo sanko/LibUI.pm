@@ -14,11 +14,11 @@ if ( defined $err ) {
 }
 
 # Create a new window
-my $w = uiNewWindow( "Hello, World!", 320, 120, 0 );
+my $w = uiNewWindow( 'Hello, World!', 320, 120, 0 );
 uiWindowOnClosing( $w, \&onClosing, undef );
 uiWindowSetMargined( $w, 1 );
 #
-my $l = uiNewLabel("Hello, World!");
+my $l = uiNewLabel('Hello, World!');
 uiWindowSetChild( $w, $l );
 #
 uiControlShow($w);

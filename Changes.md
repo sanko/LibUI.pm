@@ -13,6 +13,7 @@ This is the first version with all of libui-ng's full widget set.
 
 - New examples in `eg/`:
   - `timer.pl` - demonstrates `uiTimer` by printing timestamps every second
+  - `hello_world.pl` - minimal "Hello, World!" window
 
 ### Changed
 
