@@ -6,6 +6,7 @@ META.json
 META.yml
 README.md
 cpanfile
+eg/calculator.pl
 eg/hello_world.pl
 eg/timer.pl
 lib/LibUI.pm
