@@ -18,6 +18,7 @@ This is the first version with all of libui-ng's full widget set.
   - `calculator.pl` - basic calculator with grid layout, menus, and a settings dialog
   - `clock.pl` - animated analog clock using `uiArea`, `uiTimer`, and draw matrix transforms
   - `datetime.pl` - demonstrates `uiDateTimePicker` with date, time, and combined pickers
+  - `fontpicker.pl` - demonstrates `uiFontButton` and reading font properties
 
 ### Changed
 
