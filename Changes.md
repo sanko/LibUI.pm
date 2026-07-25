@@ -26,6 +26,7 @@ This is the first version with all of libui-ng's full widget set.
   - `matrix.pl` - animated `uiDrawMatrix` transforms (translate, scale, rotate, skew)
   - `scrollarea.pl` - demonstrates `uiNewScrollingArea` with a large interactive map
   - `separators.pl` - demonstrates `uiNewHorizontalSeparator` and `uiNewVerticalSeparator`
+  - `stopwatch.pl` - start/stop/lap timer using `uiTimer` and `Time::HiRes`
   - `table.pl` - demonstrates `uiNewTableModel` with sortable columns
   - `text_attributes.pl` - demonstrates `uiAttributedString` with styled text rendering
 

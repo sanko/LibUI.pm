@@ -35,7 +35,7 @@ package LibUI v1.0.1 {
         label   => [qw[ uiLabelText    uiLabelSetText    uiNewLabel ]],
         tab     => [qw[ uiTabAppend    uiTabInsertAt     uiTabDelete        uiTabNumPages uiTabMargined uiTabSetMargined uiNewTab ]],
         group   => [qw[ uiGroupTitle   uiGroupSetTitle   uiGroupSetChild    uiGroupMargined uiGroupSetMargined uiNewGroup ]],
-        spinbox => [qw[uiSpinboxValue uiSpinboxSetValue uiSpinboxOnChanged uiNewSpinbox ]],
+        spinbox => [qw[ uiSpinboxValue uiSpinboxSetValue uiSpinboxOnChanged uiNewSpinbox ]],
         slider  => [
             qw[
                 uiSliderValue     uiSliderSetValue   uiSliderHasToolTip uiSliderSetHasToolTip
