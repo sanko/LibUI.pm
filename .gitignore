@@ -35,3 +35,9 @@ eg/lib
 eg/table_testing.pl
 eg/testing.pl
 eg-old/
+
+eg/bittorrent.pl
+eg/drawing.pl
+eg/stopwatch.pl
+eg/text_editor.pl
+eg/todo_list.pl
