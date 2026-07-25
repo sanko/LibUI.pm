@@ -22,6 +22,7 @@ This is the first version with all of libui-ng's full widget set.
   - `form.pl` - demonstrates `uiForm` layout with various control types
   - `grid.pl` - demonstrates `uiNewGrid` with cell spanning and stretchy controls
   - `image.pl` - demonstrates `uiNewImage` and image columns in a table
+  - `matrix.pl` - animated `uiDrawMatrix` transforms (translate, scale, rotate, skew)
 
 ### Changed
 
