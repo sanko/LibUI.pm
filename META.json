@@ -68,10 +68,11 @@
    "provides" : {
       "LibUI" : {
          "file" : "lib/LibUI.pm",
-         "version" : "v1.0.1"
+         "version" : "v1.0.0"
       },
       "LibUI::Matrix" : {
-         "file" : "lib/LibUI.pm"
+         "file" : "lib/LibUI.pm",
+         "version" : "v1.0.0"
       }
    },
    "release_status" : "stable",
@@ -89,7 +90,7 @@
          "web" : "https://github.com/sanko/LibUI.pm"
       }
    },
-   "version" : "v1.0.1",
+   "version" : "v1.0.0",
    "x_authority" : "cpan:SANKO",
    "x_ignore" : [
       ".tidyallrc",

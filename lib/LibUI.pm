@@ -1,4 +1,4 @@
-package LibUI v1.0.1 {
+package LibUI v1.0.0 {
     use v5.40;
     use Affix;
     use Alien::libui;
@@ -119,8 +119,7 @@ package LibUI v1.0.1 {
             ]
         ],
         attrstr => [
-            qw[
-                uiNewAttributedString                 uiFreeAttributedString
+            qw[ uiNewAttributedString                 uiFreeAttributedString
                 uiAttributedStringString              uiAttributedStringLen
                 uiAttributedStringAppendUnattributed  uiAttributedStringInsertAtUnattributed
                 uiAttributedStringDelete              uiAttributedStringSetAttribute
@@ -128,10 +127,9 @@ package LibUI v1.0.1 {
                 uiAttributedStringByteIndexToGrapheme uiAttributedStringGraphemeToByteIndex
             ]
         ],
-        textlayout => [qw[uiDrawNewTextLayout uiDrawFreeTextLayout uiDrawText uiDrawTextLayoutExtents ]],
+        textlayout => [qw[uiDrawNewTextLayout uiDrawFreeTextLayout uiDrawText uiDrawTextLayoutExtents]],
         table      => [
-            qw[
-                uiFreeTableValue               uiTableValueGetType
+            qw[ uiFreeTableValue               uiTableValueGetType
                 uiNewTableValueString          uiTableValueString
                 uiNewTableValueImage           uiTableValueImage
                 uiNewTableValueInt             uiTableValueInt
@@ -153,39 +151,36 @@ package LibUI v1.0.1 {
         ],
         misc      => [qw[uiFreeText uiNewArea uiNewScrollingArea]],
         constants => [
-            qw[
-                UI_FILL_WINDING  UI_FILL_ALTERNATE
-                UI_BRUSH_SOLID   UI_BRUSH_LINEAR_GRADIENT UI_BRUSH_RADIAL_GRADIENT
+            qw[ UI_FILL_WINDING   UI_FILL_ALTERNATE
+                UI_BRUSH_SOLID       UI_BRUSH_LINEAR_GRADIENT UI_BRUSH_RADIAL_GRADIENT
                 UI_LINE_CAP_FLAT     UI_LINE_CAP_ROUND   UI_LINE_JOIN_MITER
                 UI_LINE_JOIN_ROUND   UI_LINE_JOIN_BEVEL  UI_TEXT_ALIGN_LEFT
                 UI_TEXT_ALIGN_CENTER UI_TEXT_ALIGN_RIGHT
-                UI_WEIGHT_THIN UI_WEIGHT_EXTRA_LIGHT UI_WEIGHT_LIGHT
+                UI_WEIGHT_THIN       UI_WEIGHT_EXTRA_LIGHT UI_WEIGHT_LIGHT
                 UI_WEIGHT_BOOK
                 UI_WEIGHT_NORMAL
                 UI_WEIGHT_MEDIUM
-                UI_WEIGHT_SEMI_BOLD UI_WEIGHT_BOLD UI_WEIGHT_EXTRA_BOLD UI_WEIGHT_HEAVY
-                UI_ITALIC_NORMAL UI_ITALIC_OBLIQUE UI_ITALIC_ITALIC
+                UI_WEIGHT_SEMI_BOLD UI_WEIGHT_BOLD    UI_WEIGHT_EXTRA_BOLD UI_WEIGHT_HEAVY
+                UI_ITALIC_NORMAL    UI_ITALIC_OBLIQUE UI_ITALIC_ITALIC
                 UI_STRETCH_ULTRA_CONDENSED UI_STRETCH_EXTRA_CONDENSED UI_STRETCH_CONDENSED
                 UI_STRETCH_SEMI_CONDENSED  UI_STRETCH_NORMAL          UI_STRETCH_SEMI_EXPANDED
                 UI_STRETCH_EXPANDED        UI_STRETCH_EXTRA_EXPANDED  UI_STRETCH_ULTRA_EXPANDED
-                UI_UNDERLINE_NONE UI_UNDERLINE_SINGLE UI_UNDERLINE_DOUBLE UI_UNDERLINE_SQUIGGLE
+                UI_UNDERLINE_NONE      UI_UNDERLINE_SINGLE   UI_UNDERLINE_DOUBLE UI_UNDERLINE_SQUIGGLE
                 UI_TABLE_COLUMN_STRING UI_TABLE_COLUMN_IMAGE UI_TABLE_COLUMN_INT UI_TABLE_COLUMN_COLOR
-                UI_SELECTION_NONE UI_SELECTION_SINGLE UI_SELECTION_MULTIPLE
-                UI_SORT_NONE UI_SORT_ASCENDING UI_SORT_DESCENDING
-                UI_ALIGN_FILL UI_ALIGN_START UI_ALIGN_CENTER UI_ALIGN_END
+                UI_SELECTION_NONE      UI_SELECTION_SINGLE   UI_SELECTION_MULTIPLE
+                UI_SORT_NONE           UI_SORT_ASCENDING     UI_SORT_DESCENDING
+                UI_ALIGN_FILL          UI_ALIGN_START        UI_ALIGN_CENTER       UI_ALIGN_END
             ]
         ],
         helpers => [qw[solid_brush draw_stroke format_tm]]
     );
     {
         my %seen;
-        push @{ $EXPORT_TAGS{control} }, grep { !$seen{$_}++ } @{ $EXPORT_TAGS{$_} } for qw[
-            window
-            button box checkbox  entry label tab group spinbox slider progressbar separator combobox
-            editablecombobox menu       multilineentry radiobuttons grid colorbutton filedialog msgbox fontbutton
-            datetimepicker   tab_extra  form
-            area_extra drawpath drawstroke drawmatrix drawcontext image attr opentype
-            attrstr          textlayout table misc constants helpers]
+        push @{ $EXPORT_TAGS{control} }, grep { !$seen{$_}++ } @{ $EXPORT_TAGS{$_} }
+            for qw[area_extra attr attrstr box button checkbox colorbutton combobox constants datetimepicker
+            drawcontext drawmatrix drawpath drawstroke editablecombobox entry filedialog fontbutton form
+            grid group helpers image label menu misc msgbox multilineentry opentype progressbar radiobuttons
+            separator slider spinbox tab tab_extra table textlayout window];
     }
     {
         my %seen;
@@ -948,7 +943,7 @@ package LibUI v1.0.1 {
     }
 
     # DrawMatrix OO wrapper
-    package LibUI::Matrix {
+    package LibUI::Matrix v1.0.0 {
 
         sub new ( $class, %opts ) {
             return bless {
