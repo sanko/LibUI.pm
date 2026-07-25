@@ -21,6 +21,7 @@ This is the first version with all of libui-ng's full widget set.
   - `fontpicker.pl` - demonstrates `uiFontButton` and reading font properties
   - `form.pl` - demonstrates `uiForm` layout with various control types
   - `grid.pl` - demonstrates `uiNewGrid` with cell spanning and stretchy controls
+  - `image.pl` - demonstrates `uiNewImage` and image columns in a table
 
 ### Changed
 
