@@ -26,6 +26,7 @@ This is the first version with all of libui-ng's full widget set.
   - `scrollarea.pl` - demonstrates `uiNewScrollingArea` with a large interactive map
   - `separators.pl` - demonstrates `uiNewHorizontalSeparator` and `uiNewVerticalSeparator`
   - `table.pl` - demonstrates `uiNewTableModel` with sortable columns
+  - `text_attributes.pl` - demonstrates `uiAttributedString` with styled text rendering
 
 ### Changed
 
