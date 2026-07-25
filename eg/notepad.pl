@@ -15,7 +15,7 @@ sub update_title() {
         my $d     = $docs[$sel];
         my $title = $d->{file} // '(untitled)';
         $title .= ' *' if $d->{modified};
-        uiWindowSetTitle( $mainwin, 'Notepad - ' .$title );
+        uiWindowSetTitle( $mainwin, 'Notepad - ' . $title );
     }
     else {
         uiWindowSetTitle( $mainwin, 'Notepad' );
@@ -38,7 +38,7 @@ sub update_status() {
 sub new_document() {
     $doc_count++;
     my $editor = uiNewMultilineEntry();
-    my $d      = { title => 'Untitled ' .$doc_count, editor => $editor, file => undef, modified => 0 };
+    my $d      = { title => 'Untitled ' . $doc_count, editor => $editor, file => undef, modified => 0 };
     uiMultilineEntryOnChanged(
         $editor,
         sub {

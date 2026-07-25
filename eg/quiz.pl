@@ -113,7 +113,6 @@ sub should_quit($data) {
     uiControlHide($mainwin);
     return 1;
 }
-
 #
 uiInit( { Size => 0 } );
 $mainwin = uiNewWindow( 'Quiz', 500, 500, 0 );

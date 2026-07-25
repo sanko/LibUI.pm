@@ -20,7 +20,7 @@ sub make_checker( $w, $h ) {
     for my $y ( 0 .. $h - 1 ) {
         for my $x ( 0 .. $w - 1 ) {
             my $v = ( int( $x / 8 ) + int( $y / 8 ) ) % 2 ? 200 : 80;
-            $pixels .= pack 'C4', $v, $v, $v + 40, 255 ;
+            $pixels .= pack 'C4', $v, $v, $v + 40, 255;
         }
     }
     return ( $pixels, $w, $h );
@@ -39,7 +39,7 @@ sub make_circles( $w, $h ) {
             my $g    = $dist < 10 ? 80  : $dist < 20 ? 200 : 50;
             my $b    = $dist < 10 ? 200 : $dist < 20 ? 80  : 200;
             my $a    = $dist < 28 ? 255 : 0;
-            $pixels .= pack 'C4', $r, $g, $b, $a ;
+            $pixels .= pack 'C4', $r, $g, $b, $a;
         }
     }
     return ( $pixels, $w, $h );
