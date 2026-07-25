@@ -20,6 +20,7 @@ This is the first version with all of libui-ng's full widget set.
   - `datetime.pl` - demonstrates `uiDateTimePicker` with date, time, and combined pickers
   - `fontpicker.pl` - demonstrates `uiFontButton` and reading font properties
   - `form.pl` - demonstrates `uiForm` layout with various control types
+  - `grid.pl` - demonstrates `uiNewGrid` with cell spanning and stretchy controls
 
 ### Changed
 
