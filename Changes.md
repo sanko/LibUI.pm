@@ -25,6 +25,7 @@ This is the first version with all of libui-ng's full widget set.
   - `image.pl` - demonstrates `uiNewImage` and image columns in a table
   - `matrix.pl` - animated `uiDrawMatrix` transforms (translate, scale, rotate, skew)
   - `menu.pl` - demonstrates all menu types: items, check items, separators, enable/disable, and submenus
+  - `quiz.pl` - interactive multiple-choice quiz with navigation, scoring, and results review
   - `scrollarea.pl` - demonstrates `uiNewScrollingArea` with a large interactive map
   - `separators.pl` - demonstrates `uiNewHorizontalSeparator` and `uiNewVerticalSeparator`
   - `stopwatch.pl` - start/stop/lap timer using `uiTimer` and `Time::HiRes`
