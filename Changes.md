@@ -20,6 +20,7 @@ This is the first version with all of libui-ng's full widget set.
   - `datetime.pl` - demonstrates `uiDateTimePicker` with date, time, and combined pickers
   - `fontpicker.pl` - demonstrates `uiFontButton` and reading font properties
   - `form.pl` - demonstrates `uiForm` layout with various control types
+  - `graph.pl` - plots mathematical functions from editable spinbox data points
   - `grid.pl` - demonstrates `uiNewGrid` with cell spanning and stretchy controls
   - `image.pl` - demonstrates `uiNewImage` and image columns in a table
   - `matrix.pl` - animated `uiDrawMatrix` transforms (translate, scale, rotate, skew)
