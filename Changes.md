@@ -34,6 +34,7 @@ This is the first version with all of libui-ng's full widget set.
   - `tab.pl` - demonstrates `uiTab` with append, insert, delete, margined, and selection tracking
   - `table.pl` - demonstrates `uiNewTableModel` with sortable columns
   - `text_attributes.pl` - demonstrates `uiAttributedString` with styled text rendering
+  - `bittorrent_threads.pl` - multi-threaded BitTorrent client using ithreads for background networking
 
 ### Changed
 
