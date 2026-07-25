@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [v1.0.0] - 2026-07-25
 
 This is the first version with all of libui-ng's full widget set.
 
@@ -64,3 +64,8 @@ This is the first version with all of libui-ng's full widget set.
 ### Added
 
 - Original version
+
+[Unreleased]: https://github.com/sanko/LibUI.pm/compare/v1.0.0...HEAD
+[v1.0.0]: https://github.com/sanko/LibUI.pm/compare/0.02...v1.0.0
+[0.02]: https://github.com/sanko/LibUI.pm/compare/0.01...0.02
+[0.01]: https://github.com/sanko/LibUI.pm/releases/tag/0.01
