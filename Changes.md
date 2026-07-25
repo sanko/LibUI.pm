@@ -27,6 +27,7 @@ This is the first version with all of libui-ng's full widget set.
   - `scrollarea.pl` - demonstrates `uiNewScrollingArea` with a large interactive map
   - `separators.pl` - demonstrates `uiNewHorizontalSeparator` and `uiNewVerticalSeparator`
   - `stopwatch.pl` - start/stop/lap timer using `uiTimer` and `Time::HiRes`
+  - `tab.pl` - demonstrates `uiTab` with append, insert, delete, margined, and selection tracking
   - `table.pl` - demonstrates `uiNewTableModel` with sortable columns
   - `text_attributes.pl` - demonstrates `uiAttributedString` with styled text rendering
 
