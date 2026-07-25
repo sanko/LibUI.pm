@@ -19,6 +19,7 @@ This is the first version with all of libui-ng's full widget set.
   - `clock.pl` - animated analog clock using `uiArea`, `uiTimer`, and draw matrix transforms
   - `datetime.pl` - demonstrates `uiDateTimePicker` with date, time, and combined pickers
   - `fontpicker.pl` - demonstrates `uiFontButton` and reading font properties
+  - `form.pl` - demonstrates `uiForm` layout with various control types
 
 ### Changed
 
