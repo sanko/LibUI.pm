@@ -24,6 +24,7 @@ This is the first version with all of libui-ng's full widget set.
   - `image.pl` - demonstrates `uiNewImage` and image columns in a table
   - `matrix.pl` - animated `uiDrawMatrix` transforms (translate, scale, rotate, skew)
   - `scrollarea.pl` - demonstrates `uiNewScrollingArea` with a large interactive map
+  - `separators.pl` - demonstrates `uiNewHorizontalSeparator` and `uiNewVerticalSeparator`
 
 ### Changed
 
